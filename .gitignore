@@ -1,0 +1,18 @@
+# Data and Survey Responses (Keep private / local only)
+*.xlsx
+*.xls
+*.json
+*.csv
+
+# Screenshots and Media
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Scratch & Temporary
+scratch*
+temp*
+.gemini/
+__pycache__/
+*.pyc

@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CO Visit Schedule | San Miguel Congregation</title>
+  <meta name="description" content="Schedule of activities, ministry accompaniments, and territories for the Circuit Overseer visit (Sept 16–20, 2026).">
+
+  <!-- Plus Jakarta Sans / Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Reference UI Color Palette */
+      --bg-page: #f4f6f4;
+      --surface-white: #ffffff;
+      --border-subtle: #e6ebe6;
+      --border-card: #e5eae5;
+      
+      /* Brand Pine Green */
+      --brand-green: #265343;
+      --brand-green-hover: #1c3f33;
+      --brand-green-light: #e8f1ec;
+      --brand-green-pill: #eef4f0;
+      
+      /* Typography */
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      
+      /* Card Indicator & Badges */
+      --indicator-co-green: #2e7d5a;
+      --indicator-co-blue: #2563eb;
+      --indicator-wife-purple: #8b5cf6;
+      
+      --co-badge-bg: #e0f2fe;
+      --co-badge-text: #0284c7;
+      
+      --wife-badge-bg: #f3e8ff;
+      --wife-badge-text: #7e22ce;
+      
+      --activity-badge-bg: #eef3ef;
+      --activity-badge-text: #475569;
+      
+      --bottom-nav-height: 64px;
+      --radius-pill: 30px;
+      --radius-card: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+
+    /* ========================================================
+       LOCK SCREEN (Matches Reference Theme, No Leaf)
+       ======================================================== */
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-page);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lock-box {
+      width: 100%;
+      max-width: 360px;
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      padding: 32px 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .lock-header {
+      margin-bottom: 24px;
+    }
+
+    .lock-header p.sub-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .lock-header h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .input-wrapper {
+      margin-bottom: 14px;
+    }
+
+    .input-field {
+      width: 100%;
+      background: #fafbfa;
+      border: 1.5px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-size: 1rem;
+      color: var(--text-main);
+      outline: none;
+      text-align: center;
+      letter-spacing: 2px;
+      transition: all 0.15s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--brand-green);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(38, 83, 67, 0.15);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--brand-green);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 13px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .btn-submit:hover {
+      background: var(--brand-green-hover);
+    }
+
+    .remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .remember-row input {
+      accent-color: var(--brand-green);
+    }
+
+    .lock-error {
+      font-size: 0.82rem;
+      color: #dc2626;
+      margin-top: 10px;
+      min-height: 20px;
+      font-weight: 500;
+    }
+
+    /* ========================================================
+       MAIN APP CONTAINER
+       ======================================================== */
+    #appContent {
+      display: none;
+      max-width: 540px;
+      margin: 0 auto;
+      width: 100%;
+      min-height: 100vh;
+      padding-bottom: calc(var(--bottom-nav-height) + 36px);
+      position: relative;
+    }
+
+    /* Admin Toolbar */
+    #adminBanner {
+      display: none;
+      background: #fef3c7;
+      border-bottom: 1px solid #fde68a;
+      color: #92400e;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 300;
+    }
+
+    .btn-admin-pill {
+      background: #ffffff;
+      border: 1px solid #d97706;
+      color: #92400e;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Site Header (NO LEAF LOGO, NO TABS, NO TOP SEARCH/HAMBURGER) */
+    header.site-header {
+      background: var(--bg-page);
+      padding: 20px 18px 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-text-group p.sub-header {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .header-text-group h1 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+
+    .btn-quick-lock {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    /* Search Dropdown Drawer (Toggled from bottom nav) */
+    #searchDrawer {
+      display: none;
+      background: var(--surface-white);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      animation: slideDown 0.16s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      background: #edf2ee;
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      gap: 10px;
+    }
+
+    .search-input-box svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .search-input-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .search-input-box input::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .btn-search-close {
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding-left: 6px;
+    }
+
+    /* Main Scrollable Content Area */
+    main.content-area {
+      padding: 8px 18px;
+    }
+
+    /* ========================================================
+       PILL FILTERS (Exact Match to Reference UI)
+       ======================================================== */
+    .filter-wrapper {
+      margin-bottom: 16px;
+    }
+
+    /* Role Pill Bar */
+    .role-filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .role-pill {
+      flex: 1;
+      background: #eef3ef;
+      color: #334155;
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .role-pill.active {
+      background: var(--brand-green);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Day Scroll Bar */
+    .days-scroll-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 2px 0 6px 0;
+    }
+    .days-scroll-bar::-webkit-scrollbar { display: none; }
+
+    .day-pill {
+      flex: 0 0 auto;
+      background: #eef3ef;
+      color: #334155;
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .day-pill.active {
+      background: var(--brand-green);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* ========================================================
+       DATE GROUP HEADER (Calendar Icon Box + Big Date Title)
+       ======================================================== */
+    .date-group-card {
+      background: #eaf1ec;
+      border-radius: var(--radius-card);
+      padding: 14px 18px;
+      margin: 18px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .date-group-card:first-child {
+      margin-top: 6px;
+    }
+
+    .cal-icon-box {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-green);
+      flex-shrink: 0;
+    }
+
+    .cal-icon-box svg {
+      width: 32px;
+      height: 32px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .date-group-info {
+      flex: 1;
+    }
+
+    .date-group-day-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .date-group-date-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .date-group-slot-count {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* ========================================================
+       MINISTRY SCHEDULE CARD (Exact Match to Reference UI)
+       ======================================================== */
+    .schedule-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-card);
+      padding: 16px 18px 16px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      display: flex;
+      position: relative;
+      cursor: default;
+      transition: all 0.15s ease;
+    }
+
+    .schedule-card.is-clickable {
+      cursor: pointer;
+    }
+
+    .schedule-card:hover {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Left Indicator Bar */
+    .indicator-strip {
+      width: 4px;
+      border-radius: 4px;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .indicator-strip.co-blue { background-color: var(--indicator-co-blue); }
+    .indicator-strip.co-green { background-color: var(--indicator-co-green); }
+    .indicator-strip.wife-purple { background-color: var(--indicator-wife-purple); }
+
+    .card-body-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Card Top Header: Time + Badges */
+    .card-top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .time-chip-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .time-chip-group svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--text-muted);
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .badge-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-role-co {
+      background: var(--co-badge-bg);
+      color: var(--co-badge-text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .badge-role-wife {
+      background: var(--wife-badge-bg);
+      color: var(--wife-badge-text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .badge-activity {
+      background: var(--activity-badge-bg);
+      color: var(--activity-badge-text);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* Card Title Row + Chevron */
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card-person-name {
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .chevron-icon {
+      color: #94a3b8;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      fill: none;
+    }
+
+    /* Card Subtext with Pin or Home Icon */
+    .card-subtext-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .card-subtext-row svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ========================================================
+       TERRITORY & MEETINGS CARD DESIGNS
+       ======================================================== */
+    .territory-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-card);
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .territory-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .territory-day-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .territory-time-badge {
+      background: var(--activity-badge-bg);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .territory-info-grid {
+      display: grid;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .info-line {
+      display: flex;
+      gap: 8px;
+    }
+
+    .info-label {
+      width: 110px;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .info-val {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .info-val.guide-name {
+      color: var(--brand-green);
+    }
+
+    .meeting-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-card);
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      cursor: default;
+    }
+
+    .meeting-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .meeting-card h3 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .meeting-card p.time-line {
+      font-size: 0.84rem;
+      color: var(--brand-green);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .meeting-card p.desc-line {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ========================================================
+       BOTTOM NAVIGATION (Matches Reference UI Style)
+       ======================================================== */
+    nav.bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--bottom-nav-height);
+      background: var(--surface-white);
+      border-top: 1px solid var(--border-subtle);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .bottom-tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 4px 0;
+      gap: 2px;
+      transition: all 0.15s ease;
+    }
+
+    .tab-icon-wrap {
+      width: 44px;
+      height: 28px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .bottom-tab-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .bottom-tab-btn span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* Active Tab: soft mint pill background behind icon + brand green */
+    .bottom-tab-btn.active {
+      color: var(--brand-green);
+    }
+
+    .bottom-tab-btn.active .tab-icon-wrap {
+      background: #e2eee6;
+      color: var(--brand-green);
+    }
+
+    .bottom-tab-btn.active span {
+      font-weight: 800;
+      color: var(--brand-green);
+    }
+
+    .bottom-tab-btn.admin-on {
+      color: #b45309;
+    }
+
+    /* Modals (Minimal Clean) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      width: 100%;
+      max-width: 400px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      animation: modalPop 0.18s ease-out;
+    }
+
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-box h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .modal-box p.sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .form-field {
+      margin-bottom: 12px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #f8faf8;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .form-control:focus {
+      background: #ffffff;
+      border-color: var(--brand-green);
+    }
+
+    .modal-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .btn-save-primary {
+      flex: 1;
+      background: var(--brand-green);
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-cancel-secondary {
+      background: none;
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Print */
+    @media print {
+      #lockScreen, #adminBanner, header.site-header, nav.bottom-bar, #searchDrawer { display: none !important; }
+      #appContent { display: block !important; max-width: 100% !important; padding-bottom: 0 !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .schedule-card, .territory-card, .meeting-card { border-color: #ccc !important; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================
+       LOCK SCREEN (No Leaf Logo)
+       ======================================================== -->
+  <div id="lockScreen">
+    <div class="lock-box">
+      <div class="lock-header">
+        <p class="sub-title">San Miguel Congregation</p>
+        <h2>CO Visit Schedule</h2>
+      </div>
+
+      <form id="unlockForm" onsubmit="handleUnlock(event)">
+        <div class="input-wrapper">
+          <input 
+            type="password" 
+            id="passcodeInput" 
+            class="input-field" 
+            placeholder="Enter Passcode" 
+            autocomplete="current-password"
+            required
+            autofocus
+          >
+        </div>
+        <button type="submit" class="btn-submit" id="unlockBtn">View Schedule</button>
+        <div class="remember-row">
+          <input type="checkbox" id="rememberMe" checked>
+          <label for="rememberMe">Remember on this device</label>
+        </div>
+        <div id="lockFeedback" class="lock-error"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MAIN APP
+       ======================================================== -->
+  <div id="appContent">
+    <!-- Admin Edit Mode Sticky Banner -->
+    <div id="adminBanner">
+      <span>Admin Edit Mode Active</span>
+      <div class="admin-btns">
+        <button class="btn-admin-pill" onclick="downloadUpdatedFile()">Export index.html</button>
+        <button class="btn-admin-pill" onclick="exitAdmin()">Exit</button>
+      </div>
+    </div>
+
+    <!-- Header (NO LEAF LOGO, NO TABS, NO TOP SEARCH/HAMBURGER) -->
+    <header class="site-header">
+      <div class="header-text-group">
+        <p class="sub-header">San Miguel Congregation</p>
+        <h1>CO Visit Schedule</h1>
+      </div>
+      <button class="btn-quick-lock" onclick="lockApp()">Lock</button>
+    </header>
+
+    <!-- Search Bar Drawer (Toggled from Bottom Nav) -->
+    <div id="searchDrawer">
+      <div class="search-input-box">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Filter by name, activity, or territory..."
+          oninput="handleSearch()"
+        >
+        <button class="btn-search-close" onclick="toggleSearch(false)">Close</button>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <main class="content-area">
+      <!-- 1. Ministry Section -->
+      <div id="ministrySection">
+        <div class="filter-wrapper">
+          <!-- Role Pills: All, Circuit Overseer, CO's Wife -->
+          <div class="role-filter-bar">
+            <button class="role-pill active" id="pill-both" onclick="filterPersona('both')">All</button>
+            <button class="role-pill" id="pill-co" onclick="filterPersona('CO')">Circuit Overseer</button>
+            <button class="role-pill" id="pill-wife" onclick="filterPersona('Wife')">CO's Wife</button>
+          </div>
+
+          <!-- Day Pills: All Days, Wed 16, Thu 17, Fri 18, Sat 19, Sun 20 -->
+          <div class="days-scroll-bar">
+            <button class="day-pill active" id="day-all" onclick="filterDay('all')">All Days</button>
+            <button class="day-pill" id="day-Wed" onclick="filterDay('Wed')">Wed 16</button>
+            <button class="day-pill" id="day-Thu" onclick="filterDay('Thu')">Thu 17</button>
+            <button class="day-pill" id="day-Fri" onclick="filterDay('Fri')">Fri 18</button>
+            <button class="day-pill" id="day-Sat" onclick="filterDay('Sat')">Sat 19</button>
+            <button class="day-pill" id="day-Sun" onclick="filterDay('Sun')">Sun 20</button>
+          </div>
+        </div>
+
+        <div id="scheduleContainer"></div>
+      </div>
+
+      <!-- 2. Territory Section -->
+      <div id="territorySection" style="display: none;">
+        <div id="territoryContainer"></div>
+      </div>
+
+      <!-- 3. Meetings Section -->
+      <div id="meetingsSection" style="display: none;">
+        <div id="meetingsContainer"></div>
+      </div>
+    </main>
+
+    <!-- ========================================================
+         BOTTOM NAVIGATION BAR (Exact Match to Reference UI)
+         ======================================================== -->
+    <nav class="bottom-bar">
+      <!-- 1. Schedule -->
+      <button class="bottom-tab-btn active" id="nav-schedule" onclick="switchSection('ministry')">
+        <div class="tab-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <span>Schedule</span>
+      </button>
+
+      <!-- 2. Territories -->
+      <button class="bottom-tab-btn" id="nav-territories" onclick="switchSection('territory')">
+        <div class="tab-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <span>Territories</span>
+      </button>
+
+      <!-- 3. Meetings -->
+      <button class="bottom-tab-btn" id="nav-meetings" onclick="switchSection('meetings')">
+        <div class="tab-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <span>Meetings</span>
+      </button>
+
+      <!-- 4. Search Toggle -->
+      <button class="bottom-tab-btn" id="nav-search" onclick="toggleSearch()">
+        <div class="tab-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <span>Search</span>
+      </button>
+
+      <!-- 5. More / Admin -->
+      <button class="bottom-tab-btn" id="nav-more" onclick="promptAdminLogin()">
+        <div class="tab-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="1.5"></circle>
+            <circle cx="19" cy="12" r="1.5"></circle>
+            <circle cx="5" cy="12" r="1.5"></circle>
+          </svg>
+        </div>
+        <span id="nav-more-label">More</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ========================================================
+       ADMIN MODALS
+       ======================================================== -->
+  <!-- Admin Passcode Modal -->
+  <div id="adminLoginModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3>Admin Access</h3>
+      <p class="sub">Enter Admin Master Passcode to edit.</p>
+      <div class="form-field">
+        <input type="password" id="adminPassInput" class="form-control" placeholder="Admin Passcode">
+      </div>
+      <div id="adminLoginError" style="color: #dc2626; font-size: 0.8rem; min-height: 18px;"></div>
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeAdminModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="submitAdminLogin()">Verify Admin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ministry Slot Edit Modal -->
+  <div id="editSlotModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 id="editSlotTitle">Edit Slot</h3>
+      <p class="sub" id="editSlotSubtitle">Update companion name or notes.</p>
+      
+      <input type="hidden" id="editSlotIndex">
+
+      <div class="form-field">
+        <label for="editSlotCompanion">Companion Name</label>
+        <input type="text" id="editSlotCompanion" class="form-control" list="publishersDatalist" placeholder="Select or type name">
+        <datalist id="publishersDatalist"></datalist>
+      </div>
+
+      <div class="form-field">
+        <label for="editSlotNote">Notes / Location Details</label>
+        <input type="text" id="editSlotNote" class="form-control" placeholder="e.g. Requested Sunday PM Bahay-bahay">
+      </div>
+
+      <div class="form-field">
+        <label for="editSlotStatus">Status</label>
+        <select id="editSlotStatus" class="form-control">
+          <option value="confirmed">Confirmed</option>
+          <option value="open">Open / Available</option>
+          <option value="shepherd">Shepherding</option>
+          <option value="meeting">Meeting</option>
+        </select>
+      </div>
+
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeEditSlotModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="saveSlotEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Territory Edit Modal -->
+  <div id="editTerritoryModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 id="editTerritoryTitle">Edit Territory</h3>
+      <p class="sub">Update territory details or brother in charge.</p>
+      
+      <input type="hidden" id="editTerritoryIndex">
+
+      <div class="form-field">
+        <label for="editTerritoryArea">Territory Area & No.</label>
+        <input type="text" id="editTerritoryArea" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editTerritoryPlace">Meeting Place</label>
+        <input type="text" id="editTerritoryPlace" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editTerritoryGuide">Territory Guide / In Charge</label>
+        <input type="text" id="editTerritoryGuide" class="form-control" list="brothersDatalist">
+        <datalist id="brothersDatalist"></datalist>
+      </div>
+
+      <div class="form-field">
+        <label for="editTerritoryTime">Gathering Time</label>
+        <input type="text" id="editTerritoryTime" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editTerritoryNotes">Special Notes</label>
+        <input type="text" id="editTerritoryNotes" class="form-control">
+      </div>
+
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeEditTerritoryModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="saveTerritoryEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meeting Edit Modal -->
+  <div id="editMeetingModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 id="editMeetingTitle">Edit Meeting</h3>
+      <p class="sub">Update congregation meeting details.</p>
+      
+      <input type="hidden" id="editMeetingIndex">
+
+      <div class="form-field">
+        <label for="editMeetingTitleInput">Meeting Title</label>
+        <input type="text" id="editMeetingTitleInput" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editMeetingTimeInput">Day & Time</label>
+        <input type="text" id="editMeetingTimeInput" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editMeetingPlaceInput">Meeting Place</label>
+        <input type="text" id="editMeetingPlaceInput" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editMeetingAttendeesInput">Attendees</label>
+        <input type="text" id="editMeetingAttendeesInput" class="form-control">
+      </div>
+
+      <div class="form-field">
+        <label for="editMeetingDescInput">Description / Purpose</label>
+        <input type="text" id="editMeetingDescInput" class="form-control">
+      </div>
+
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeEditMeetingModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="saveMeetingEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       DATA & APPLICATION LOGIC
+       ======================================================== -->
+  <script>
+    /**
+     * PASSCODES:
+     * Viewer: "covisit2026"
+     * Admin:  "admin2026"
+     */
+    const PASSWORD_HASH_VIEWER = "d1744b389285cc622db317f2452ae011bba2477e25dbcd0fe0e4e9753cccb84e";
+    const PASSWORD_HASH_ADMIN  = "6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6";
+    
+    const SESSION_KEY = "sm_covisit_unlocked";
+    const ADMIN_KEY   = "sm_covisit_is_admin";
+    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v1";
+
+    const BROTHERS = [
+      "Amiel Joshua Zoleta", "Arnold Cabrales Jr.", "Arnold Cabrales Sr.", "Arnulfo Sebastian",
+      "Christopher De Guzman", "Emerson Salonga", "Emmanuel Santiago", "Francis Francisco",
+      "Howell Dela Cruz", "Jade Baldovino", "Jemuel Barte", "Jeremy Barte", "Jofferson Roque",
+      "John Michael Sta. Cruz", "John Rey Belerma", "Lino Cahilo", "Michael Angelo Gutierrez",
+      "Paul Richard Acaylar", "Pierre Paulo Sebastian", "Robledo Lazaro", "Samuel Barte",
+      "Vlad Parole", "Zar Pormilos", "Group Overseer / Servant"
+    ];
+
+    const SISTERS = [
+      "Agatha Victoria", "Aija Mae Pormilos", "Ann Mariel Zoleta", "April Rose Cabrales",
+      "Arlene Campita", "Arlene Enriquez", "Aubrey Desiree Aguilar", "Aurora De Leon",
+      "Beth Francisco", "Caridad Salonga", "Catalina Velasco", "Cherry Sebastian",
+      "Connie Cabrales", "Deborah Barte", "Elena Balatbat", "Evangeline Malicsi",
+      "Fercy Sebastian", "Flor De Guzman", "Florisa Sebastian", "Florissa Sebastian",
+      "Francisca A. Sebastian", "Hazel Dela Cruz", "Imelda Dela Cruz", "Jerica Seco",
+      "Joan Victoria", "Jocelyn Aguilar", "Josephina Sebastian", "Joycel Salonga",
+      "Julie Ann Aguilar", "Lani Yuzon", "Leni Dela Cruz", "Lerma Maclang",
+      "Lira Zoleta", "Lizel Sebastian", "Lolita Barcelona", "Lolita Guidoc",
+      "Lorinda Seco (Soco)", "Lucy Cahilo", "Lydia Aguilar", "Mabelle Parole",
+      "Malou Dela Cruz", "Marcia Acaylar", "Mary Jane Santiago", "May Dilloro",
+      "Milca Francisco", "Mishelemiah Baldovino", "Nieves Sebastian", "Noemi Zoleta",
+      "Raquel Coronado", "Vanessa Maclang"
+    ];
+
+    // 1. Ministry Schedule Dataset
+    let SCHEDULE_DATA = [
+      // WEDNESDAY (Sep 16)
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "8:00 - 9:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Arnold Cabrales Sr.",
+        status: "confirmed",
+        note: "Requested Wednesday AM Bahay-bahay"
+      },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "8:00 - 9:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Malou Dela Cruz",
+        status: "confirmed",
+        note: "Requested Wednesday AM Bahay-bahay"
+      },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "9:00 - 10:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Francis Francisco",
+        status: "confirmed",
+        note: "Available Wednesday AM"
+      },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "9:00 - 10:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Flor De Guzman",
+        status: "confirmed",
+        note: "Requested Wed morning (Alt: Vanessa Maclang)"
+      },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "10:00 - 11:00 AM",
+        role: "CO",
+        activity: "RV / Bible Study",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open for Bible Study conduct"
+      },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "10:00 - 11:00 AM",
+        role: "Wife",
+        activity: "RV / Bible Study",
+        companion: "Lydia Aguilar",
+        status: "confirmed",
+        note: "Requested Wed AM RV / Bible Study"
+      },
+
+      // THURSDAY (Sep 17)
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "8:00 - 9:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Francis Francisco",
+        status: "confirmed",
+        note: "Available Thursday AM"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "8:00 - 9:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "May Dilloro",
+        status: "confirmed",
+        note: "Accompanied by Sis Maylen"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "9:00 - 10:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "John Michael Sta. Cruz",
+        status: "confirmed",
+        note: "Available Thursday AM"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "9:00 - 10:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Leni Dela Cruz",
+        status: "confirmed",
+        note: "Available Weekday AM slot"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "10:00 - 11:00 AM",
+        role: "CO",
+        activity: "Shepherding",
+        companion: "Shepherding Call",
+        status: "shepherd",
+        note: "Arranged with Elders"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "10:00 - 11:00 AM",
+        role: "Wife",
+        activity: "RV / Bible Study",
+        companion: "Julie Ann Aguilar",
+        status: "confirmed",
+        note: "Requested Thursday AM RV / Bible Study"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "3:00 - 4:00 PM",
+        role: "CO",
+        activity: "RV / Bible Study",
+        companion: "John Michael Sta. Cruz",
+        status: "confirmed",
+        note: "Requested Thursday PM RV / Bible Study"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "3:00 - 4:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Florissa Sebastian",
+        status: "confirmed",
+        note: "Requested Thursday House to House"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "4:00 - 5:00 PM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "4:00 - 5:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Lerma Maclang",
+        status: "confirmed",
+        note: "Requested Thursday House to House"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "5:00 - 6:00 PM",
+        role: "CO",
+        activity: "Special Meeting",
+        companion: "Pioneers Meeting with C.O.",
+        status: "meeting",
+        note: "Kingdom Hall"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "5:00 - 6:00 PM",
+        role: "Wife",
+        activity: "Special Meeting",
+        companion: "Pioneers Meeting",
+        status: "meeting",
+        note: "Kingdom Hall"
+      },
+
+      // FRIDAY (Sep 18)
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "8:00 - 9:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Arnold Cabrales Sr.",
+        status: "confirmed",
+        note: "Available Friday AM"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "8:00 - 9:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Deborah Barte",
+        status: "confirmed",
+        note: "Requested Friday House to House"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "9:00 - 10:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Francis Francisco",
+        status: "confirmed",
+        note: "Available Friday AM"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "9:00 - 10:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Lorinda Seco (Soco)",
+        status: "confirmed",
+        note: "Requested Friday AM H2H / RV"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "10:00 - 11:00 AM",
+        role: "CO",
+        activity: "RV / Bible Study",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open for Bible Study conduct"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "10:00 - 11:00 AM",
+        role: "Wife",
+        activity: "RV / Bible Study",
+        companion: "Lolita Barcelona",
+        status: "confirmed",
+        note: "Requested Friday RV with CO's wife"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "3:00 - 4:00 PM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "3:00 - 4:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Aija Mae Pormilos",
+        status: "confirmed",
+        note: "Available Friday afternoon"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "4:00 - 5:00 PM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "4:00 - 5:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Open / Available Sister",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "5:30 - 7:30 PM",
+        role: "CO",
+        activity: "Special Meeting",
+        companion: "Elder & MS Meeting with C.O.",
+        status: "meeting",
+        note: "Kingdom Hall"
+      },
+
+      // SATURDAY (Sep 19)
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "8:00 - 9:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Group Overseer / Servant",
+        status: "confirmed",
+        note: "By Group Field Service"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "8:00 - 9:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Cherry Sebastian",
+        status: "confirmed",
+        note: "Requested Saturday morning"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "9:00 - 10:00 AM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "9:00 - 10:00 AM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Noemi Zoleta",
+        status: "confirmed",
+        note: "Requested Saturday morning"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "10:00 - 11:00 AM",
+        role: "CO",
+        activity: "Shepherding",
+        companion: "Shepherding Call",
+        status: "shepherd",
+        note: "Arranged with Elders"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "10:00 - 11:00 AM",
+        role: "Wife",
+        activity: "RV / Bible Study",
+        companion: "Francisca A. Sebastian",
+        status: "confirmed",
+        note: "Bible Study Conduct"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "3:00 - 4:00 PM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "3:00 - 4:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Open / Available Sister",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "4:00 - 5:00 PM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Open / Available Brother",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "4:00 - 5:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Open / Available Sister",
+        status: "open",
+        note: "Open slot for ministry"
+      },
+
+      // SUNDAY (Sep 20)
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "8:00 - 10:00 AM",
+        role: "CO",
+        activity: "Special Meeting",
+        companion: "Weekend Meeting with Public Talk",
+        status: "meeting",
+        note: "Congregation Meeting (Kingdom Hall)"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "8:00 - 10:00 AM",
+        role: "Wife",
+        activity: "Special Meeting",
+        companion: "Weekend Meeting",
+        status: "meeting",
+        note: "Congregation Meeting (Kingdom Hall)"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "3:00 - 4:00 PM",
+        role: "CO",
+        activity: "House to House",
+        companion: "Arnold Cabrales Sr.",
+        status: "confirmed",
+        note: "Requested Sunday PM Bahay-bahay"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "3:00 - 4:00 PM",
+        role: "Wife",
+        activity: "House to House",
+        companion: "Julie Ann Aguilar",
+        status: "confirmed",
+        note: "Requested Sunday PM Bahay-bahay"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "4:00 - 5:00 PM",
+        role: "CO",
+        activity: "RV / Bible Study",
+        companion: "Francis Francisco",
+        status: "confirmed",
+        note: "Requested Sunday PM RV / Bible Study"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "4:00 - 5:00 PM",
+        role: "Wife",
+        activity: "RV / Bible Study",
+        companion: "Marcia Acaylar",
+        status: "confirmed",
+        note: "Sunday PM Study Conduct"
+      }
+    ];
+
+    // 2. Territory Dataset
+    let TERRITORY_DATA = [
+      {
+        day: "Wednesday, Sept 16",
+        time: "8:00 AM",
+        territory: "San Isidro (Territory No. 68 & 69)",
+        meetingPlace: "San Miguel (Bro. Sebastian's Residence)",
+        guide: "Bro. Jeremy Barte",
+        notes: "Gather promptly at 7:45 AM for field service arrangement."
+      },
+      {
+        day: "Thursday, Sept 17",
+        time: "8:00 AM (Morning) & 3:00 PM (Afternoon)",
+        territory: "San Isidro (Territory No. 66 & 67)",
+        meetingPlace: "San Miguel (Bro. Sebastian's Residence)",
+        guide: "Bro. Arnold Cabrales Sr.",
+        notes: "Morning and afternoon field service groups."
+      },
+      {
+        day: "Friday, Sept 18",
+        time: "8:00 AM (Morning) & 3:00 PM (Afternoon)",
+        territory: "Abulalas (Territory No. 50, 51 & 52)",
+        meetingPlace: "San Miguel (Bro. Sebastian's Residence)",
+        guide: "Bro. Pierre Paulo Sebastian",
+        notes: "Prepare return visits and Bible study routes."
+      },
+      {
+        day: "Saturday, Sept 19",
+        time: "8:00 AM (Morning) & 3:00 PM (Afternoon)",
+        territory: "Group Territories & Sto. Niño",
+        meetingPlace: "Kingdom Hall (By Service Group)",
+        guide: "Group Overseers & Assistant Servants",
+        notes: "All groups gather at the Kingdom Hall."
+      },
+      {
+        day: "Sunday, Sept 20",
+        time: "3:00 PM (Afternoon)",
+        territory: "Palapat - Sandoval (Territory No. 33 & 34)",
+        meetingPlace: "San Miguel (Bro. Sebastian's Residence)",
+        guide: "Bro. Samuel Barte",
+        notes: "Final afternoon house-to-house and return visits."
+      }
+    ];
+
+    // 3. Special Meetings Dataset
+    let MEETINGS_DATA = [
+      {
+        title: "Life and Ministry Meeting",
+        dayTime: "Tuesday (Sept 15) • 6:00 PM",
+        place: "Kingdom Hall",
+        attendees: "Entire Congregation",
+        desc: "Service talk and encouraging discourse by the Circuit Overseer."
+      },
+      {
+        title: "Pioneers Meeting with Circuit Overseer",
+        dayTime: "Thursday (Sept 17) • 5:00 PM - 6:00 PM",
+        place: "Kingdom Hall",
+        attendees: "Regular & Special Pioneers",
+        desc: "Special meeting to spiritually refresh and encourage pioneers in their service."
+      },
+      {
+        title: "Elders & Ministerial Servants Meeting",
+        dayTime: "Friday (Sept 18) • 5:30 PM - 7:30 PM",
+        place: "Kingdom Hall",
+        attendees: "Appointed Elders & Servants",
+        desc: "Review of congregation progress and shepherding recommendations."
+      },
+      {
+        title: "Weekend Meeting & Public Talk",
+        dayTime: "Sunday (Sept 20) • 8:00 AM - 10:00 AM",
+        place: "Kingdom Hall",
+        attendees: "Congregation & Public",
+        desc: "Public talk by the Circuit Overseer followed by the Watchtower Study."
+      }
+    ];
+
+    let currentSection = 'ministry';
+    let currentPersona = 'both';
+    let currentDay = 'all';
+    let currentSearch = '';
+    let isSearchOpen = false;
+    let isAdmin = false;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadDraftData();
+      checkAuth();
+      setupDatalists();
+    });
+
+    function setupDatalists() {
+      const bList = document.getElementById("brothersDatalist");
+      bList.innerHTML = BROTHERS.map(b => `<option value="${b}">`).join('');
+    }
+
+    function loadDraftData() {
+      try {
+        const saved = localStorage.getItem(LOCAL_DATA_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.SCHEDULE_DATA) SCHEDULE_DATA = parsed.SCHEDULE_DATA;
+          if (parsed.TERRITORY_DATA) TERRITORY_DATA = parsed.TERRITORY_DATA;
+          if (parsed.MEETINGS_DATA) MEETINGS_DATA = parsed.MEETINGS_DATA;
+        }
+      } catch (e) {}
+    }
+
+    function persistDraftData() {
+      try {
+        localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify({
+          SCHEDULE_DATA,
+          TERRITORY_DATA,
+          MEETINGS_DATA
+        }));
+      } catch (e) {}
+    }
+
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message.trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function handleUnlock(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById("passcodeInput").value;
+      const feedback = document.getElementById("lockFeedback");
+      const remember = document.getElementById("rememberMe").checked;
+
+      feedback.textContent = "";
+      const hash = await sha256(input);
+
+      if (hash === PASSWORD_HASH_ADMIN) {
+        isAdmin = true;
+        setAuthStorage(remember, true);
+        showApp();
+      } else if (hash === PASSWORD_HASH_VIEWER) {
+        isAdmin = false;
+        setAuthStorage(remember, false);
+        showApp();
+      } else {
+        feedback.textContent = "Incorrect passcode.";
+        document.getElementById("passcodeInput").value = "";
+        document.getElementById("passcodeInput").focus();
+      }
+    }
+
+    function setAuthStorage(remember, isUserAdmin) {
+      const storage = remember ? localStorage : sessionStorage;
+      storage.setItem(SESSION_KEY, "true");
+      storage.setItem(ADMIN_KEY, isUserAdmin ? "true" : "false");
+    }
+
+    function checkAuth() {
+      const hasAuth = localStorage.getItem(SESSION_KEY) === "true" || sessionStorage.getItem(SESSION_KEY) === "true";
+      if (hasAuth) {
+        isAdmin = localStorage.getItem(ADMIN_KEY) === "true" || sessionStorage.getItem(ADMIN_KEY) === "true";
+        showApp();
+      }
+    }
+
+    function showApp() {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("appContent").style.display = "block";
+      updateAdminUI();
+      renderSchedule();
+      renderTerritories();
+      renderMeetings();
+    }
+
+    function updateAdminUI() {
+      const banner = document.getElementById("adminBanner");
+      const moreLabel = document.getElementById("nav-more-label");
+      const moreBtn = document.getElementById("nav-more");
+
+      if (isAdmin) {
+        banner.style.display = "flex";
+        moreLabel.textContent = "Admin";
+        moreBtn.classList.add("admin-on");
+      } else {
+        banner.style.display = "none";
+        moreLabel.textContent = "More";
+        moreBtn.classList.remove("admin-on");
+      }
+    }
+
+    function lockApp() {
+      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
+      localStorage.removeItem(ADMIN_KEY);
+      sessionStorage.removeItem(ADMIN_KEY);
+      isAdmin = false;
+      document.getElementById("appContent").style.display = "none";
+      document.getElementById("lockScreen").style.display = "flex";
+      document.getElementById("passcodeInput").value = "";
+      document.getElementById("lockFeedback").textContent = "";
+    }
+
+    function promptAdminLogin() {
+      if (isAdmin) {
+        if (confirm("You are currently in Admin Mode. Would you like to exit to publisher view?")) {
+          exitAdmin();
+        }
+        return;
+      }
+      document.getElementById("adminPassInput").value = "";
+      document.getElementById("adminLoginError").textContent = "";
+      document.getElementById("adminLoginModal").style.display = "flex";
+      setTimeout(() => document.getElementById("adminPassInput").focus(), 100);
+    }
+
+    function closeAdminModal() {
+      document.getElementById("adminLoginModal").style.display = "none";
+    }
+
+    async function submitAdminLogin() {
+      const input = document.getElementById("adminPassInput").value;
+      const errorDiv = document.getElementById("adminLoginError");
+      const hash = await sha256(input);
+
+      if (hash === PASSWORD_HASH_ADMIN) {
+        isAdmin = true;
+        localStorage.setItem(ADMIN_KEY, "true");
+        closeAdminModal();
+        updateAdminUI();
+        renderSchedule();
+        renderTerritories();
+        renderMeetings();
+      } else {
+        errorDiv.textContent = "Incorrect Admin Passcode.";
+      }
+    }
+
+    function exitAdmin() {
+      isAdmin = false;
+      localStorage.setItem(ADMIN_KEY, "false");
+      sessionStorage.setItem(ADMIN_KEY, "false");
+      updateAdminUI();
+      renderSchedule();
+      renderTerritories();
+      renderMeetings();
+    }
+
+    function switchSection(sec) {
+      currentSection = sec;
+      document.getElementById("ministrySection").style.display = sec === 'ministry' ? 'block' : 'none';
+      document.getElementById("territorySection").style.display = sec === 'territory' ? 'block' : 'none';
+      document.getElementById("meetingsSection").style.display = sec === 'meetings' ? 'block' : 'none';
+
+      document.querySelectorAll(".bottom-tab-btn").forEach(b => {
+        if (b.id !== 'nav-search' && b.id !== 'nav-more') {
+          b.classList.remove("active");
+        }
+      });
+
+      if (sec === 'ministry') document.getElementById("nav-schedule").classList.add("active");
+      if (sec === 'territory') document.getElementById("nav-territories").classList.add("active");
+      if (sec === 'meetings') document.getElementById("nav-meetings").classList.add("active");
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSearch(forceState) {
+      const drawer = document.getElementById("searchDrawer");
+      const searchBtn = document.getElementById("nav-search");
+      
+      if (typeof forceState === 'boolean') {
+        isSearchOpen = forceState;
+      } else {
+        isSearchOpen = !isSearchOpen;
+      }
+
+      if (isSearchOpen) {
+        drawer.style.display = "block";
+        searchBtn.classList.add("active");
+        document.getElementById("searchInput").focus();
+      } else {
+        drawer.style.display = "none";
+        searchBtn.classList.remove("active");
+        document.getElementById("searchInput").value = "";
+        currentSearch = "";
+        renderSchedule();
+        renderTerritories();
+        renderMeetings();
+      }
+    }
+
+    function handleSearch() {
+      currentSearch = document.getElementById("searchInput").value.toLowerCase().trim();
+      renderSchedule();
+      renderTerritories();
+      renderMeetings();
+    }
+
+    function filterPersona(p) {
+      currentPersona = p;
+      document.querySelectorAll(".role-pill").forEach(btn => btn.classList.remove("active"));
+      if (p === 'both') document.getElementById("pill-both").classList.add("active");
+      if (p === 'CO') document.getElementById("pill-co").classList.add("active");
+      if (p === 'Wife') document.getElementById("pill-wife").classList.add("active");
+      renderSchedule();
+    }
+
+    function filterDay(d) {
+      currentDay = d;
+      document.querySelectorAll(".day-pill").forEach(chip => chip.classList.remove("active"));
+      document.getElementById("day-" + d).classList.add("active");
+      renderSchedule();
+    }
+
+    // Render Ministry Schedule (Exact Match to Reference UI)
+    function renderSchedule() {
+      const container = document.getElementById("scheduleContainer");
+      container.innerHTML = "";
+
+      let filtered = SCHEDULE_DATA.filter((item, index) => {
+        item._originalIndex = index;
+        if (currentPersona !== 'both' && item.role !== currentPersona) return false;
+        if (currentDay !== 'all' && item.dayKey !== currentDay) return false;
+        if (currentSearch) {
+          const matchText = (item.companion + " " + item.activity + " " + item.dayLabel + " " + item.note).toLowerCase();
+          if (!matchText.includes(currentSearch)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem;">No ministry activities found.</div>`;
+        return;
+      }
+
+      const days = [...new Set(filtered.map(i => i.dayLabel))];
+
+      days.forEach(dayName => {
+        const itemsForDay = filtered.filter(i => i.dayLabel === dayName);
+        const fullDateStr = itemsForDay[0].fullDate || dayName;
+
+        // Date Group Header Box
+        const groupHeader = document.createElement("div");
+        groupHeader.className = "date-group-card";
+        groupHeader.innerHTML = `
+          <div class="cal-icon-box">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+              <circle cx="8" cy="14" r="1.2" fill="currentColor"></circle>
+              <circle cx="12" cy="14" r="1.2" fill="currentColor"></circle>
+              <circle cx="16" cy="14" r="1.2" fill="currentColor"></circle>
+              <circle cx="8" cy="18" r="1.2" fill="currentColor"></circle>
+              <circle cx="12" cy="18" r="1.2" fill="currentColor"></circle>
+              <circle cx="16" cy="18" r="1.2" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <div class="date-group-info">
+            <div class="date-group-day-label">${dayName}</div>
+            <div class="date-group-date-title">${fullDateStr}</div>
+          </div>
+          <div class="date-group-slot-count">${itemsForDay.length} slots</div>
+        `;
+        container.appendChild(groupHeader);
+
+        // Schedule Cards
+        itemsForDay.forEach(item => {
+          const card = document.createElement("div");
+          card.className = `schedule-card ${isAdmin ? 'is-clickable' : ''}`;
+          if (isAdmin) {
+            card.onclick = () => openEditSlotModal(item._originalIndex);
+          }
+
+          // Indicator color strip logic
+          let indicatorClass = "co-green";
+          if (item.role === "Wife") {
+            indicatorClass = "wife-purple";
+          } else if (item.activity.includes("Special Meeting") || item.activity.includes("Weekend")) {
+            indicatorClass = "co-blue";
+          }
+
+          // Subtext icon (pin for meeting/Kingdom Hall, home for house to house, book for study)
+          let subIconSvg = `
+            <svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          `;
+          if (item.note.includes("Kingdom Hall") || item.activity.includes("Meeting")) {
+            subIconSvg = `
+              <svg viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            `;
+          }
+
+          const roleBadgeClass = item.role === "CO" ? "badge-role-co" : "badge-role-wife";
+          const roleBadgeText = item.role === "CO" ? "CO" : "CO's Wife";
+
+          card.innerHTML = `
+            <div class="indicator-strip ${indicatorClass}"></div>
+            <div class="card-body-content">
+              <!-- Top Row: Time + Badges -->
+              <div class="card-top-header">
+                <div class="time-chip-group">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>${item.time}</span>
+                </div>
+                <div class="badge-group">
+                  <span class="${roleBadgeClass}">${roleBadgeText}</span>
+                  <span class="badge-activity">${item.activity}</span>
+                </div>
+              </div>
+
+              <!-- Main Title Row + Chevron -->
+              <div class="card-title-row">
+                <span class="card-person-name">${item.companion}</span>
+                <svg class="chevron-icon" viewBox="0 0 24 24">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+
+              <!-- Subtext Row -->
+              <div class="card-subtext-row">
+                ${subIconSvg}
+                <span>${item.note || item.activity}</span>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      });
+    }
+
+    // Render Territory Section
+    function renderTerritories() {
+      const container = document.getElementById("territoryContainer");
+      container.innerHTML = "";
+
+      let list = TERRITORY_DATA.map((t, idx) => ({ ...t, _idx: idx }));
+      if (currentSearch) {
+        list = list.filter(t => (t.day + " " + t.territory + " " + t.guide + " " + t.meetingPlace).toLowerCase().includes(currentSearch));
+      }
+
+      list.forEach(t => {
+        const card = document.createElement("div");
+        card.className = "territory-card";
+        if (isAdmin) {
+          card.style.cursor = "pointer";
+          card.onclick = () => openEditTerritoryModal(t._idx);
+        }
+
+        card.innerHTML = `
+          <div class="territory-top">
+            <span class="territory-day-title">${t.day}</span>
+            <span class="territory-time-badge">${t.time}</span>
+          </div>
+          <div class="territory-info-grid">
+            <div class="info-line">
+              <span class="info-label">Territory Area:</span>
+              <span class="info-val">${t.territory}</span>
+            </div>
+            <div class="info-line">
+              <span class="info-label">Meeting Place:</span>
+              <span class="info-val">${t.meetingPlace}</span>
+            </div>
+            <div class="info-line">
+              <span class="info-label">In Charge / Guide:</span>
+              <span class="info-val guide-name">${t.guide}</span>
+            </div>
+            ${t.notes ? `
+            <div class="info-line">
+              <span class="info-label">Notes:</span>
+              <span style="color: var(--text-muted); font-size: 0.82rem;">${t.notes}</span>
+            </div>` : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render Meetings Section
+    function renderMeetings() {
+      const container = document.getElementById("meetingsContainer");
+      container.innerHTML = "";
+
+      let list = MEETINGS_DATA.map((m, idx) => ({ ...m, _idx: idx }));
+      if (currentSearch) {
+        list = list.filter(m => (m.title + " " + m.dayTime + " " + m.attendees).toLowerCase().includes(currentSearch));
+      }
+
+      list.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "meeting-card";
+        if (isAdmin) {
+          card.style.cursor = "pointer";
+          card.onclick = () => openEditMeetingModal(m._idx);
+        }
+
+        card.innerHTML = `
+          <div class="meeting-header-row">
+            <h3>${m.title}</h3>
+            ${isAdmin ? `<span style="font-size:0.72rem; color:var(--brand-green); font-weight:700;">Edit</span>` : ''}
+          </div>
+          <p class="time-line">📅 ${m.dayTime} • ${m.place}</p>
+          <p class="desc-line">${m.desc} (Attendees: ${m.attendees})</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Modal Handlers
+    function openEditSlotModal(index) {
+      if (!isAdmin) return;
+      const item = SCHEDULE_DATA[index];
+      if (!item) return;
+
+      document.getElementById("editSlotIndex").value = index;
+      document.getElementById("editSlotTitle").textContent = `${item.dayLabel} • ${item.time}`;
+      document.getElementById("editSlotSubtitle").textContent = `${item.role === 'CO' ? 'Circuit Overseer' : "CO's Wife"} • ${item.activity}`;
+      document.getElementById("editSlotCompanion").value = item.companion;
+      document.getElementById("editSlotNote").value = item.note || "";
+      document.getElementById("editSlotStatus").value = item.status || "confirmed";
+
+      const dl = document.getElementById("publishersDatalist");
+      const list = item.role === "CO" ? BROTHERS : SISTERS;
+      dl.innerHTML = list.map(name => `<option value="${name}">`).join('');
+
+      document.getElementById("editSlotModal").style.display = "flex";
+      setTimeout(() => document.getElementById("editSlotCompanion").focus(), 100);
+    }
+
+    function closeEditSlotModal() {
+      document.getElementById("editSlotModal").style.display = "none";
+    }
+
+    function saveSlotEdit() {
+      const index = parseInt(document.getElementById("editSlotIndex").value, 10);
+      if (isNaN(index) || !SCHEDULE_DATA[index]) return;
+
+      SCHEDULE_DATA[index].companion = document.getElementById("editSlotCompanion").value.trim() || "Open / Available";
+      SCHEDULE_DATA[index].note = document.getElementById("editSlotNote").value.trim();
+      SCHEDULE_DATA[index].status = document.getElementById("editSlotStatus").value;
+
+      persistDraftData();
+      closeEditSlotModal();
+      renderSchedule();
+    }
+
+    function openEditTerritoryModal(index) {
+      if (!isAdmin) return;
+      const t = TERRITORY_DATA[index];
+      if (!t) return;
+
+      document.getElementById("editTerritoryIndex").value = index;
+      document.getElementById("editTerritoryTitle").textContent = `Edit: ${t.day}`;
+      document.getElementById("editTerritoryArea").value = t.territory;
+      document.getElementById("editTerritoryPlace").value = t.meetingPlace;
+      document.getElementById("editTerritoryGuide").value = t.guide;
+      document.getElementById("editTerritoryTime").value = t.time;
+      document.getElementById("editTerritoryNotes").value = t.notes || "";
+
+      document.getElementById("editTerritoryModal").style.display = "flex";
+      setTimeout(() => document.getElementById("editTerritoryArea").focus(), 100);
+    }
+
+    function closeEditTerritoryModal() {
+      document.getElementById("editTerritoryModal").style.display = "none";
+    }
+
+    function saveTerritoryEdit() {
+      const index = parseInt(document.getElementById("editTerritoryIndex").value, 10);
+      if (isNaN(index) || !TERRITORY_DATA[index]) return;
+
+      TERRITORY_DATA[index].territory = document.getElementById("editTerritoryArea").value.trim();
+      TERRITORY_DATA[index].meetingPlace = document.getElementById("editTerritoryPlace").value.trim();
+      TERRITORY_DATA[index].guide = document.getElementById("editTerritoryGuide").value.trim();
+      TERRITORY_DATA[index].time = document.getElementById("editTerritoryTime").value.trim();
+      TERRITORY_DATA[index].notes = document.getElementById("editTerritoryNotes").value.trim();
+
+      persistDraftData();
+      closeEditTerritoryModal();
+      renderTerritories();
+    }
+
+    function openEditMeetingModal(index) {
+      if (!isAdmin) return;
+      const m = MEETINGS_DATA[index];
+      if (!m) return;
+
+      document.getElementById("editMeetingIndex").value = index;
+      document.getElementById("editMeetingTitle").textContent = `Edit: ${m.title}`;
+      document.getElementById("editMeetingTitleInput").value = m.title;
+      document.getElementById("editMeetingTimeInput").value = m.dayTime;
+      document.getElementById("editMeetingPlaceInput").value = m.place;
+      document.getElementById("editMeetingAttendeesInput").value = m.attendees;
+      document.getElementById("editMeetingDescInput").value = m.desc;
+
+      document.getElementById("editMeetingModal").style.display = "flex";
+      setTimeout(() => document.getElementById("editMeetingTitleInput").focus(), 100);
+    }
+
+    function closeEditMeetingModal() {
+      document.getElementById("editMeetingModal").style.display = "none";
+    }
+
+    function saveMeetingEdit() {
+      const index = parseInt(document.getElementById("editMeetingIndex").value, 10);
+      if (isNaN(index) || !MEETINGS_DATA[index]) return;
+
+      MEETINGS_DATA[index].title = document.getElementById("editMeetingTitleInput").value.trim();
+      MEETINGS_DATA[index].dayTime = document.getElementById("editMeetingTimeInput").value.trim();
+      MEETINGS_DATA[index].place = document.getElementById("editMeetingPlaceInput").value.trim();
+      MEETINGS_DATA[index].attendees = document.getElementById("editMeetingAttendeesInput").value.trim();
+      MEETINGS_DATA[index].desc = document.getElementById("editMeetingDescInput").value.trim();
+
+      persistDraftData();
+      closeEditMeetingModal();
+      renderMeetings();
+    }
+
+    function downloadUpdatedFile() {
+      if (!isAdmin) return;
+
+      let html = document.documentElement.outerHTML;
+
+      const schedRegex = /let\s+SCHEDULE_DATA\s*=\s*\[[\s\S]*?\];/;
+      const newSchedStr = `let SCHEDULE_DATA = ${JSON.stringify(SCHEDULE_DATA, null, 2)};`;
+      html = html.replace(schedRegex, newSchedStr);
+
+      const terrRegex = /let\s+TERRITORY_DATA\s*=\s*\[[\s\S]*?\];/;
+      const newTerrStr = `let TERRITORY_DATA = ${JSON.stringify(TERRITORY_DATA, null, 2)};`;
+      html = html.replace(terrRegex, newTerrStr);
+
+      const meetRegex = /let\s+MEETINGS_DATA\s*=\s*\[[\s\S]*?\];/;
+      const newMeetStr = `let MEETINGS_DATA = ${JSON.stringify(MEETINGS_DATA, null, 2)};`;
+      html = html.replace(meetRegex, newMeetStr);
+
+      const fullDoc = "<!DOCTYPE html>\n<html lang=\"en\">\n" + html.substring(html.indexOf("<head>"));
+
+      const blob = new Blob([fullDoc], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "index.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      alert("Updated 'index.html' downloaded! You can now commit or upload this file to your GitHub repository.");
+    }
+  </script>
+</body>
+</html>
