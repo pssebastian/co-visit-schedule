@@ -7,17 +7,6 @@ This repository hosts the mobile-first Circuit Overseer Visit Schedule applicati
 
 ---
 
-## 🔑 Passcodes
-
-| Access Level | Passcode | Description |
-| :--- | :--- | :--- |
-| **Publishers / Congregation** | `covisit2026` | Read-only access. Full mobile-friendly view of ministry slots, territories, and congregation meetings. |
-| **Admin** | `admin2026` | Full edit access. Enables in-app editing of any ministry slot, territory guide/location, or meeting details with 1-click `Export index.html` download. |
-
-*Tip: You can type `admin2026` directly into the passcode box on the lock screen to enter Admin Mode immediately.*
-
----
-
 ## 📱 Features
 
 - **Mobile-First Design**: Tailored for smartphones with bottom navigation, responsive day filters, role pills (`All`, `Circuit Overseer`, `CO's Wife`), and search drawer.
