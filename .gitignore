@@ -3,6 +3,7 @@
 *.xls
 *.json
 *.csv
+*.txt
 
 # Screenshots and Media
 *.jpg

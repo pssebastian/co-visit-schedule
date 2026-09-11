@@ -34,12 +34,16 @@
       --indicator-co-green: #2e7d5a;
       --indicator-co-blue: #2563eb;
       --indicator-wife-purple: #8b5cf6;
+      --indicator-meal-amber: #f59e0b;
       
       --co-badge-bg: #e0f2fe;
       --co-badge-text: #0284c7;
       
       --wife-badge-bg: #f3e8ff;
       --wife-badge-text: #7e22ce;
+
+      --meal-badge-bg: #fef3c7;
+      --meal-badge-text: #b45309;
       
       --activity-badge-bg: #eef3ef;
       --activity-badge-text: #475569;
@@ -70,7 +74,7 @@
     }
 
     /* ========================================================
-       LOCK SCREEN (Matches Reference Theme, No Leaf)
+       LOCK SCREEN
        ======================================================== */
     #lockScreen {
       position: fixed;
@@ -176,7 +180,7 @@
     }
 
     /* ========================================================
-       MAIN APP CONTAINER
+       MAIN APP CONTAINER & STICKY HEADER
        ======================================================== */
     #appContent {
       display: none;
@@ -188,20 +192,32 @@
       position: relative;
     }
 
+    /* Sticky Header Wrapper: Contains Admin Banner, Header, Search Drawer, and Filters */
+    #stickyHeaderArea {
+      position: sticky;
+      top: 0;
+      z-index: 400;
+      background: var(--bg-page);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
     /* Admin Toolbar */
     #adminBanner {
       display: none;
       background: #fef3c7;
       border-bottom: 1px solid #fde68a;
       color: #92400e;
-      padding: 8px 16px;
+      padding: 8px 18px;
       font-size: 0.8rem;
       font-weight: 700;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 300;
+    }
+
+    .admin-btns {
+      display: flex;
+      gap: 8px;
     }
 
     .btn-admin-pill {
@@ -215,10 +231,10 @@
       cursor: pointer;
     }
 
-    /* Site Header (NO LEAF LOGO, NO TABS, NO TOP SEARCH/HAMBURGER) */
+    /* Site Header */
     header.site-header {
-      background: var(--bg-page);
-      padding: 20px 18px 10px 18px;
+      background: transparent;
+      padding: 16px 18px 10px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -232,30 +248,61 @@
     }
 
     .header-text-group h1 {
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text-main);
     }
 
-    .btn-quick-lock {
-      background: var(--surface-white);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-pill);
-      padding: 6px 12px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    .header-icon-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* Search Dropdown Drawer (Toggled from bottom nav) */
+    .btn-icon-header {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: all 0.15s ease;
+    }
+
+    .btn-icon-header:hover {
+      color: var(--text-main);
+      border-color: var(--brand-green);
+      transform: translateY(-1px);
+    }
+
+    .btn-icon-header svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-icon-header.admin-active {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #b45309;
+    }
+
+    /* Search Dropdown Drawer */
     #searchDrawer {
       display: none;
       background: var(--surface-white);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 12px 18px;
+      padding: 10px 18px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.04);
       animation: slideDown 0.16s ease-out;
     }
@@ -270,7 +317,7 @@
       align-items: center;
       background: #edf2ee;
       border-radius: var(--radius-md);
-      padding: 10px 14px;
+      padding: 9px 14px;
       gap: 10px;
     }
 
@@ -286,7 +333,7 @@
       flex: 1;
       border: none;
       background: transparent;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-main);
       outline: none;
     }
@@ -305,77 +352,132 @@
       padding-left: 6px;
     }
 
+    /* Single-line Filter Wrapper in Sticky Header */
+    #scheduleFilterWrapper {
+      padding: 0 18px 12px 18px;
+    }
+
+    .single-line-filters {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .filter-select-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #eef3ef;
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 0 10px;
+      min-height: 40px;
+      transition: all 0.15s ease;
+    }
+
+    .filter-select-group:focus-within {
+      background: #ffffff;
+      border-color: var(--brand-green);
+      box-shadow: 0 0 0 2px rgba(38, 83, 67, 0.12);
+    }
+
+    .filter-group-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-right: 6px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .filter-group-label svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--text-muted);
+    }
+
+    .filter-dropdown {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+      padding: 8px 0;
+      width: 100%;
+    }
+
+    /* Responsive text labels: <400px abbreviations */
+    .lbl-short {
+      display: none;
+    }
+    .lbl-full {
+      display: inline;
+    }
+
+    @media (max-width: 399.98px) {
+      .lbl-full {
+        display: none !important;
+      }
+      .lbl-short {
+        display: inline !important;
+      }
+      header.site-header h1 {
+        font-size: 1.35rem;
+      }
+      .single-line-filters {
+        gap: 6px;
+      }
+      .filter-select-group {
+        padding: 0 6px;
+      }
+      .filter-dropdown {
+        font-size: 0.82rem;
+      }
+    }
+
     /* Main Scrollable Content Area */
     main.content-area {
-      padding: 8px 18px;
+      padding: 12px 18px 24px 18px;
     }
 
-    /* ========================================================
-       PILL FILTERS (Exact Match to Reference UI)
-       ======================================================== */
-    .filter-wrapper {
-      margin-bottom: 16px;
+    /* Admin Action Bars inside sections */
+    .admin-tab-bar {
+      margin-bottom: 12px;
     }
 
-    /* Role Pill Bar */
-    .role-filter-bar {
+    .btn-admin-add {
       display: flex;
+      align-items: center;
+      justify-content: center;
       gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .role-pill {
-      flex: 1;
-      background: #eef3ef;
-      color: #334155;
-      border: none;
-      border-radius: var(--radius-pill);
-      padding: 10px 12px;
+      width: 100%;
+      background: var(--surface-white);
+      border: 1.5px dashed var(--brand-green);
+      color: var(--brand-green);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
       font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s ease;
-    }
-
-    .role-pill.active {
-      background: var(--brand-green);
-      color: #ffffff;
       font-weight: 700;
-    }
-
-    /* Day Scroll Bar */
-    .days-scroll-bar {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding: 2px 0 6px 0;
-    }
-    .days-scroll-bar::-webkit-scrollbar { display: none; }
-
-    .day-pill {
-      flex: 0 0 auto;
-      background: #eef3ef;
-      color: #334155;
-      border: none;
-      border-radius: var(--radius-pill);
-      padding: 8px 16px;
-      font-size: 0.84rem;
-      font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
-      white-space: nowrap;
     }
 
-    .day-pill.active {
-      background: var(--brand-green);
-      color: #ffffff;
-      font-weight: 700;
+    .btn-admin-add:hover {
+      background: #eef5f0;
+      border-color: var(--brand-green-hover);
     }
 
     /* ========================================================
-       DATE GROUP HEADER (Calendar Icon Box + Big Date Title)
+       DATE GROUP HEADER
        ======================================================== */
     .date-group-card {
       background: #eaf1ec;
@@ -388,7 +490,7 @@
     }
 
     .date-group-card:first-child {
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .cal-icon-box {
@@ -436,7 +538,7 @@
     }
 
     /* ========================================================
-       MINISTRY SCHEDULE CARD (Exact Match to Reference UI)
+       MINISTRY SCHEDULE CARD
        ======================================================== */
     .schedule-card {
       background: var(--surface-white);
@@ -459,7 +561,6 @@
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     }
 
-    /* Left Indicator Bar */
     .indicator-strip {
       width: 4px;
       border-radius: 4px;
@@ -470,6 +571,7 @@
     .indicator-strip.co-blue { background-color: var(--indicator-co-blue); }
     .indicator-strip.co-green { background-color: var(--indicator-co-green); }
     .indicator-strip.wife-purple { background-color: var(--indicator-wife-purple); }
+    .indicator-strip.meal-amber { background-color: var(--indicator-meal-amber); }
 
     .card-body-content {
       flex: 1;
@@ -478,7 +580,6 @@
       gap: 6px;
     }
 
-    /* Card Top Header: Time + Badges */
     .card-top-header {
       display: flex;
       align-items: center;
@@ -536,7 +637,12 @@
       border-radius: var(--radius-pill);
     }
 
-    /* Card Title Row + Chevron */
+    .badge-activity.badge-meal {
+      background: var(--meal-badge-bg);
+      color: var(--meal-badge-text);
+      font-weight: 700;
+    }
+
     .card-title-row {
       display: flex;
       align-items: center;
@@ -545,7 +651,7 @@
     }
 
     .card-person-name {
-      font-size: 1.06rem;
+      font-size: 1.04rem;
       font-weight: 700;
       color: var(--text-main);
       letter-spacing: -0.01em;
@@ -561,7 +667,6 @@
       fill: none;
     }
 
-    /* Card Subtext with Pin or Home Icon */
     .card-subtext-row {
       display: flex;
       align-items: center;
@@ -679,7 +784,7 @@
     }
 
     /* ========================================================
-       BOTTOM NAVIGATION (Matches Reference UI Style)
+       BOTTOM NAVIGATION (With Print button beside Search)
        ======================================================== */
     nav.bottom-bar {
       position: fixed;
@@ -695,7 +800,7 @@
       justify-content: space-around;
       max-width: 540px;
       margin: 0 auto;
-      padding: 0 10px;
+      padding: 0 6px;
     }
 
     .bottom-tab-btn {
@@ -739,7 +844,6 @@
       letter-spacing: -0.01em;
     }
 
-    /* Active Tab: soft mint pill background behind icon + brand green */
     .bottom-tab-btn.active {
       color: var(--brand-green);
     }
@@ -754,21 +858,19 @@
       color: var(--brand-green);
     }
 
-    .bottom-tab-btn.admin-on {
-      color: #b45309;
-    }
-
-    /* Modals (Minimal Clean) */
+    /* ========================================================
+       MODALS (Clean & Accessible)
+       ======================================================== */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.4);
+      background: rgba(15, 23, 42, 0.45);
       backdrop-filter: blur(4px);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
 
     .modal-box {
@@ -776,7 +878,9 @@
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-card);
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
+      max-height: 90vh;
+      overflow-y: auto;
       padding: 22px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       animation: modalPop 0.18s ease-out;
@@ -788,7 +892,7 @@
     }
 
     .modal-box h3 {
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--text-main);
       margin-bottom: 2px;
@@ -849,6 +953,10 @@
       cursor: pointer;
     }
 
+    .btn-save-primary:hover {
+      background: var(--brand-green-hover);
+    }
+
     .btn-cancel-secondary {
       background: none;
       border: 1px solid var(--border-card);
@@ -860,19 +968,223 @@
       cursor: pointer;
     }
 
-    /* Print */
+    .btn-delete-danger {
+      background: #fee2e2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-delete-danger:hover {
+      background: #fecaca;
+      color: #b91c1c;
+    }
+
+    /* Print Preview Modal Specific */
+    .print-modal-box {
+      max-width: 820px;
+      width: 100%;
+      padding: 18px;
+      background: #ffffff;
+    }
+
+    .print-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .print-preview-container {
+      max-height: 75vh;
+      overflow-y: auto;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    /* ========================================================
+       SINGLE-PAGE PRINTABLE BULLETIN TEMPLATE STYLES
+       ======================================================== */
+    #printableSheet {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #000;
+      background: #fff;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 8pt;
+      line-height: 1.22;
+    }
+
+    .print-title-box {
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .print-main-title {
+      font-size: 10.5pt;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    .print-sub-title {
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #333;
+    }
+
+    table.print-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+    }
+
+    table.print-table th, table.print-table td {
+      border: 1px solid #374151;
+      padding: 3px 4px;
+      font-size: 7.5pt;
+      vertical-align: middle;
+    }
+
+    table.print-table th {
+      background: #374151;
+      color: #ffffff;
+      font-weight: 700;
+      text-align: center;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    table.print-table th.sub-th {
+      background: #4b5563;
+      font-size: 7.2pt;
+    }
+
+    table.print-table td.center {
+      text-align: center;
+    }
+
+    table.print-table td.bold {
+      font-weight: 700;
+    }
+
+    .print-table-hospitality th {
+      background: #374151;
+    }
+
+    /* ========================================================
+       PRINT MEDIA QUERY (Strictly 1 Page, 0 Blank/Missing Pages Ahead)
+       ======================================================== */
     @media print {
-      #lockScreen, #adminBanner, header.site-header, nav.bottom-bar, #searchDrawer { display: none !important; }
-      #appContent { display: block !important; max-width: 100% !important; padding-bottom: 0 !important; }
-      body { background: #fff !important; color: #000 !important; }
-      .schedule-card, .territory-card, .meeting-card { border-color: #ccc !important; break-inside: avoid; }
+      @page {
+        size: portrait;
+        margin: 5mm 6mm;
+      }
+
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+        color: #000 !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+
+      /* Explicitly hide the lock screen, main app, search drawer, header, and all non-print modals */
+      #lockScreen,
+      #appContent,
+      #adminBanner,
+      header.site-header,
+      nav.bottom-bar,
+      #searchDrawer,
+      .print-modal-header,
+      .btn-cancel-secondary,
+      .btn-save-primary,
+      .modal-backdrop:not(#printModal) {
+        display: none !important;
+      }
+
+      /* Ensure print modal itself resets to natural flow without absolute centering or blank offset */
+      #printModal {
+        display: block !important;
+        position: static !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+      }
+
+      .modal-box.print-modal-box {
+        display: block !important;
+        position: static !important;
+        border: none !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        background: transparent !important;
+      }
+
+      .print-preview-container {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      #printableSheet {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      table.print-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 5px !important;
+      }
+
+      table.print-table th, table.print-table td {
+        border: 1px solid #374151 !important;
+        padding: 2.2px 3.5px !important;
+        font-size: 7.2pt !important;
+        color: #000 !important;
+      }
+
+      table.print-table th {
+        background: #374151 !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
     }
   </style>
 </head>
 <body>
 
   <!-- ========================================================
-       LOCK SCREEN (No Leaf Logo)
+       LOCK SCREEN
        ======================================================== -->
   <div id="lockScreen">
     <div class="lock-box">
@@ -907,80 +1219,143 @@
        MAIN APP
        ======================================================== -->
   <div id="appContent">
-    <!-- Admin Edit Mode Sticky Banner -->
-    <div id="adminBanner">
-      <span>Admin Edit Mode Active</span>
-      <div class="admin-btns">
-        <button class="btn-admin-pill" onclick="downloadUpdatedFile()">Export index.html</button>
-        <button class="btn-admin-pill" onclick="exitAdmin()">Exit</button>
+    
+    <!-- STICKY TOP CONTAINER (Header, Admin Bar, Search Drawer, Single-Line Filters) -->
+    <div id="stickyHeaderArea">
+      <!-- Admin Edit Mode Sticky Banner -->
+      <div id="adminBanner">
+        <span>Admin Edit Mode Active</span>
+        <div class="admin-btns">
+          <button class="btn-admin-pill" onclick="downloadUpdatedFile()">Export index.html</button>
+          <button class="btn-admin-pill" onclick="exitAdmin()">Exit</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Header (NO LEAF LOGO, NO TABS, NO TOP SEARCH/HAMBURGER) -->
-    <header class="site-header">
-      <div class="header-text-group">
-        <p class="sub-header">San Miguel Congregation</p>
-        <h1>CO Visit Schedule</h1>
+      <!-- Site Header -->
+      <header class="site-header">
+        <div class="header-text-group">
+          <p class="sub-header">San Miguel Congregation</p>
+          <h1 id="siteHeaderTitle">CO Visit Schedule</h1>
+        </div>
+        <div class="header-icon-actions">
+          <!-- Admin Icon Button (beside Lock button) -->
+          <button class="btn-icon-header" id="btnAdminHeader" onclick="promptAdminLogin()" title="Admin Mode" aria-label="Admin Mode">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <circle cx="12" cy="11" r="3"></circle>
+            </svg>
+          </button>
+          <!-- Lock Icon Button -->
+          <button class="btn-icon-header" id="btnLockHeader" onclick="lockApp()" title="Lock App" aria-label="Lock App">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Search Drawer (Toggled from Bottom Nav) -->
+      <div id="searchDrawer">
+        <div class="search-input-box">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Filter by name, meal, activity, or territory..."
+            oninput="handleSearch()"
+          >
+          <button class="btn-search-close" onclick="toggleSearch(false)">Close</button>
+        </div>
       </div>
-      <button class="btn-quick-lock" onclick="lockApp()">Lock</button>
-    </header>
 
-    <!-- Search Bar Drawer (Toggled from Bottom Nav) -->
-    <div id="searchDrawer">
-      <div class="search-input-box">
-        <svg viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input 
-          type="text" 
-          id="searchInput" 
-          placeholder="Filter by name, activity, or territory..."
-          oninput="handleSearch()"
-        >
-        <button class="btn-search-close" onclick="toggleSearch(false)">Close</button>
-      </div>
-    </div>
-
-    <!-- Content Area -->
-    <main class="content-area">
-      <!-- 1. Ministry Section -->
-      <div id="ministrySection">
-        <div class="filter-wrapper">
-          <!-- Role Pills: All, Circuit Overseer, CO's Wife -->
-          <div class="role-filter-bar">
-            <button class="role-pill active" id="pill-both" onclick="filterPersona('both')">All</button>
-            <button class="role-pill" id="pill-co" onclick="filterPersona('CO')">Circuit Overseer</button>
-            <button class="role-pill" id="pill-wife" onclick="filterPersona('Wife')">CO's Wife</button>
+      <!-- Schedule Tab Filters: Compact Single-Line with Role & Date Dropdowns -->
+      <div id="scheduleFilterWrapper">
+        <div class="single-line-filters">
+          <!-- Role Filter Dropdown -->
+          <div class="filter-select-group">
+            <label for="roleFilterSelect" class="filter-group-label" title="Filter by assigned role">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Role:</span>
+            </label>
+            <select id="roleFilterSelect" class="filter-dropdown" onchange="filterPersona(this.value)" aria-label="Filter by role">
+              <option value="both">All</option>
+              <option value="CO">CO</option>
+              <option value="Wife">Wife</option>
+            </select>
           </div>
 
-          <!-- Day Pills: All Days, Wed 16, Thu 17, Fri 18, Sat 19, Sun 20 -->
-          <div class="days-scroll-bar">
-            <button class="day-pill active" id="day-all" onclick="filterDay('all')">All Days</button>
-            <button class="day-pill" id="day-Wed" onclick="filterDay('Wed')">Wed 16</button>
-            <button class="day-pill" id="day-Thu" onclick="filterDay('Thu')">Thu 17</button>
-            <button class="day-pill" id="day-Fri" onclick="filterDay('Fri')">Fri 18</button>
-            <button class="day-pill" id="day-Sat" onclick="filterDay('Sat')">Sat 19</button>
-            <button class="day-pill" id="day-Sun" onclick="filterDay('Sun')">Sun 20</button>
+          <!-- Date Filter Dropdown -->
+          <div class="filter-select-group">
+            <label for="dayFilterSelect" class="filter-group-label" title="Filter by visit date">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>Date:</span>
+            </label>
+            <select id="dayFilterSelect" class="filter-dropdown" onchange="filterDay(this.value)" aria-label="Filter by date">
+              <option value="all">All Dates</option>
+              <option value="Tue15">Tue, Sep 15</option>
+              <option value="Wed">Wed, Sep 16</option>
+              <option value="Thu">Thu, Sep 17</option>
+              <option value="Fri">Fri, Sep 18</option>
+              <option value="Sat">Sat, Sep 19</option>
+              <option value="Sun">Sun, Sep 20</option>
+              <option value="Mon21">Mon, Sep 21</option>
+              <option value="Tue22">Tue, Sep 22</option>
+            </select>
           </div>
         </div>
+      </div>
+    </div>
 
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <!-- 1. Ministry & Meals Schedule Section -->
+      <div id="ministrySection">
+        <div id="adminScheduleBar" class="admin-tab-bar" style="display: none;">
+          <button class="btn-admin-add" onclick="openAddSlotModal()">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Schedule Slot
+          </button>
+        </div>
         <div id="scheduleContainer"></div>
       </div>
 
       <!-- 2. Territory Section -->
       <div id="territorySection" style="display: none;">
+        <div id="adminTerritoryBar" class="admin-tab-bar" style="display: none;">
+          <button class="btn-admin-add" onclick="openAddTerritoryModal()">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Territory
+          </button>
+        </div>
         <div id="territoryContainer"></div>
       </div>
 
       <!-- 3. Meetings Section -->
       <div id="meetingsSection" style="display: none;">
+        <div id="adminMeetingBar" class="admin-tab-bar" style="display: none;">
+          <button class="btn-admin-add" onclick="openAddMeetingModal()">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Meeting
+          </button>
+        </div>
         <div id="meetingsContainer"></div>
       </div>
     </main>
 
     <!-- ========================================================
-         BOTTOM NAVIGATION BAR (Exact Match to Reference UI)
+         BOTTOM NAVIGATION BAR
          ======================================================== -->
     <nav class="bottom-bar">
       <!-- 1. Schedule -->
@@ -1031,28 +1406,29 @@
         <span>Search</span>
       </button>
 
-      <!-- 5. More / Admin -->
-      <button class="bottom-tab-btn" id="nav-more" onclick="promptAdminLogin()">
+      <!-- 5. Export / Print (placed beside search at bottom) -->
+      <button class="bottom-tab-btn" id="nav-print" onclick="openPrintModal()">
         <div class="tab-icon-wrap">
           <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="1.5"></circle>
-            <circle cx="19" cy="12" r="1.5"></circle>
-            <circle cx="5" cy="12" r="1.5"></circle>
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
           </svg>
         </div>
-        <span id="nav-more-label">More</span>
+        <span>Print</span>
       </button>
     </nav>
   </div>
 
   <!-- ========================================================
-       ADMIN MODALS
+       MODALS
        ======================================================== -->
-  <!-- Admin Passcode Modal -->
+
+  <!-- 1. Admin Passcode Modal -->
   <div id="adminLoginModal" class="modal-backdrop">
     <div class="modal-box">
       <h3>Admin Access</h3>
-      <p class="sub">Enter Admin Master Passcode to edit.</p>
+      <p class="sub">Enter Admin Master Passcode to edit slots.</p>
       <div class="form-field">
         <input type="password" id="adminPassInput" class="form-control" placeholder="Admin Passcode">
       </div>
@@ -1064,23 +1440,27 @@
     </div>
   </div>
 
-  <!-- Ministry Slot Edit Modal -->
+  <!-- 2. Edit Slot Modal (With Delete Slot Button) -->
   <div id="editSlotModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 id="editSlotTitle">Edit Slot</h3>
-      <p class="sub" id="editSlotSubtitle">Update companion name or notes.</p>
+      <p class="sub" id="editSlotSubtitle">Update companion name, notes, or status.</p>
       
       <input type="hidden" id="editSlotIndex">
 
       <div class="form-field">
-        <label for="editSlotCompanion">Companion Name</label>
+        <label for="editSlotCompanion">Companion / Host Name</label>
         <input type="text" id="editSlotCompanion" class="form-control" list="publishersDatalist" placeholder="Select or type name">
-        <datalist id="publishersDatalist"></datalist>
+      </div>
+
+      <div class="form-field">
+        <label for="editSlotTime">Time</label>
+        <input type="text" id="editSlotTime" class="form-control" placeholder="e.g. 8:00 - 9:00 AM">
       </div>
 
       <div class="form-field">
         <label for="editSlotNote">Notes / Location Details</label>
-        <input type="text" id="editSlotNote" class="form-control" placeholder="e.g. Requested Sunday PM Bahay-bahay">
+        <input type="text" id="editSlotNote" class="form-control" placeholder="e.g. Bahay-bahay / Hospitality">
       </div>
 
       <div class="form-field">
@@ -1094,13 +1474,89 @@
       </div>
 
       <div class="modal-btn-group">
+        <button class="btn-delete-danger" onclick="deleteCurrentSlot()">Delete Slot</button>
         <button class="btn-cancel-secondary" onclick="closeEditSlotModal()">Cancel</button>
         <button class="btn-save-primary" onclick="saveSlotEdit()">Save</button>
       </div>
     </div>
   </div>
 
-  <!-- Territory Edit Modal -->
+  <!-- 3. Add Slot Modal (Admin) -->
+  <div id="addSlotModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3>Add Schedule Slot</h3>
+      <p class="sub">Slot will automatically sort into its date and time order.</p>
+
+      <div class="form-field">
+        <label for="addSlotDay">Day / Date</label>
+        <select id="addSlotDay" class="form-control">
+          <option value="Tue15">Tuesday (Sept 15)</option>
+          <option value="Wed" selected>Wednesday (Sept 16)</option>
+          <option value="Thu">Thursday (Sept 17)</option>
+          <option value="Fri">Friday (Sept 18)</option>
+          <option value="Sat">Saturday (Sept 19)</option>
+          <option value="Sun">Sunday (Sept 20)</option>
+          <option value="Mon21">Monday (Sept 21)</option>
+          <option value="Tue22">Tuesday (Sept 22)</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="addSlotTime">Time</label>
+        <input type="text" id="addSlotTime" class="form-control" placeholder="e.g. 8:00 - 9:00 AM, 12:00 PM">
+      </div>
+
+      <div class="form-field">
+        <label for="addSlotRole">Role</label>
+        <select id="addSlotRole" class="form-control">
+          <option value="CO">CO (Circuit Overseer)</option>
+          <option value="Wife">CO's Wife</option>
+          <option value="both">Both (Shared / Meals)</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="addSlotActivity">Activity</label>
+        <select id="addSlotActivity" class="form-control">
+          <option value="House to House">House to House</option>
+          <option value="RV / Bible Study">RV / Bible Study</option>
+          <option value="Shepherding">Shepherding</option>
+          <option value="Meeting">Meeting</option>
+          <option value="Breakfast">Breakfast (Hospitality)</option>
+          <option value="Lunch">Lunch (Hospitality)</option>
+          <option value="Dinner">Dinner (Hospitality)</option>
+          <option value="Hospitality">Hospitality / Meal</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="addSlotCompanion">Companion / Host</label>
+        <input type="text" id="addSlotCompanion" class="form-control" list="publishersDatalist" placeholder="Select or enter name">
+      </div>
+
+      <div class="form-field">
+        <label for="addSlotNote">Notes / Location Details</label>
+        <input type="text" id="addSlotNote" class="form-control" placeholder="e.g. Kingdom Hall / Residence">
+      </div>
+
+      <div class="form-field">
+        <label for="addSlotStatus">Status</label>
+        <select id="addSlotStatus" class="form-control">
+          <option value="confirmed">Confirmed</option>
+          <option value="open">Open / Available</option>
+          <option value="shepherd">Shepherding</option>
+          <option value="meeting">Meeting</option>
+        </select>
+      </div>
+
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeAddSlotModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="saveNewSlot()">Add Slot</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Edit Territory Modal (With Delete Button) -->
   <div id="editTerritoryModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 id="editTerritoryTitle">Edit Territory</h3>
@@ -1121,7 +1577,6 @@
       <div class="form-field">
         <label for="editTerritoryGuide">Territory Guide / In Charge</label>
         <input type="text" id="editTerritoryGuide" class="form-control" list="brothersDatalist">
-        <datalist id="brothersDatalist"></datalist>
       </div>
 
       <div class="form-field">
@@ -1135,13 +1590,57 @@
       </div>
 
       <div class="modal-btn-group">
+        <button class="btn-delete-danger" onclick="deleteCurrentTerritory()">Delete Territory</button>
         <button class="btn-cancel-secondary" onclick="closeEditTerritoryModal()">Cancel</button>
         <button class="btn-save-primary" onclick="saveTerritoryEdit()">Save</button>
       </div>
     </div>
   </div>
 
-  <!-- Meeting Edit Modal -->
+  <!-- 5. Add Territory Modal -->
+  <div id="addTerritoryModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3>Add Territory Arrangement</h3>
+      <p class="sub">Add territory meeting place, area and guide.</p>
+
+      <div class="form-field">
+        <label for="addTerritoryDay">Day & Date</label>
+        <input type="text" id="addTerritoryDay" class="form-control" placeholder="e.g. Wednesday, Sept 16">
+      </div>
+
+      <div class="form-field">
+        <label for="addTerritoryTime">Time</label>
+        <input type="text" id="addTerritoryTime" class="form-control" placeholder="e.g. 8:00 AM">
+      </div>
+
+      <div class="form-field">
+        <label for="addTerritoryArea">Territory Area & No.</label>
+        <input type="text" id="addTerritoryArea" class="form-control" placeholder="e.g. San Isidro (Territory No. 68 & 69)">
+      </div>
+
+      <div class="form-field">
+        <label for="addTerritoryPlace">Meeting Place</label>
+        <input type="text" id="addTerritoryPlace" class="form-control" placeholder="e.g. San Miguel (Bro. Sebastian's Residence)">
+      </div>
+
+      <div class="form-field">
+        <label for="addTerritoryGuide">Guide / In Charge</label>
+        <input type="text" id="addTerritoryGuide" class="form-control" list="brothersDatalist" placeholder="e.g. Bro. Jeremy Barte">
+      </div>
+
+      <div class="form-field">
+        <label for="addTerritoryNotes">Special Notes</label>
+        <input type="text" id="addTerritoryNotes" class="form-control" placeholder="Gather promptly for service">
+      </div>
+
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeAddTerritoryModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="saveNewTerritory()">Add Territory</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Edit Meeting Modal (With Delete Button) -->
   <div id="editMeetingModal" class="modal-backdrop">
     <div class="modal-box">
       <h3 id="editMeetingTitle">Edit Meeting</h3>
@@ -1175,11 +1674,75 @@
       </div>
 
       <div class="modal-btn-group">
+        <button class="btn-delete-danger" onclick="deleteCurrentMeeting()">Delete Meeting</button>
         <button class="btn-cancel-secondary" onclick="closeEditMeetingModal()">Cancel</button>
         <button class="btn-save-primary" onclick="saveMeetingEdit()">Save</button>
       </div>
     </div>
   </div>
+
+  <!-- 7. Add Meeting Modal -->
+  <div id="addMeetingModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3>Add Meeting Slot</h3>
+      <p class="sub">Add congregation or special meeting schedule.</p>
+
+      <div class="form-field">
+        <label for="addMeetingTitleInput">Meeting Title</label>
+        <input type="text" id="addMeetingTitleInput" class="form-control" placeholder="e.g. Pioneers Meeting with Circuit Overseer">
+      </div>
+
+      <div class="form-field">
+        <label for="addMeetingTimeInput">Day & Time</label>
+        <input type="text" id="addMeetingTimeInput" class="form-control" placeholder="e.g. Thursday (Sept 17) • 5:00 PM">
+      </div>
+
+      <div class="form-field">
+        <label for="addMeetingPlaceInput">Meeting Place</label>
+        <input type="text" id="addMeetingPlaceInput" class="form-control" placeholder="Kingdom Hall">
+      </div>
+
+      <div class="form-field">
+        <label for="addMeetingAttendeesInput">Attendees</label>
+        <input type="text" id="addMeetingAttendeesInput" class="form-control" placeholder="e.g. Regular & Special Pioneers">
+      </div>
+
+      <div class="form-field">
+        <label for="addMeetingDescInput">Description</label>
+        <input type="text" id="addMeetingDescInput" class="form-control" placeholder="Special meeting to encourage pioneers">
+      </div>
+
+      <div class="modal-btn-group">
+        <button class="btn-cancel-secondary" onclick="closeAddMeetingModal()">Cancel</button>
+        <button class="btn-save-primary" onclick="saveNewMeeting()">Add Meeting</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Single-Page Printable Bulletin Modal (Available to all users) -->
+  <div id="printModal" class="modal-backdrop">
+    <div class="modal-box print-modal-box">
+      <div class="print-modal-header">
+        <div>
+          <h3>Print Arrangement Sheet</h3>
+          <p class="sub" style="margin-bottom:0;">Formatted to print cleanly on a single page.</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-save-primary" onclick="triggerPrint()" style="padding:8px 14px;">🖨️ Print / Save as PDF</button>
+          <button class="btn-cancel-secondary" onclick="closePrintModal()" style="padding:8px 12px;">Close</button>
+        </div>
+      </div>
+
+      <!-- Scrollable Preview container for screen -->
+      <div class="print-preview-container">
+        <div id="printableSheet"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Autocomplete Datalists -->
+  <datalist id="brothersDatalist"></datalist>
+  <datalist id="publishersDatalist"></datalist>
 
   <!-- ========================================================
        DATA & APPLICATION LOGIC
@@ -1195,7 +1758,7 @@
     
     const SESSION_KEY = "sm_covisit_unlocked";
     const ADMIN_KEY   = "sm_covisit_is_admin";
-    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v1";
+    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v2";
 
     const BROTHERS = [
       "Amiel Joshua Zoleta", "Arnold Cabrales Jr.", "Arnold Cabrales Sr.", "Arnulfo Sebastian",
@@ -1222,9 +1785,67 @@
       "Raquel Coronado", "Vanessa Maclang"
     ];
 
-    // 1. Ministry Schedule Dataset
+    // Dedicated Hospitality Dataset from SMC hospitality schedule for CO.txt
+    let HOSPITALITY_DATA = [
+      { day: "Tuesday", date: "Sept 15", breakfast: "-", lunch: "Taken", dinner: "Arlene Enriquez" },
+      { day: "Wednesday", date: "Sept 16", breakfast: "Catalina Velasco", lunch: "Taken by group", dinner: "Malou Dela Cruz" },
+      { day: "Thursday", date: "Sept 17", breakfast: "Julie Ann and Des Aguilar", lunch: "Taken by group", dinner: "Evangeline Malicsi" },
+      { day: "Friday", date: "Sept 18", breakfast: "Lydia Aguilar and Lolita Barcelona", lunch: "Taken by group", dinner: "Melda Dela Cruz" },
+      { day: "Saturday", date: "Sept 19", breakfast: "Marissa Fermalino", lunch: "FSG 4", dinner: "May Dilloro" },
+      { day: "Sunday", date: "Sept 20", breakfast: "Barte Family", lunch: "FSG 1 (c/o Zoleta Family)", dinner: "Parole Family" },
+      { day: "Monday", date: "Sept 21", breakfast: "Zar and Ajie Pormilos", lunch: "Ellen Baltbat and Lolita Guidoc", dinner: "Paulo and Lizel Sebastian" },
+      { day: "Tuesday", date: "Sept 22", breakfast: "Lino and Lucy Cahilo", lunch: "Traveling to next congregation", dinner: "-" }
+    ];
+
+    // 1. Ministry & Hospitality Schedule Dataset
     let SCHEDULE_DATA = [
+      // TUESDAY (Sep 15)
+      {
+        dayKey: "Tue15",
+        dayLabel: "Tuesday",
+        fullDate: "September 15",
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "Taken",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Tue15",
+        dayLabel: "Tuesday",
+        fullDate: "September 15",
+        time: "5:00 - 6:00 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "Arlene Enriquez",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Tue15",
+        dayLabel: "Tuesday",
+        fullDate: "September 15",
+        time: "6:00 - 7:45 PM",
+        role: "both",
+        activity: "Meeting",
+        companion: "Our Christian Life & Ministry Meeting",
+        status: "meeting",
+        note: "Kingdom Hall"
+      },
+
       // WEDNESDAY (Sep 16)
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "7:00 - 7:45 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Catalina Velasco",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
       {
         dayKey: "Wed",
         dayLabel: "Wednesday",
@@ -1291,8 +1912,41 @@
         status: "confirmed",
         note: "Requested Wed AM RV / Bible Study"
       },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "Taken by group",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Wed",
+        dayLabel: "Wednesday",
+        fullDate: "September 16",
+        time: "6:00 - 7:00 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "Malou Dela Cruz",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
 
       // THURSDAY (Sep 17)
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
+        time: "7:00 - 7:45 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Julie Ann and Des Aguilar",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
       {
         dayKey: "Thu",
         dayLabel: "Thursday",
@@ -1363,6 +2017,17 @@
         dayKey: "Thu",
         dayLabel: "Thursday",
         fullDate: "September 17",
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "Taken by group",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Thu",
+        dayLabel: "Thursday",
+        fullDate: "September 17",
         time: "3:00 - 4:00 PM",
         role: "CO",
         activity: "RV / Bible Study",
@@ -1408,8 +2073,8 @@
         dayLabel: "Thursday",
         fullDate: "September 17",
         time: "5:00 - 6:00 PM",
-        role: "CO",
-        activity: "Special Meeting",
+        role: "both",
+        activity: "Meeting",
         companion: "Pioneers Meeting with C.O.",
         status: "meeting",
         note: "Kingdom Hall"
@@ -1418,15 +2083,26 @@
         dayKey: "Thu",
         dayLabel: "Thursday",
         fullDate: "September 17",
-        time: "5:00 - 6:00 PM",
-        role: "Wife",
-        activity: "Special Meeting",
-        companion: "Pioneers Meeting",
-        status: "meeting",
-        note: "Kingdom Hall"
+        time: "6:30 - 7:30 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "Evangeline Malicsi",
+        status: "confirmed",
+        note: "Hospitality Meal"
       },
 
       // FRIDAY (Sep 18)
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "7:00 - 7:45 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Lydia Aguilar and Lolita Barcelona",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
       {
         dayKey: "Fri",
         dayLabel: "Friday",
@@ -1497,6 +2173,17 @@
         dayKey: "Fri",
         dayLabel: "Friday",
         fullDate: "September 18",
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "Taken by group",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
         time: "3:00 - 4:00 PM",
         role: "CO",
         activity: "House to House",
@@ -1543,13 +2230,35 @@
         fullDate: "September 18",
         time: "5:30 - 7:30 PM",
         role: "CO",
-        activity: "Special Meeting",
+        activity: "Meeting",
         companion: "Elder & MS Meeting with C.O.",
         status: "meeting",
         note: "Kingdom Hall"
       },
+      {
+        dayKey: "Fri",
+        dayLabel: "Friday",
+        fullDate: "September 18",
+        time: "7:30 - 8:30 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "Melda Dela Cruz",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
 
       // SATURDAY (Sep 19)
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "7:00 - 7:45 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Marissa Fermalino",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
       {
         dayKey: "Sat",
         dayLabel: "Saturday",
@@ -1620,6 +2329,17 @@
         dayKey: "Sat",
         dayLabel: "Saturday",
         fullDate: "September 19",
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "FSG 4",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
         time: "3:00 - 4:00 PM",
         role: "CO",
         activity: "House to House",
@@ -1659,6 +2379,17 @@
         companion: "Open / Available Sister",
         status: "open",
         note: "Open slot for ministry"
+      },
+      {
+        dayKey: "Sat",
+        dayLabel: "Saturday",
+        fullDate: "September 19",
+        time: "6:00 - 7:00 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "May Dilloro",
+        status: "confirmed",
+        note: "Hospitality Meal"
       },
 
       // SUNDAY (Sep 20)
@@ -1666,9 +2397,20 @@
         dayKey: "Sun",
         dayLabel: "Sunday",
         fullDate: "September 20",
+        time: "7:00 - 7:45 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Barte Family",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
         time: "8:00 - 10:00 AM",
-        role: "CO",
-        activity: "Special Meeting",
+        role: "both",
+        activity: "Meeting",
         companion: "Weekend Meeting with Public Talk",
         status: "meeting",
         note: "Congregation Meeting (Kingdom Hall)"
@@ -1677,12 +2419,12 @@
         dayKey: "Sun",
         dayLabel: "Sunday",
         fullDate: "September 20",
-        time: "8:00 - 10:00 AM",
-        role: "Wife",
-        activity: "Special Meeting",
-        companion: "Weekend Meeting",
-        status: "meeting",
-        note: "Congregation Meeting (Kingdom Hall)"
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "FSG 1 (c/o Zoleta Family)",
+        status: "confirmed",
+        note: "Hospitality Meal"
       },
       {
         dayKey: "Sun",
@@ -1727,6 +2469,65 @@
         companion: "Marcia Acaylar",
         status: "confirmed",
         note: "Sunday PM Study Conduct"
+      },
+      {
+        dayKey: "Sun",
+        dayLabel: "Sunday",
+        fullDate: "September 20",
+        time: "6:00 - 7:00 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "Parole Family",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+
+      // MONDAY (Sep 21)
+      {
+        dayKey: "Mon21",
+        dayLabel: "Monday",
+        fullDate: "September 21",
+        time: "7:00 - 8:00 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Zar and Ajie Pormilos",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Mon21",
+        dayLabel: "Monday",
+        fullDate: "September 21",
+        time: "12:00 - 1:00 PM",
+        role: "both",
+        activity: "Lunch",
+        companion: "Ellen Baltbat and Lolita Guidoc",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+      {
+        dayKey: "Mon21",
+        dayLabel: "Monday",
+        fullDate: "September 21",
+        time: "6:00 - 7:00 PM",
+        role: "both",
+        activity: "Dinner",
+        companion: "Paulo and Lizel Sebastian",
+        status: "confirmed",
+        note: "Hospitality Meal"
+      },
+
+      // TUESDAY (Sep 22)
+      {
+        dayKey: "Tue22",
+        dayLabel: "Tuesday",
+        fullDate: "September 22",
+        time: "7:00 - 8:00 AM",
+        role: "both",
+        activity: "Breakfast",
+        companion: "Lino and Lucy Cahilo",
+        status: "confirmed",
+        note: "Hospitality Meal"
       }
     ];
 
@@ -1817,11 +2618,16 @@
       loadDraftData();
       checkAuth();
       setupDatalists();
+      sortScheduleData();
     });
 
     function setupDatalists() {
       const bList = document.getElementById("brothersDatalist");
       bList.innerHTML = BROTHERS.map(b => `<option value="${b}">`).join('');
+
+      const pList = document.getElementById("publishersDatalist");
+      const combined = [...new Set([...BROTHERS, ...SISTERS])].sort();
+      pList.innerHTML = combined.map(p => `<option value="${p}">`).join('');
     }
 
     function loadDraftData() {
@@ -1832,6 +2638,7 @@
           if (parsed.SCHEDULE_DATA) SCHEDULE_DATA = parsed.SCHEDULE_DATA;
           if (parsed.TERRITORY_DATA) TERRITORY_DATA = parsed.TERRITORY_DATA;
           if (parsed.MEETINGS_DATA) MEETINGS_DATA = parsed.MEETINGS_DATA;
+          if (parsed.HOSPITALITY_DATA) HOSPITALITY_DATA = parsed.HOSPITALITY_DATA;
         }
       } catch (e) {}
     }
@@ -1841,9 +2648,58 @@
         localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify({
           SCHEDULE_DATA,
           TERRITORY_DATA,
-          MEETINGS_DATA
+          MEETINGS_DATA,
+          HOSPITALITY_DATA
         }));
       } catch (e) {}
+    }
+
+    /* Chronological Date & Time Auto-Sort Helper */
+    function parseTimeToMinutes(timeStr) {
+      if (!timeStr) return 0;
+      const str = timeStr.trim();
+      const firstPart = str.split('-')[0].trim();
+      const match = firstPart.match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?/i);
+      if (!match) return 0;
+      let hours = parseInt(match[1], 10);
+      const minutes = match[2] ? parseInt(match[2], 10) : 0;
+      let period = match[3] ? match[3].toUpperCase() : null;
+
+      if (!period) {
+        if (/PM/i.test(str)) period = 'PM';
+        else if (/AM/i.test(str)) period = 'AM';
+      }
+
+      if (period === 'PM' && hours < 12) hours += 12;
+      if (period === 'AM' && hours === 12) hours = 0;
+      return hours * 60 + minutes;
+    }
+
+    function getDayRank(dayKey, fullDate, dayLabel) {
+      const str = ((dayKey || "") + " " + (fullDate || "") + " " + (dayLabel || "")).toLowerCase();
+      if (str.includes("15") || str.includes("tue15")) return 15;
+      if (str.includes("16") || str.includes("wed")) return 16;
+      if (str.includes("17") || str.includes("thu")) return 17;
+      if (str.includes("18") || str.includes("fri")) return 18;
+      if (str.includes("19") || str.includes("sat")) return 19;
+      if (str.includes("20") || str.includes("sun")) return 20;
+      if (str.includes("21") || str.includes("mon")) return 21;
+      if (str.includes("22") || str.includes("tue22")) return 22;
+      return 99;
+    }
+
+    function sortScheduleData() {
+      SCHEDULE_DATA.sort((a, b) => {
+        const rankA = getDayRank(a.dayKey, a.fullDate, a.dayLabel);
+        const rankB = getDayRank(b.dayKey, b.fullDate, b.dayLabel);
+        if (rankA !== rankB) return rankA - rankB;
+        const timeA = parseTimeToMinutes(a.time);
+        const timeB = parseTimeToMinutes(b.time);
+        if (timeA !== timeB) return timeA - timeB;
+        if (a.role === "CO" && b.role === "Wife") return -1;
+        if (a.role === "Wife" && b.role === "CO") return 1;
+        return 0;
+      });
     }
 
     async function sha256(message) {
@@ -1902,17 +2758,25 @@
 
     function updateAdminUI() {
       const banner = document.getElementById("adminBanner");
-      const moreLabel = document.getElementById("nav-more-label");
-      const moreBtn = document.getElementById("nav-more");
+      const btnAdmin = document.getElementById("btnAdminHeader");
+      const schedBar = document.getElementById("adminScheduleBar");
+      const terrBar = document.getElementById("adminTerritoryBar");
+      const meetBar = document.getElementById("adminMeetingBar");
 
       if (isAdmin) {
         banner.style.display = "flex";
-        moreLabel.textContent = "Admin";
-        moreBtn.classList.add("admin-on");
+        btnAdmin.classList.add("admin-active");
+        btnAdmin.title = "Admin Active (Tap to Exit)";
+        if (schedBar) schedBar.style.display = "block";
+        if (terrBar) terrBar.style.display = "block";
+        if (meetBar) meetBar.style.display = "block";
       } else {
         banner.style.display = "none";
-        moreLabel.textContent = "More";
-        moreBtn.classList.remove("admin-on");
+        btnAdmin.classList.remove("admin-active");
+        btnAdmin.title = "Admin Mode";
+        if (schedBar) schedBar.style.display = "none";
+        if (terrBar) terrBar.style.display = "none";
+        if (meetBar) meetBar.style.display = "none";
       }
     }
 
@@ -1975,12 +2839,27 @@
 
     function switchSection(sec) {
       currentSection = sec;
+      const titleElem = document.getElementById("siteHeaderTitle");
+      const filterWrapper = document.getElementById("scheduleFilterWrapper");
+
       document.getElementById("ministrySection").style.display = sec === 'ministry' ? 'block' : 'none';
       document.getElementById("territorySection").style.display = sec === 'territory' ? 'block' : 'none';
       document.getElementById("meetingsSection").style.display = sec === 'meetings' ? 'block' : 'none';
 
+      // Header title update per active tab
+      if (sec === 'ministry') {
+        titleElem.textContent = "CO Visit Schedule";
+        filterWrapper.style.display = "block";
+      } else if (sec === 'territory') {
+        titleElem.textContent = "Territories";
+        filterWrapper.style.display = "none";
+      } else if (sec === 'meetings') {
+        titleElem.textContent = "Meetings";
+        filterWrapper.style.display = "none";
+      }
+
       document.querySelectorAll(".bottom-tab-btn").forEach(b => {
-        if (b.id !== 'nav-search' && b.id !== 'nav-more') {
+        if (b.id !== 'nav-search' && b.id !== 'nav-print') {
           b.classList.remove("active");
         }
       });
@@ -2026,28 +2905,27 @@
 
     function filterPersona(p) {
       currentPersona = p;
-      document.querySelectorAll(".role-pill").forEach(btn => btn.classList.remove("active"));
-      if (p === 'both') document.getElementById("pill-both").classList.add("active");
-      if (p === 'CO') document.getElementById("pill-co").classList.add("active");
-      if (p === 'Wife') document.getElementById("pill-wife").classList.add("active");
+      const sel = document.getElementById("roleFilterSelect");
+      if (sel && sel.value !== p) sel.value = p;
       renderSchedule();
     }
 
     function filterDay(d) {
       currentDay = d;
-      document.querySelectorAll(".day-pill").forEach(chip => chip.classList.remove("active"));
-      document.getElementById("day-" + d).classList.add("active");
+      const sel = document.getElementById("dayFilterSelect");
+      if (sel && sel.value !== d) sel.value = d;
       renderSchedule();
     }
 
-    // Render Ministry Schedule (Exact Match to Reference UI)
+    // Render Ministry & Hospitality Schedule
     function renderSchedule() {
       const container = document.getElementById("scheduleContainer");
       container.innerHTML = "";
 
       let filtered = SCHEDULE_DATA.filter((item, index) => {
         item._originalIndex = index;
-        if (currentPersona !== 'both' && item.role !== currentPersona) return false;
+        // Persona filtering: 'CO' and 'Wife' both include shared items (role: 'both')
+        if (currentPersona !== 'both' && item.role !== currentPersona && item.role !== 'both') return false;
         if (currentDay !== 'all' && item.dayKey !== currentDay) return false;
         if (currentSearch) {
           const matchText = (item.companion + " " + item.activity + " " + item.dayLabel + " " + item.note).toLowerCase();
@@ -2057,15 +2935,15 @@
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem;">No ministry activities found.</div>`;
+        container.innerHTML = `<div style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem;">No schedule activities found.</div>`;
         return;
       }
 
-      const days = [...new Set(filtered.map(i => i.dayLabel))];
+      const days = [...new Set(filtered.map(i => i.fullDate || i.dayLabel))];
 
-      days.forEach(dayName => {
-        const itemsForDay = filtered.filter(i => i.dayLabel === dayName);
-        const fullDateStr = itemsForDay[0].fullDate || dayName;
+      days.forEach(dateTitle => {
+        const itemsForDay = filtered.filter(i => (i.fullDate || i.dayLabel) === dateTitle);
+        const dayLabel = itemsForDay[0].dayLabel || dateTitle;
 
         // Date Group Header Box
         const groupHeader = document.createElement("div");
@@ -2086,8 +2964,8 @@
             </svg>
           </div>
           <div class="date-group-info">
-            <div class="date-group-day-label">${dayName}</div>
-            <div class="date-group-date-title">${fullDateStr}</div>
+            <div class="date-group-day-label">${dayLabel}</div>
+            <div class="date-group-date-title">${dateTitle}</div>
           </div>
           <div class="date-group-slot-count">${itemsForDay.length} slots</div>
         `;
@@ -2101,22 +2979,35 @@
             card.onclick = () => openEditSlotModal(item._originalIndex);
           }
 
-          // Indicator color strip logic
+          // Indicator Color Strip
           let indicatorClass = "co-green";
+          const isMeal = (item.activity === "Breakfast" || item.activity === "Lunch" || item.activity === "Dinner" || item.activity === "Hospitality");
           if (item.role === "Wife") {
             indicatorClass = "wife-purple";
-          } else if (item.activity.includes("Special Meeting") || item.activity.includes("Weekend")) {
+          } else if (isMeal) {
+            indicatorClass = "meal-amber";
+          } else if (item.activity.includes("Meeting") || item.activity.includes("Weekend") || item.activity.includes("Life and Ministry")) {
             indicatorClass = "co-blue";
           }
 
-          // Subtext icon (pin for meeting/Kingdom Hall, home for house to house, book for study)
+          // Subtext Icon SVG
           let subIconSvg = `
             <svg viewBox="0 0 24 24">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
           `;
-          if (item.note.includes("Kingdom Hall") || item.activity.includes("Meeting")) {
+          if (isMeal) {
+            subIconSvg = `
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            `;
+          } else if (item.note.includes("Kingdom Hall") || item.activity.includes("Meeting")) {
             subIconSvg = `
               <svg viewBox="0 0 24 24">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -2125,8 +3016,28 @@
             `;
           }
 
-          const roleBadgeClass = item.role === "CO" ? "badge-role-co" : "badge-role-wife";
-          const roleBadgeText = item.role === "CO" ? "CO" : "CO's Wife";
+          // Role Badge: When slot is both for CO & Wife, do not put a pill "CO & Wife"
+          let roleBadgeHtml = "";
+          if (item.role === "CO") {
+            roleBadgeHtml = `<span class="badge-role-co">CO</span>`;
+          } else if (item.role === "Wife") {
+            roleBadgeHtml = `<span class="badge-role-wife"><span class="lbl-full">CO's Wife</span><span class="lbl-short">Wife</span></span>`;
+          }
+          // Note: if item.role === 'both', roleBadgeHtml remains empty!
+
+          // Activity Badge: "Special Meeting" changed to "Meeting" only
+          let activityBadgeHtml = "";
+          if (item.activity === "Meeting" || item.activity === "Special Meeting") {
+            activityBadgeHtml = `<span class="badge-activity">Meeting</span>`;
+          } else if (item.activity === "House to House") {
+            activityBadgeHtml = `<span class="badge-activity"><span class="lbl-full">House to House</span><span class="lbl-short">H2H</span></span>`;
+          } else if (item.activity.includes("RV") || item.activity.includes("Bible Study")) {
+            activityBadgeHtml = `<span class="badge-activity"><span class="lbl-full">RV / Bible Study</span><span class="lbl-short">RV/BS</span></span>`;
+          } else if (isMeal) {
+            activityBadgeHtml = `<span class="badge-activity badge-meal">🍽️ ${item.activity}</span>`;
+          } else {
+            activityBadgeHtml = `<span class="badge-activity">${item.activity}</span>`;
+          }
 
           card.innerHTML = `
             <div class="indicator-strip ${indicatorClass}"></div>
@@ -2141,8 +3052,8 @@
                   <span>${item.time}</span>
                 </div>
                 <div class="badge-group">
-                  <span class="${roleBadgeClass}">${roleBadgeText}</span>
-                  <span class="badge-activity">${item.activity}</span>
+                  ${roleBadgeHtml}
+                  ${activityBadgeHtml}
                 </div>
               </div>
 
@@ -2234,7 +3145,7 @@
         card.innerHTML = `
           <div class="meeting-header-row">
             <h3>${m.title}</h3>
-            ${isAdmin ? `<span style="font-size:0.72rem; color:var(--brand-green); font-weight:700;">Edit</span>` : ''}
+            ${isAdmin ? `<span style="font-size:0.75rem; color:var(--brand-green); font-weight:700;">Edit</span>` : ''}
           </div>
           <p class="time-line">📅 ${m.dayTime} • ${m.place}</p>
           <p class="desc-line">${m.desc} (Attendees: ${m.attendees})</p>
@@ -2243,7 +3154,9 @@
       });
     }
 
-    // Modal Handlers
+    /* ========================================================
+       MODAL ACTIONS: SCHEDULE SLOTS
+       ======================================================== */
     function openEditSlotModal(index) {
       if (!isAdmin) return;
       const item = SCHEDULE_DATA[index];
@@ -2251,14 +3164,11 @@
 
       document.getElementById("editSlotIndex").value = index;
       document.getElementById("editSlotTitle").textContent = `${item.dayLabel} • ${item.time}`;
-      document.getElementById("editSlotSubtitle").textContent = `${item.role === 'CO' ? 'Circuit Overseer' : "CO's Wife"} • ${item.activity}`;
+      document.getElementById("editSlotSubtitle").textContent = `${item.role === 'CO' ? 'CO' : (item.role === 'Wife' ? "CO's Wife" : "CO & Wife")} • ${item.activity}`;
       document.getElementById("editSlotCompanion").value = item.companion;
+      document.getElementById("editSlotTime").value = item.time;
       document.getElementById("editSlotNote").value = item.note || "";
       document.getElementById("editSlotStatus").value = item.status || "confirmed";
-
-      const dl = document.getElementById("publishersDatalist");
-      const list = item.role === "CO" ? BROTHERS : SISTERS;
-      dl.innerHTML = list.map(name => `<option value="${name}">`).join('');
 
       document.getElementById("editSlotModal").style.display = "flex";
       setTimeout(() => document.getElementById("editSlotCompanion").focus(), 100);
@@ -2273,14 +3183,84 @@
       if (isNaN(index) || !SCHEDULE_DATA[index]) return;
 
       SCHEDULE_DATA[index].companion = document.getElementById("editSlotCompanion").value.trim() || "Open / Available";
+      SCHEDULE_DATA[index].time = document.getElementById("editSlotTime").value.trim() || SCHEDULE_DATA[index].time;
       SCHEDULE_DATA[index].note = document.getElementById("editSlotNote").value.trim();
       SCHEDULE_DATA[index].status = document.getElementById("editSlotStatus").value;
 
+      sortScheduleData();
       persistDraftData();
       closeEditSlotModal();
       renderSchedule();
     }
 
+    function deleteCurrentSlot() {
+      const index = parseInt(document.getElementById("editSlotIndex").value, 10);
+      if (isNaN(index) || !SCHEDULE_DATA[index]) return;
+      const item = SCHEDULE_DATA[index];
+
+      if (confirm(`Delete slot for ${item.dayLabel} (${item.time}) with ${item.companion}?`)) {
+        SCHEDULE_DATA.splice(index, 1);
+        persistDraftData();
+        closeEditSlotModal();
+        renderSchedule();
+      }
+    }
+
+    function openAddSlotModal() {
+      if (!isAdmin) return;
+      document.getElementById("addSlotTime").value = "";
+      document.getElementById("addSlotCompanion").value = "";
+      document.getElementById("addSlotNote").value = "";
+      document.getElementById("addSlotModal").style.display = "flex";
+      setTimeout(() => document.getElementById("addSlotTime").focus(), 100);
+    }
+
+    function closeAddSlotModal() {
+      document.getElementById("addSlotModal").style.display = "none";
+    }
+
+    function saveNewSlot() {
+      const dayKey = document.getElementById("addSlotDay").value;
+      const dayMap = {
+        Tue15: { dayLabel: "Tuesday", fullDate: "September 15" },
+        Wed: { dayLabel: "Wednesday", fullDate: "September 16" },
+        Thu: { dayLabel: "Thursday", fullDate: "September 17" },
+        Fri: { dayLabel: "Friday", fullDate: "September 18" },
+        Sat: { dayLabel: "Saturday", fullDate: "September 19" },
+        Sun: { dayLabel: "Sunday", fullDate: "September 20" },
+        Mon21: { dayLabel: "Monday", fullDate: "September 21" },
+        Tue22: { dayLabel: "Tuesday", fullDate: "September 22" }
+      };
+
+      const meta = dayMap[dayKey] || { dayLabel: "Other Day", fullDate: "September" };
+      const time = document.getElementById("addSlotTime").value.trim() || "8:00 AM";
+      const role = document.getElementById("addSlotRole").value;
+      const activity = document.getElementById("addSlotActivity").value;
+      const companion = document.getElementById("addSlotCompanion").value.trim() || "Open / Available";
+      const note = document.getElementById("addSlotNote").value.trim();
+      const status = document.getElementById("addSlotStatus").value;
+
+      SCHEDULE_DATA.push({
+        dayKey,
+        dayLabel: meta.dayLabel,
+        fullDate: meta.fullDate,
+        time,
+        role,
+        activity,
+        companion,
+        status,
+        note
+      });
+
+      sortScheduleData();
+      persistDraftData();
+      closeAddSlotModal();
+      renderSchedule();
+    }
+
+    /* ========================================================
+       MODAL ACTIONS: TERRITORIES
+       ======================================================== */
     function openEditTerritoryModal(index) {
       if (!isAdmin) return;
       const t = TERRITORY_DATA[index];
@@ -2317,6 +3297,51 @@
       renderTerritories();
     }
 
+    function deleteCurrentTerritory() {
+      const index = parseInt(document.getElementById("editTerritoryIndex").value, 10);
+      if (isNaN(index) || !TERRITORY_DATA[index]) return;
+
+      if (confirm(`Delete territory entry: "${TERRITORY_DATA[index].territory}"?`)) {
+        TERRITORY_DATA.splice(index, 1);
+        persistDraftData();
+        closeEditTerritoryModal();
+        renderTerritories();
+      }
+    }
+
+    function openAddTerritoryModal() {
+      if (!isAdmin) return;
+      document.getElementById("addTerritoryDay").value = "";
+      document.getElementById("addTerritoryTime").value = "";
+      document.getElementById("addTerritoryArea").value = "";
+      document.getElementById("addTerritoryPlace").value = "";
+      document.getElementById("addTerritoryGuide").value = "";
+      document.getElementById("addTerritoryNotes").value = "";
+      document.getElementById("addTerritoryModal").style.display = "flex";
+      setTimeout(() => document.getElementById("addTerritoryDay").focus(), 100);
+    }
+
+    function closeAddTerritoryModal() {
+      document.getElementById("addTerritoryModal").style.display = "none";
+    }
+
+    function saveNewTerritory() {
+      const day = document.getElementById("addTerritoryDay").value.trim() || "Field Service";
+      const time = document.getElementById("addTerritoryTime").value.trim() || "8:00 AM";
+      const territory = document.getElementById("addTerritoryArea").value.trim() || "Territory Area";
+      const meetingPlace = document.getElementById("addTerritoryPlace").value.trim() || "Kingdom Hall";
+      const guide = document.getElementById("addTerritoryGuide").value.trim() || "Group Overseer";
+      const notes = document.getElementById("addTerritoryNotes").value.trim();
+
+      TERRITORY_DATA.push({ day, time, territory, meetingPlace, guide, notes });
+      persistDraftData();
+      closeAddTerritoryModal();
+      renderTerritories();
+    }
+
+    /* ========================================================
+       MODAL ACTIONS: MEETINGS
+       ======================================================== */
     function openEditMeetingModal(index) {
       if (!isAdmin) return;
       const m = MEETINGS_DATA[index];
@@ -2353,6 +3378,274 @@
       renderMeetings();
     }
 
+    function deleteCurrentMeeting() {
+      const index = parseInt(document.getElementById("editMeetingIndex").value, 10);
+      if (isNaN(index) || !MEETINGS_DATA[index]) return;
+
+      if (confirm(`Delete meeting: "${MEETINGS_DATA[index].title}"?`)) {
+        MEETINGS_DATA.splice(index, 1);
+        persistDraftData();
+        closeEditMeetingModal();
+        renderMeetings();
+      }
+    }
+
+    function openAddMeetingModal() {
+      if (!isAdmin) return;
+      document.getElementById("addMeetingTitleInput").value = "";
+      document.getElementById("addMeetingTimeInput").value = "";
+      document.getElementById("addMeetingPlaceInput").value = "";
+      document.getElementById("addMeetingAttendeesInput").value = "";
+      document.getElementById("addMeetingDescInput").value = "";
+      document.getElementById("addMeetingModal").style.display = "flex";
+      setTimeout(() => document.getElementById("addMeetingTitleInput").focus(), 100);
+    }
+
+    function closeAddMeetingModal() {
+      document.getElementById("addMeetingModal").style.display = "none";
+    }
+
+    function saveNewMeeting() {
+      const title = document.getElementById("addMeetingTitleInput").value.trim() || "Meeting Title";
+      const dayTime = document.getElementById("addMeetingTimeInput").value.trim() || "TBA";
+      const place = document.getElementById("addMeetingPlaceInput").value.trim() || "Kingdom Hall";
+      const attendees = document.getElementById("addMeetingAttendeesInput").value.trim() || "Congregation";
+      const desc = document.getElementById("addMeetingDescInput").value.trim() || "";
+
+      MEETINGS_DATA.push({ title, dayTime, place, attendees, desc });
+      persistDraftData();
+      closeAddMeetingModal();
+      renderMeetings();
+    }
+
+    /* ========================================================
+       SINGLE-PAGE PRINT TEMPLATE BUILDER & MODAL
+       ======================================================== */
+    function openPrintModal() {
+      renderPrintTemplate();
+      document.getElementById("printModal").style.display = "flex";
+    }
+
+    function closePrintModal() {
+      document.getElementById("printModal").style.display = "none";
+    }
+
+    function triggerPrint() {
+      window.print();
+    }
+
+    function renderPrintTemplate() {
+      const container = document.getElementById("printableSheet");
+      if (!container) return;
+
+      // 1. Header
+      let html = `
+        <div class="print-title-box">
+          <div class="print-main-title">ARRANGEMENT DURING CIRCUIT OVERSEER'S VISIT</div>
+          <div class="print-sub-title">San Miguel Congregation • September 16–20, 2026</div>
+        </div>
+      `;
+
+      // 2. Field Service & Special Meetings Table
+      html += `
+        <table class="print-table">
+          <thead>
+            <tr>
+              <th style="width:16%;">Field Service</th>
+              <th style="width:14%;">Time</th>
+              <th style="width:28%;">Territory</th>
+              <th style="width:26%;">Meeting Place</th>
+              <th style="width:16%;">Territory Guide</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      TERRITORY_DATA.forEach(t => {
+        const shortDay = t.day.split(',')[0];
+        html += `
+          <tr>
+            <td class="bold">${shortDay}</td>
+            <td class="center">${t.time}</td>
+            <td>${t.territory}</td>
+            <td>${t.meetingPlace}</td>
+            <td>${t.guide}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+          </tbody>
+        </table>
+      `;
+
+      // 3. Ministry Accompaniments Table (Sasamahan)
+      // Matches the reference layout with Wednesday to Sunday
+      html += `
+        <table class="print-table">
+          <thead>
+            <tr>
+              <th style="width:8%;" rowspan="2">Araw</th>
+              <th colspan="3" style="width:47%;">Sasamahan sa umaga</th>
+              <th colspan="2" style="width:45%;">Sasamahan sa hapon</th>
+            </tr>
+            <tr>
+              <th class="sub-th" style="width:14%;">Time &amp; Act</th>
+              <th class="sub-th" style="width:10%;">Role</th>
+              <th class="sub-th" style="width:23%;">Kasama</th>
+              <th class="sub-th" style="width:14%;">Time</th>
+              <th class="sub-th" style="width:31%;">Gawain / Pulong / Kasama</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- WEDNESDAY -->
+            <tr>
+              <td class="bold center" rowspan="3">Wed</td>
+              <td class="center">8:00 - 9:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Arnold Cabrales Sr.<br>Malou Dela Cruz</td>
+              <td class="center" rowspan="3">-</td>
+              <td rowspan="3" class="center" style="font-style:italic; color:#444;">*Flexibility Time</td>
+            </tr>
+            <tr>
+              <td class="center">9:00 - 10:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Francis Francisco<br>Flor De Guzman</td>
+            </tr>
+            <tr>
+              <td class="center">10:00 - 11:00 (RV/BS)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Open Brother<br>Lydia Aguilar</td>
+            </tr>
+
+            <!-- THURSDAY -->
+            <tr>
+              <td class="bold center" rowspan="3">Thu</td>
+              <td class="center">8:00 - 9:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Francis Francisco<br>May Dilloro</td>
+              <td class="center">3:00 - 4:00</td>
+              <td>CO: John Michael Sta. Cruz (RV/BS)<br>Wife: Florissa Sebastian (H2H)</td>
+            </tr>
+            <tr>
+              <td class="center">9:00 - 10:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>John Michael Sta. Cruz<br>Leni Dela Cruz</td>
+              <td class="center">4:00 - 5:00</td>
+              <td>CO: Open Brother (H2H)<br>Wife: Lerma Maclang (H2H)</td>
+            </tr>
+            <tr>
+              <td class="center">10:00 - 11:00</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Shepherding Call<br>Julie Ann Aguilar (RV/BS)</td>
+              <td class="center">5:00 - 6:00</td>
+              <td class="bold">Pioneers Meeting with C.O. (Kingdom Hall)</td>
+            </tr>
+
+            <!-- FRIDAY -->
+            <tr>
+              <td class="bold center" rowspan="3">Fri</td>
+              <td class="center">8:00 - 9:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Arnold Cabrales Sr.<br>Deborah Barte</td>
+              <td class="center">3:00 - 4:00</td>
+              <td>CO: Open Brother (H2H)<br>Wife: Aija Mae Pormilos (H2H)</td>
+            </tr>
+            <tr>
+              <td class="center">9:00 - 10:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Francis Francisco<br>Lorinda Seco</td>
+              <td class="center">4:00 - 5:00</td>
+              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
+            </tr>
+            <tr>
+              <td class="center">10:00 - 11:00 (RV/BS)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Open Brother<br>Lolita Barcelona</td>
+              <td class="center">5:30 - 7:30</td>
+              <td class="bold">Elder &amp; MS Meeting with C.O. (Kingdom Hall)</td>
+            </tr>
+
+            <!-- SATURDAY -->
+            <tr>
+              <td class="bold center" rowspan="3">Sat</td>
+              <td class="center">8:00 - 9:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Group Overseer/Servant<br>Cherry Sebastian</td>
+              <td class="center">3:00 - 4:00</td>
+              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
+            </tr>
+            <tr>
+              <td class="center">9:00 - 10:00 (H2H)</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Open Brother<br>Noemi Zoleta</td>
+              <td class="center">4:00 - 5:00</td>
+              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
+            </tr>
+            <tr>
+              <td class="center">10:00 - 11:00</td>
+              <td class="center">CO<br>Wife</td>
+              <td>Shepherding Call<br>Francisca A. Sebastian (RV/BS)</td>
+              <td class="center">-</td>
+              <td class="center">-</td>
+            </tr>
+
+            <!-- SUNDAY -->
+            <tr>
+              <td class="bold center" rowspan="2">Sun</td>
+              <td class="center">8:00 - 10:00 AM</td>
+              <td colspan="2" class="bold center">Weekend Meeting &amp; Public Talk (Kingdom Hall)</td>
+              <td class="center">3:00 - 4:00</td>
+              <td>CO: Arnold Cabrales Sr. (H2H)<br>Wife: Julie Ann Aguilar (H2H)</td>
+            </tr>
+            <tr>
+              <td colspan="3" class="center"><i>Congregation Meeting</i></td>
+              <td class="center">4:00 - 5:00</td>
+              <td>CO: Francis Francisco (RV/BS)<br>Wife: Marcia Acaylar (RV/BS)</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+
+      // 4. Hospitality Table (Share of Hospitality During Visit)
+      html += `
+        <table class="print-table print-table-hospitality">
+          <thead>
+            <tr>
+              <th colspan="4" style="text-transform:uppercase; letter-spacing:0.02em;">Share of Hospitality During Visit</th>
+            </tr>
+            <tr>
+              <th class="sub-th" style="width:16%;">Day</th>
+              <th class="sub-th" style="width:28%;">Breakfast</th>
+              <th class="sub-th" style="width:28%;">Lunch</th>
+              <th class="sub-th" style="width:28%;">Dinner</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      HOSPITALITY_DATA.forEach(h => {
+        html += `
+          <tr>
+            <td class="bold">${h.day} (${h.date})</td>
+            <td>${h.breakfast}</td>
+            <td>${h.lunch}</td>
+            <td>${h.dinner}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+          </tbody>
+        </table>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    /* ========================================================
+       FILE EXPORT (Saves all 4 updated arrays)
+       ======================================================== */
     function downloadUpdatedFile() {
       if (!isAdmin) return;
 
@@ -2369,6 +3662,10 @@
       const meetRegex = /let\s+MEETINGS_DATA\s*=\s*\[[\s\S]*?\];/;
       const newMeetStr = `let MEETINGS_DATA = ${JSON.stringify(MEETINGS_DATA, null, 2)};`;
       html = html.replace(meetRegex, newMeetStr);
+
+      const hospRegex = /let\s+HOSPITALITY_DATA\s*=\s*\[[\s\S]*?\];/;
+      const newHospStr = `let HOSPITALITY_DATA = ${JSON.stringify(HOSPITALITY_DATA, null, 2)};`;
+      html = html.replace(hospRegex, newHospStr);
 
       const fullDoc = "<!DOCTYPE html>\n<html lang=\"en\">\n" + html.substring(html.indexOf("<head>"));
 
