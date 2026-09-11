@@ -22,7 +22,7 @@ This repository hosts the mobile-first Circuit Overseer Visit Schedule applicati
 ## ✏️ How to Publish Updates
 
 1. Open [https://pssebastian.github.io/co-visit-schedule/](https://pssebastian.github.io/co-visit-schedule/) on your device.
-2. Log in with passcode `admin2026` (or tap **More** in the bottom bar).
+2. Log in with passcode admin passcode (or tap **More** in the bottom bar).
 3. Tap on any card (ministry slot, territory, or meeting) to modify companions, times, or notes.
 4. Tap **Export index.html** in the top admin banner to download your updated `index.html`.
 5. Replace `index.html` in this repository and commit/push:
