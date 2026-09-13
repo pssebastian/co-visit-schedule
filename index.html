@@ -1922,6 +1922,20 @@
       </div>
 
       <div class="form-field">
+        <label for="editSlotActivity">Activity / Ministry Type</label>
+        <select id="editSlotActivity" class="form-control">
+          <option value="House to House">House to House</option>
+          <option value="RV / Bible Study">RV / Bible Study</option>
+          <option value="Shepherding">Shepherding Call</option>
+          <option value="Meeting">Meeting</option>
+          <option value="Breakfast">Breakfast (Hospitality)</option>
+          <option value="Lunch">Lunch (Hospitality)</option>
+          <option value="Dinner">Dinner (Hospitality)</option>
+          <option value="Hospitality">Hospitality / Meal</option>
+        </select>
+      </div>
+
+      <div class="form-field">
         <label for="editSlotTime">Time</label>
         <input type="text" id="editSlotTime" class="form-control" placeholder="e.g. 8:00 - 9:00 AM">
       </div>
@@ -2204,248 +2218,257 @@
       <!-- Scrollable Preview container for screen -->
       <div class="print-preview-container">
         <div id="printableSheet">
-        <div class="print-title-box">
-          <div class="print-main-title">ARRANGEMENT DURING CIRCUIT OVERSEER'S VISIT</div>
-          <div class="print-sub-title">San Miguel Congregation • September 16–20, 2026</div>
-        </div>
-      
-        <table class="print-table">
-          <thead>
-            <tr>
-              <th style="width:16%;">Field Service</th>
-              <th style="width:14%;">Time</th>
-              <th style="width:28%;">Territory</th>
-              <th style="width:26%;">Meeting Place</th>
-              <th style="width:16%;">Territory Guide</th>
-            </tr>
-          </thead>
-          <tbody>
-      
-          <tr>
-            <td class="bold">Wednesday</td>
-            <td class="center">8:00 AM</td>
-            <td>San Isidro (Territory No. 68 &amp; 69)</td>
-            <td>San Miguel (Bro. Sebastian's Residence)</td>
-            <td>Bro. Jeremy Barte</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Thursday</td>
-            <td class="center">8:00 AM (Morning) &amp; 3:00 PM (Afternoon)</td>
-            <td>San Isidro (Territory No. 66 &amp; 67)</td>
-            <td>San Miguel (Bro. Sebastian's Residence)</td>
-            <td>Bro. Arnold Cabrales Sr.</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Friday</td>
-            <td class="center">8:00 AM (Morning) &amp; 3:00 PM (Afternoon)</td>
-            <td>Abulalas (Territory No. 50, 51 &amp; 52)</td>
-            <td>San Miguel (Bro. Sebastian's Residence)</td>
-            <td>Bro. Pierre Paulo Sebastian</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Saturday</td>
-            <td class="center">8:00 AM (Morning) &amp; 3:00 PM (Afternoon)</td>
-            <td>Group Territories &amp; Sto. Niño</td>
-            <td>Kingdom Hall (By Service Group)</td>
-            <td>Group Overseers &amp; Assistant Servants</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Sunday</td>
-            <td class="center">3:00 PM (Afternoon)</td>
-            <td>Palapat - Sandoval (Territory No. 33 &amp; 34)</td>
-            <td>San Miguel (Bro. Sebastian's Residence)</td>
-            <td>Bro. Samuel Barte</td>
-          </tr>
-        
-          </tbody>
-        </table>
-      
-        <table class="print-table">
-          <thead>
-            <tr>
-              <th style="width:8%;" rowspan="2">Araw</th>
-              <th colspan="2" style="width:46%;">Sasamahan sa umaga</th>
-              <th colspan="2" style="width:46%;">Sasamahan sa hapon</th>
-            </tr>
-            <tr>
-              <th class="sub-th" style="width:14%;">Time</th>
-              <th class="sub-th" style="width:32%;">Gawain / Pulong / Kasama</th>
-              <th class="sub-th" style="width:14%;">Time</th>
-              <th class="sub-th" style="width:32%;">Gawain / Pulong / Kasama</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- WEDNESDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Wed</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: Francis Francisco (H2H)<br>Wife: Malou Dela Cruz (H2H)</td>
-              <td class="center" rowspan="3">-</td>
-              <td rowspan="3" class="center" style="font-style:italic; color:#444;">*Flexibility Time</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Lani Yuzon (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Open Brother (RV/BS)<br>Wife: Lydia Aguilar (RV/BS)</td>
-            </tr>
 
-            <!-- THURSDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Thu</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: John Michael Sta. Cruz (H2H)<br>Wife: May Dilloro (H2H)</td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: John Michael Sta. Cruz (H2H)<br>Wife: Lerma Maclang (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Florissa Sebastian (H2H)</td>
-              <td class="center">-</td>
-              <td class="center">-</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Shepherding Call<br>Wife: Julie Ann Aguilar (RV/BS)</td>
-              <td class="center">5:00 - 6:00</td>
-              <td class="bold">Pioneers Meeting with C.O. (Kingdom Hall)</td>
-            </tr>
+    <div class="print-title-box">
+      <div class="print-main-title">ARRANGEMENT DURING CIRCUIT OVERSEER'S VISIT</div>
+      <div class="print-sub-title">San Miguel Congregation • September 16–20, 2026</div>
+    </div>
 
-            <!-- FRIDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Fri</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: Arnold Cabrales Sr. (H2H)<br>Wife: Leni Dela Cruz (H2H)</td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Deborah Barte (H2H)</td>
-              <td class="center">4:00 - 5:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Open Brother (RV/BS)<br>Wife: Lorinda Soco (RV/BS)</td>
-              <td class="center">5:30 - 7:30</td>
-              <td class="bold">Elder &amp; MS Meeting with C.O. (Kingdom Hall)</td>
-            </tr>
+    <table class="print-table">
+      <thead>
+        <tr>
+          <th style="width:16%;">Field Service</th>
+          <th style="width:14%;">Time</th>
+          <th style="width:28%;">Territory</th>
+          <th style="width:26%;">Meeting Place</th>
+          <th style="width:16%;">Territory Guide</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+      <tr>
+        <td class="bold">Wednesday</td>
+        <td class="center">7:30 AM</td>
+        <td>San Isidro (Terr. 60 - 61)</td>
+        <td>Sebastian Residence</td>
+        <td>Bro. Jeremy Barte</td>
+      </tr>
+      <tr>
+        <td class="bold">Thursday (AM)</td>
+        <td class="center">7:30 AM</td>
+        <td>San Isidro (Terr. 62 - 63)</td>
+        <td>Sebastian Residence</td>
+        <td>Bro. Arnold Cabrales Sr.</td>
+      </tr>
+      <tr>
+        <td class="bold">Thursday (PM)</td>
+        <td class="center">4:00 PM</td>
+        <td>Abulalas (Terr. 52)</td>
+        <td>Victoria Residence</td>
+        <td>Bro. Pierre Paulo Sebastian</td>
+      </tr>
+      <tr>
+        <td class="bold">Friday (AM)</td>
+        <td class="center">7:30 AM</td>
+        <td>Iba-Ibayo (Terr. 45-46)</td>
+        <td>Salonga Residence</td>
+        <td>Bro. Arnold Cabrales Sr.</td>
+      </tr>
+      <tr>
+        <td class="bold">Friday (PM)</td>
+        <td class="center">4:00 PM</td>
+        <td>Parong-Parong (Terr. 59)</td>
+        <td>Kingdom Hall</td>
+        <td>Bro. Jeremy Barte</td>
+      </tr>
+      <tr>
+        <td class="bold">Saturday (AM)</td>
+        <td class="center">7:30 AM</td>
+        <td>By Group</td>
+        <td>Meet via Zoom</td>
+        <td>Group Overseers &amp; Assistant Servants</td>
+      </tr>
+      <tr>
+        <td class="bold">Saturday (PM)</td>
+        <td class="center">4:00 PM</td>
+        <td>Iba (Territory 44)</td>
+        <td>Salonga Residence</td>
+        <td>Bro. Paul Richard Acaylar</td>
+      </tr>
+      <tr>
+        <td class="bold">Sunday (PM)</td>
+        <td class="center">4:00 PM</td>
+        <td>Iba-Ibayo (Territory 49)</td>
+        <td>Parole Residence</td>
+        <td>Bro. Samuel Barte</td>
+      </tr>
+    
+      </tbody>
+    </table>
 
-            <!-- SATURDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Sat</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Cherry Sebastian (H2H)</td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Noemi Zoleta (H2H)</td>
-              <td class="center">4:00 - 5:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Shepherding Call<br>Wife: Francisca A. Sebastian (RV/BS)</td>
-              <td class="center">-</td>
-              <td class="center">-</td>
-            </tr>
-
-            <!-- SUNDAY -->
-            <tr>
-              <td class="bold center" rowspan="2">Sun</td>
-              <td class="center" rowspan="2">8:00 - 10:00</td>
-              <td class="bold center" rowspan="2">Weekend Meeting &amp; Public Talk<br><span style="font-size:7.5pt; font-weight:normal; color:#444;">(Kingdom Hall)</span></td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Julie Ann Aguilar (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">4:00 - 5:00</td>
-              <td>CO: Francis Francisco (H2H)<br>Wife: Marcia Acaylar (H2H)</td>
-            </tr>
-          </tbody>
-        </table>
+    <table class="print-table">
+      <thead>
+        <tr>
+          <th style="width:8%;" rowspan="2">Araw</th>
+          <th colspan="2" style="width:46%;">Sasamahan sa umaga</th>
+          <th colspan="2" style="width:46%;">Sasamahan sa hapon</th>
+        </tr>
+        <tr>
+          <th class="sub-th" style="width:14%;">Time</th>
+          <th class="sub-th" style="width:32%;">Gawain / Pulong / Kasama</th>
+          <th class="sub-th" style="width:14%;">Time</th>
+          <th class="sub-th" style="width:32%;">Gawain / Pulong / Kasama</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+        <tr>
+          <td class="bold center" rowspan="3">Wed</td>
+          <td class="center">7:30 - 8:30</td>
+          <td>CO: Francis Francisco (H2H)<br>Wife: Malou Dela Cruz (H2H)</td>
+          <td class="center" rowspan="3">-</td>
+          <td rowspan="3" class="center" style="font-style:italic; color:#444;">*Flexibility Time</td>
+        </tr>
+        <tr>
+          <td class="center">8:30 - 9:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Lani Yuzon (H2H)</td>
+        </tr>
+        <tr>
+          <td class="center">9:30 - 11:00</td>
+          <td>CO: Open slot (RV/BS)<br>Wife: Lydia Aguilar (RV/BS)</td>
+        </tr>
+        <tr>
+          <td class="bold center" rowspan="3">Thu</td>
+          <td class="center">7:30 - 8:30</td>
+          <td>CO: John Michael Sta. Cruz (H2H)<br>Wife: May Dilloro (H2H)</td>
+          <td class="center">4:00 - 5:00</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Lerma Maclang (H2H)</td>
+        </tr>
+        <tr>
+          <td class="center">8:30 - 9:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Florissa Sebastian (H2H)</td>
+          <td class="center">6:00 - 7:00</td>
+          <td class="bold">Pioneers Meeting with C.O. (Kingdom Hall)</td>
+        </tr>
+        <tr>
+          <td class="center">9:30 - 11:00</td>
+          <td>CO: Open slot (RV/BS)<br>Wife: Julie Ann Aguilar (RV/BS)</td>
+          <td class="center">-</td>
+          <td class="center">-</td>
+        </tr>
+        <tr>
+          <td class="bold center" rowspan="3">Fri</td>
+          <td class="center">7:30 - 8:30</td>
+          <td>CO: Arnold Cabrales Sr. (H2H)<br>Wife: Leni Dela Cruz (H2H)</td>
+          <td class="center">4:00 - 5:00</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Open / Available Sister (H2H)</td>
+        </tr>
+        <tr>
+          <td class="center">8:30 - 9:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Deborah Barte (H2H)</td>
+          <td class="center">6:00 - 8:00</td>
+          <td class="bold">Elder & MS Meeting with C.O. (Kingdom Hall)</td>
+        </tr>
+        <tr>
+          <td class="center">9:30 - 11:00</td>
+          <td>CO: Open / Available Brother (RV/BS)<br>Wife: Lorinda Soco (RV/BS)</td>
+          <td class="center">-</td>
+          <td class="center">-</td>
+        </tr>
+        <tr>
+          <td class="bold center" rowspan="3">Sat</td>
+          <td class="center">7:30 - 8:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Cherry Sebastian (H2H)</td>
+          <td class="center">4:00 - 5:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Open / Available Sister (H2H)</td>
+        </tr>
+        <tr>
+          <td class="center">8:30 - 9:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Noemi Zoleta (H2H)</td>
+          <td class="center">-</td>
+          <td class="center">-</td>
+        </tr>
+        <tr>
+          <td class="center">9:30 - 11:00</td>
+          <td>CO: Shepherding Call (Shepherding)<br>Wife: Francisca A. Sebastian (RV/BS)</td>
+          <td class="center">-</td>
+          <td class="center">-</td>
+        </tr>
+        <!-- SUNDAY -->
+        <tr>
+          <td class="bold center">Sun</td>
+          <td class="center">8:00 - 10:00</td>
+          <td class="bold center">Weekend Meeting &amp; Public Talk<br><span style="font-size:7.5pt; font-weight:normal; color:#444;">(Kingdom Hall)</span></td>
+          <td class="center">4:00 - 5:30</td>
+          <td>CO: Open / Available Brother (H2H)<br>Wife: Marcia Acaylar (H2H)</td>
+        </tr>
       
-        <table class="print-table print-table-hospitality">
-          <thead>
-            <tr>
-              <th colspan="4" style="text-transform:uppercase; letter-spacing:0.02em;">Share of Hospitality During Visit</th>
-            </tr>
-            <tr>
-              <th class="sub-th" style="width:16%;">Day</th>
-              <th class="sub-th" style="width:28%;">Breakfast</th>
-              <th class="sub-th" style="width:28%;">Lunch</th>
-              <th class="sub-th" style="width:28%;">Dinner</th>
-            </tr>
-          </thead>
-          <tbody>
-      
-          <tr>
-            <td class="bold">Tuesday (Sept 15)</td>
-            <td>-</td>
-            <td>Taken</td>
-            <td>Arlene Enriquez</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Wednesday (Sept 16)</td>
-            <td>Catalina Velasco</td>
-            <td>Taken by group</td>
-            <td>Malou Dela Cruz</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Thursday (Sept 17)</td>
-            <td>Julie Ann and Des Aguilar</td>
-            <td>Taken by group</td>
-            <td>Evangeline Malicsi</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Friday (Sept 18)</td>
-            <td>Lydia Aguilar and Lolita Barcelona</td>
-            <td>Taken by group</td>
-            <td>Melda Dela Cruz</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Saturday (Sept 19)</td>
-            <td>Marissa Fermalino</td>
-            <td>FSG 4</td>
-            <td>May Dilloro</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Sunday (Sept 20)</td>
-            <td>Barte Family</td>
-            <td>FSG 1 (c/o Zoleta Family)</td>
-            <td>Parole Family</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Monday (Sept 21)</td>
-            <td>Zar and Ajie Pormilos</td>
-            <td>Ellen Baltbat and Lolita Guidoc</td>
-            <td>Paulo and Lizel Sebastian</td>
-          </tr>
-        
-          <tr>
-            <td class="bold">Tuesday (Sept 22)</td>
-            <td>Lino and Lucy Cahilo</td>
-            <td>Traveling to next congregation</td>
-            <td>-</td>
-          </tr>
-        
-          </tbody>
-        </table>
+      </tbody>
+    </table>
+
+    <table class="print-table print-table-hospitality">
+      <thead>
+        <tr>
+          <th colspan="4" style="text-transform:uppercase; letter-spacing:0.02em;">Share of Hospitality During Visit</th>
+        </tr>
+        <tr>
+          <th class="sub-th" style="width:16%;">Day</th>
+          <th class="sub-th" style="width:28%;">Breakfast</th>
+          <th class="sub-th" style="width:28%;">Lunch</th>
+          <th class="sub-th" style="width:28%;">Dinner</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+      <tr>
+        <td class="bold">Tuesday (Sept 15)</td>
+        <td>-</td>
+        <td>Taken</td>
+        <td>Arlene Enriquez</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Wednesday (Sept 16)</td>
+        <td>Catalina Velasco</td>
+        <td>Taken by group</td>
+        <td>Malou Dela Cruz</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Thursday (Sept 17)</td>
+        <td>Julie Ann and Des Aguilar</td>
+        <td>Taken by group</td>
+        <td>Evangeline Malicsi</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Friday (Sept 18)</td>
+        <td>Lydia Aguilar and Lolita Barcelona</td>
+        <td>Taken by group</td>
+        <td>Melda Dela Cruz</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Saturday (Sept 19)</td>
+        <td>Marissa Fermalino</td>
+        <td>FSG 4</td>
+        <td>May Dilloro</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Sunday (Sept 20)</td>
+        <td>Barte Family</td>
+        <td>FSG 1 (c/o Zoleta Family)</td>
+        <td>Parole Family</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Monday (Sept 21)</td>
+        <td>Zar and Ajie Pormilos</td>
+        <td>Ellen Baltbat and Lolita Guidoc</td>
+        <td>Paulo and Lizel Sebastian</td>
+      </tr>
+    
+      <tr>
+        <td class="bold">Tuesday (Sept 22)</td>
+        <td>Lino and Lucy Cahilo</td>
+        <td>Traveling to next congregation</td>
+        <td>-</td>
+      </tr>
+    
+      </tbody>
+    </table>
+  
       </div>
       </div>
     </div>
@@ -2469,7 +2492,7 @@
     
     const SESSION_KEY = "sm_covisit_unlocked";
     const ADMIN_KEY   = "sm_covisit_is_admin";
-    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v2";
+    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v3";
 
     const BROTHERS = [
       "Amiel Joshua Zoleta", "Arnold Cabrales Jr.", "Arnold Cabrales Sr.", "Arnulfo Sebastian",
@@ -2567,8 +2590,7 @@
     "activity": "Lunch",
     "companion": "Taken by Group",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 0
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Tue15",
@@ -2579,8 +2601,7 @@
     "activity": "Dinner",
     "companion": "Arlene Enriquez",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 1
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Tue15",
@@ -2591,92 +2612,84 @@
     "activity": "Meeting",
     "companion": "Our Christian Life & Ministry Meeting",
     "status": "meeting",
-    "note": "Kingdom Hall",
-    "_originalIndex": 2
+    "note": "Kingdom Hall"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "7:00 - 7:45 AM",
+    "time": "6:30 - 7:15 AM",
     "role": "both",
     "activity": "Breakfast",
     "companion": "Catalina Velasco",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 3
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Francis Francisco",
     "status": "confirmed",
-    "note": "Requested Wednesday AM Bahay-bahay",
-    "_originalIndex": 4
+    "note": "Requested Wednesday AM Bahay-bahay"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Malou Dela Cruz",
     "status": "confirmed",
-    "note": "Requested Wednesday House to House",
-    "_originalIndex": 5
+    "note": "Requested Wednesday House to House"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 6
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Lani Yuzon",
     "status": "confirmed",
-    "note": "Requested Wednesday House to House",
-    "_originalIndex": 7
+    "note": "Requested Wednesday House to House"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "CO",
     "activity": "RV / Bible Study",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
-    "note": "Open for Bible Study conduct",
-    "_originalIndex": 8
+    "note": "Flexible slot: RV / Bible Study or Shepherding Call"
   },
   {
     "dayKey": "Wed",
     "dayLabel": "Wednesday",
     "fullDate": "September 16",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "Wife",
     "activity": "RV / Bible Study",
     "companion": "Lydia Aguilar",
     "status": "confirmed",
-    "note": "Requested Wed AM RV / Bible Study",
-    "_originalIndex": 9
+    "note": "Requested Wed AM RV / Bible Study"
   },
   {
     "dayKey": "Wed",
@@ -2687,8 +2700,7 @@
     "activity": "Lunch",
     "companion": "Taken by group",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 10
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Wed",
@@ -2699,92 +2711,84 @@
     "activity": "Dinner",
     "companion": "Malou Dela Cruz",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 11
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "7:00 - 7:45 AM",
+    "time": "6:30 - 7:15 AM",
     "role": "both",
     "activity": "Breakfast",
     "companion": "Julie Ann and Des Aguilar",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 12
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "John Michael Sta. Cruz",
     "status": "confirmed",
-    "note": "",
-    "_originalIndex": 13
+    "note": "Available Thursday morning"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "May Dilloro",
     "status": "confirmed",
-    "note": "Requested Thursday House to House",
-    "_originalIndex": 14
+    "note": "Requested Thursday House to House"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "",
-    "_originalIndex": 15
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Florissa Sebastian",
     "status": "confirmed",
-    "note": "Requested Thursday House to House",
-    "_originalIndex": 16
+    "note": "Requested Thursday House to House"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "CO",
-    "activity": "Shepherding",
-    "companion": "Shepherding Call",
-    "status": "confirmed",
-    "note": "Arranged with Elders",
-    "_originalIndex": 17
+    "activity": "RV / Bible Study",
+    "companion": "Open slot",
+    "status": "open",
+    "note": "Flexible slot: Shepherding Call or RV / Bible Study"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "Wife",
     "activity": "RV / Bible Study",
     "companion": "Julie Ann Aguilar",
     "status": "confirmed",
-    "note": "Requested Thursday AM RV / Bible Study",
-    "_originalIndex": 18
+    "note": "Requested Thursday AM RV / Bible Study"
   },
   {
     "dayKey": "Thu",
@@ -2795,140 +2799,128 @@
     "activity": "Lunch",
     "companion": "Taken by group",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 19
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "3:00 - 4:00 PM",
+    "time": "4:00 - 5:00 PM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "John Michael Sta. Cruz",
-    "status": "confirmed",
-    "note": "Available for RV/Bible Study",
-    "_originalIndex": 20
+    "companion": "Open / Available Brother",
+    "status": "open",
+    "note": "Available for House to House"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "3:00 - 4:00 PM",
+    "time": "4:00 - 5:00 PM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Lerma Maclang",
     "status": "confirmed",
-    "note": "Requested Thursday House to House",
-    "_originalIndex": 21
+    "note": "Requested Thursday House to House"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "5:00 - 6:00 PM",
+    "time": "6:00 PM - 7:00 PM",
     "role": "both",
     "activity": "Meeting",
     "companion": "Pioneers Meeting with C.O.",
     "status": "meeting",
-    "note": "Kingdom Hall",
-    "_originalIndex": 22
+    "note": "Kingdom Hall"
   },
   {
     "dayKey": "Thu",
     "dayLabel": "Thursday",
     "fullDate": "September 17",
-    "time": "6:30 - 7:30 PM",
+    "time": "7:15 - 8:00 PM",
     "role": "both",
     "activity": "Dinner",
     "companion": "Evangeline Malicsi",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 23
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "7:00 - 7:45 AM",
+    "time": "6:30 - 7:15 AM",
     "role": "both",
     "activity": "Breakfast",
     "companion": "Lydia Aguilar and Lolita Barcelona",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 24
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Arnold Cabrales Sr.",
     "status": "confirmed",
-    "note": "Available Friday AM",
-    "_originalIndex": 25
+    "note": "Available Friday AM"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Leni Dela Cruz",
     "status": "confirmed",
-    "note": "Assigned Friday AM House to House (To confirm.)",
-    "_originalIndex": 26
+    "note": "Assigned Friday AM House to House"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 27
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Deborah Barte",
     "status": "confirmed",
-    "note": "Requested Friday House to House",
-    "_originalIndex": 28
+    "note": "Requested Friday House to House"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "CO",
     "activity": "RV / Bible Study",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open for Bible Study conduct",
-    "_originalIndex": 29
+    "note": "Flexible slot: RV / Bible Study or Shepherding Call"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "Wife",
     "activity": "RV / Bible Study",
     "companion": "Lorinda Soco",
     "status": "confirmed",
-    "note": "Requested Friday AM Study / RV",
-    "_originalIndex": 30
+    "note": "Requested Friday AM Study / RV"
   },
   {
     "dayKey": "Fri",
@@ -2939,32 +2931,7 @@
     "activity": "Lunch",
     "companion": "Taken by group",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 31
-  },
-  {
-    "dayKey": "Fri",
-    "dayLabel": "Friday",
-    "fullDate": "September 18",
-    "time": "3:00 - 4:00 PM",
-    "role": "CO",
-    "activity": "House to House",
-    "companion": "Open / Available Brother",
-    "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 32
-  },
-  {
-    "dayKey": "Fri",
-    "dayLabel": "Friday",
-    "fullDate": "September 18",
-    "time": "3:00 - 4:00 PM",
-    "role": "Wife",
-    "activity": "House to House",
-    "companion": "Open / Available Sister",
-    "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 33
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Fri",
@@ -2975,8 +2942,7 @@
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 34
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Fri",
@@ -2987,116 +2953,106 @@
     "activity": "House to House",
     "companion": "Open / Available Sister",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 35
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "5:30 - 7:30 PM",
+    "time": "6:00 - 8:00 PM",
     "role": "CO",
     "activity": "Meeting",
     "companion": "Elder & MS Meeting with C.O.",
     "status": "meeting",
-    "note": "Kingdom Hall",
-    "_originalIndex": 36
+    "note": "Kingdom Hall"
   },
   {
     "dayKey": "Fri",
     "dayLabel": "Friday",
     "fullDate": "September 18",
-    "time": "7:30 - 8:30 PM",
+    "time": "8:15 - 9:00 PM",
     "role": "both",
     "activity": "Dinner",
     "companion": "Melda Dela Cruz",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 37
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "7:00 - 7:45 AM",
+    "time": "6:30 - 7:15 AM",
     "role": "both",
     "activity": "Breakfast",
     "companion": "Marissa Fermalino",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 38
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "By Group Field Service",
-    "_originalIndex": 39
+    "note": "By Group Field Service"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "8:00 - 9:00 AM",
+    "time": "7:30 - 8:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Cherry Sebastian",
     "status": "confirmed",
-    "note": "Requested Saturday morning",
-    "_originalIndex": 40
+    "note": "Requested Saturday morning"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 41
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "9:00 - 10:00 AM",
+    "time": "8:30 - 9:30 AM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Noemi Zoleta",
     "status": "confirmed",
-    "note": "Requested Saturday morning",
-    "_originalIndex": 42
+    "note": "Tentative."
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "CO",
     "activity": "Shepherding",
     "companion": "Shepherding Call",
-    "status": "confirmed",
-    "note": "Arranged with Elders",
-    "_originalIndex": 43
+    "status": "shepherd",
+    "note": "Flexible slot: Shepherding Call or RV / Bible Study"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "10:00 - 11:00 AM",
+    "time": "9:30 - 11:00 AM",
     "role": "Wife",
     "activity": "RV / Bible Study",
     "companion": "Francisca A. Sebastian",
     "status": "confirmed",
-    "note": "Bible Study Conduct",
-    "_originalIndex": 44
+    "note": "Request for Mayleen to conduct Bible Study"
   },
   {
     "dayKey": "Sat",
@@ -3107,56 +3063,29 @@
     "activity": "Lunch",
     "companion": "FSG 4",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 45
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "3:00 - 4:00 PM",
+    "time": "4:00 - 5:30 PM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 46
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Sat",
     "dayLabel": "Saturday",
     "fullDate": "September 19",
-    "time": "3:00 - 4:00 PM",
+    "time": "4:00 - 5:30 PM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Open / Available Sister",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 47
-  },
-  {
-    "dayKey": "Sat",
-    "dayLabel": "Saturday",
-    "fullDate": "September 19",
-    "time": "4:00 - 5:00 PM",
-    "role": "CO",
-    "activity": "House to House",
-    "companion": "Open / Available Brother",
-    "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 48
-  },
-  {
-    "dayKey": "Sat",
-    "dayLabel": "Saturday",
-    "fullDate": "September 19",
-    "time": "4:00 - 5:00 PM",
-    "role": "Wife",
-    "activity": "House to House",
-    "companion": "Open / Available Sister",
-    "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 49
+    "note": "Open slot for ministry"
   },
   {
     "dayKey": "Sat",
@@ -3167,20 +3096,18 @@
     "activity": "Dinner",
     "companion": "May Dilloro",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 50
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Sun",
     "dayLabel": "Sunday",
     "fullDate": "September 20",
-    "time": "7:00 - 7:45 AM",
+    "time": "6:30 - 7:15 AM",
     "role": "both",
     "activity": "Breakfast",
     "companion": "Barte Family",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 51
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Sun",
@@ -3191,8 +3118,7 @@
     "activity": "Meeting",
     "companion": "Weekend Meeting with Public Talk",
     "status": "meeting",
-    "note": "Congregation Meeting (Kingdom Hall)",
-    "_originalIndex": 52
+    "note": "Congregation Meeting (Kingdom Hall)"
   },
   {
     "dayKey": "Sun",
@@ -3203,56 +3129,29 @@
     "activity": "Lunch",
     "companion": "FSG 1 (c/o Zoleta Family)",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 53
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Sun",
     "dayLabel": "Sunday",
     "fullDate": "September 20",
-    "time": "3:00 - 4:00 PM",
+    "time": "4:00 - 5:30 PM",
     "role": "CO",
     "activity": "House to House",
     "companion": "Open / Available Brother",
     "status": "open",
-    "note": "Open slot for ministry",
-    "_originalIndex": 54
+    "note": "Open slot for ministry - to be assigned"
   },
   {
     "dayKey": "Sun",
     "dayLabel": "Sunday",
     "fullDate": "September 20",
-    "time": "3:00 - 4:00 PM",
-    "role": "Wife",
-    "activity": "House to House",
-    "companion": "Julie Ann Aguilar",
-    "status": "confirmed",
-    "note": "Requested Sunday PM Bahay-bahay",
-    "_originalIndex": 55
-  },
-  {
-    "dayKey": "Sun",
-    "dayLabel": "Sunday",
-    "fullDate": "September 20",
-    "time": "4:00 - 5:00 PM",
-    "role": "CO",
-    "activity": "House to House",
-    "companion": "Francis Francisco",
-    "status": "confirmed",
-    "note": "Available also for RV/Bible Study",
-    "_originalIndex": 56
-  },
-  {
-    "dayKey": "Sun",
-    "dayLabel": "Sunday",
-    "fullDate": "September 20",
-    "time": "4:00 - 5:00 PM",
+    "time": "4:00 - 5:30 PM",
     "role": "Wife",
     "activity": "House to House",
     "companion": "Marcia Acaylar",
     "status": "confirmed",
-    "note": "Available also for RV/Bible Study",
-    "_originalIndex": 57
+    "note": "Assigned Sunday PM House to House"
   },
   {
     "dayKey": "Sun",
@@ -3263,8 +3162,7 @@
     "activity": "Dinner",
     "companion": "Parole Family",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 58
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Mon21",
@@ -3275,8 +3173,7 @@
     "activity": "Breakfast",
     "companion": "Zar and Ajie Pormilos",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 59
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Mon21",
@@ -3287,8 +3184,7 @@
     "activity": "Lunch",
     "companion": "Ellen Baltbat and Lolita Guidoc",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 60
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Mon21",
@@ -3299,8 +3195,7 @@
     "activity": "Dinner",
     "companion": "Paulo and Lizel Sebastian",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 61
+    "note": "Hospitality Meal"
   },
   {
     "dayKey": "Tue22",
@@ -3311,49 +3206,72 @@
     "activity": "Breakfast",
     "companion": "Lino and Lucy Cahilo",
     "status": "confirmed",
-    "note": "Hospitality Meal",
-    "_originalIndex": 62
+    "note": "Hospitality Meal"
   }
 ];
 
     let TERRITORY_DATA = [
   {
     "day": "Wednesday, Sept 16",
-    "time": "8:00 AM",
-    "territory": "San Isidro (Territory No. 68 & 69)",
-    "meetingPlace": "San Miguel (Bro. Sebastian's Residence)",
+    "time": "7:30 AM",
+    "territory": "San Isidro (Terr. 60 - 61)",
+    "meetingPlace": "Sebastian Residence",
     "guide": "Bro. Jeremy Barte",
-    "notes": "Gather promptly at 7:45 AM for field service arrangement."
+    "notes": "Gather promptly at 7:15 AM for field service arrangement."
   },
   {
-    "day": "Thursday, Sept 17",
-    "time": "8:00 AM (Morning) & 3:00 PM (Afternoon)",
-    "territory": "San Isidro (Territory No. 66 & 67)",
-    "meetingPlace": "San Miguel (Bro. Sebastian's Residence)",
+    "day": "Thursday (AM), Sept 17",
+    "time": "7:30 AM",
+    "territory": "San Isidro (Terr. 62 - 63)",
+    "meetingPlace": "Sebastian Residence",
     "guide": "Bro. Arnold Cabrales Sr.",
-    "notes": "Morning and afternoon field service groups."
+    "notes": "Morning field service group. Gather promptly at 7:15 AM."
   },
   {
-    "day": "Friday, Sept 18",
-    "time": "8:00 AM (Morning) & 3:00 PM (Afternoon)",
-    "territory": "Abulalas (Territory No. 50, 51 & 52)",
-    "meetingPlace": "San Miguel (Bro. Sebastian's Residence)",
+    "day": "Thursday (PM), Sept 17",
+    "time": "4:00 PM",
+    "territory": "Abulalas (Terr. 52)",
+    "meetingPlace": "Victoria Residence",
     "guide": "Bro. Pierre Paulo Sebastian",
-    "notes": "Prepare return visits and Bible study routes."
+    "notes": "Afternoon field service group before Pioneers Meeting."
   },
   {
-    "day": "Saturday, Sept 19",
-    "time": "8:00 AM (Morning) & 3:00 PM (Afternoon)",
-    "territory": "Group Territories & Sto. Niño",
-    "meetingPlace": "Kingdom Hall (By Service Group)",
+    "day": "Friday (AM), Sept 18",
+    "time": "7:30 AM",
+    "territory": "Iba-Ibayo (Terr. 45-46)",
+    "meetingPlace": "Salonga Residence",
+    "guide": "Bro. Arnold Cabrales Sr.",
+    "notes": "Morning field service group. Gather promptly at 7:15 AM."
+  },
+  {
+    "day": "Friday (PM), Sept 18",
+    "time": "4:00 PM",
+    "territory": "Parong-Parong (Terr. 59)",
+    "meetingPlace": "Kingdom Hall",
+    "guide": "Bro. Jeremy Barte",
+    "notes": "Afternoon field service group before Elders & MS Meeting."
+  },
+  {
+    "day": "Saturday (AM), Sept 19",
+    "time": "7:30 AM",
+    "territory": "By Group",
+    "meetingPlace": "Meet via Zoom",
     "guide": "Group Overseers & Assistant Servants",
-    "notes": "All groups gather at the Kingdom Hall."
+    "notes": "All service groups meet online via Zoom for ministry arrangements."
   },
   {
-    "day": "Sunday, Sept 20",
-    "time": "3:00 PM (Afternoon)",
-    "territory": "Palapat - Sandoval (Territory No. 33 & 34)",
-    "meetingPlace": "San Miguel (Bro. Sebastian's Residence)",
+    "day": "Saturday (PM), Sept 19",
+    "time": "4:00 PM",
+    "territory": "Iba (Territory 44)",
+    "meetingPlace": "Salonga Residence",
+    "guide": "Bro. Paul Richard Acaylar",
+    "notes": "Afternoon field service group."
+  },
+  {
+    "day": "Sunday (PM), Sept 20",
+    "time": "4:00 PM",
+    "territory": "Iba-Ibayo (Territory 49)",
+    "meetingPlace": "Parole Residence",
     "guide": "Bro. Samuel Barte",
     "notes": "Final afternoon house-to-house and return visits."
   }
@@ -3363,28 +3281,28 @@
     let MEETINGS_DATA = [
   {
     "title": "Life and Ministry Meeting",
-    "dayTime": "Tuesday (Sept 15) • 6:00 PM",
+    "dayTime": "Tuesday (Sept 15) \u2022 6:00 PM",
     "place": "Kingdom Hall",
     "attendees": "Entire Congregation",
     "desc": "Service Talk: Mahalin Niyo Sila at Maging Makonsiderasyon sa Kanila"
   },
   {
     "title": "Pioneers Meeting with Circuit Overseer",
-    "dayTime": "Thursday (Sept 17) • 5:00 PM - 6:00 PM",
+    "dayTime": "Thursday (Sept 17) \u2022 6:00 PM - 7:00 PM",
     "place": "Kingdom Hall",
     "attendees": "All Congregation Pioneers",
     "desc": ""
   },
   {
     "title": "Elders & Ministerial Servants Meeting",
-    "dayTime": "Friday (Sept 18) • 5:30 PM - 7:30 PM",
+    "dayTime": "Friday (Sept 18) \u2022 6:00 PM - 8:00 PM",
     "place": "Kingdom Hall",
     "attendees": "All Elders & Ministerial Servants",
     "desc": ""
   },
   {
     "title": "Weekend Meeting",
-    "dayTime": "Sunday (Sept 20) • 8:00 AM - 10:00 AM",
+    "dayTime": "Sunday (Sept 20) \u2022 8:00 AM - 10:00 AM",
     "place": "Kingdom Hall",
     "attendees": "Congregation & Public",
     "desc": "Public Talk: Episode 2 ng Ang Mabuting Balita Ayon kay Jesus (Bahagi 1) Last Service Talk: Sino Ba Talaga ang Namamahala sa Mundo?"
@@ -3538,6 +3456,7 @@
       renderSchedule();
       renderTerritories();
       renderMeetings();
+      renderPrintTemplate();
     }
 
     function updateAdminUI() {
@@ -3943,6 +3862,7 @@
        ======================================================== */
     function openEditSlotModal(index) {
       if (!isAdmin) return;
+      renderPrintTemplate();
       const item = SCHEDULE_DATA[index];
       if (!item) return;
 
@@ -3950,6 +3870,9 @@
       document.getElementById("editSlotTitle").textContent = `${item.dayLabel} • ${item.time}`;
       document.getElementById("editSlotSubtitle").textContent = `${item.role === 'CO' ? 'CO' : (item.role === 'Wife' ? "CO's Wife" : "CO & Wife")} • ${item.activity}`;
       document.getElementById("editSlotCompanion").value = item.companion;
+      if (document.getElementById("editSlotActivity")) {
+        document.getElementById("editSlotActivity").value = item.activity || "House to House";
+      }
       document.getElementById("editSlotTime").value = item.time;
       document.getElementById("editSlotNote").value = item.note || "";
       document.getElementById("editSlotStatus").value = item.status || "confirmed";
@@ -3967,6 +3890,9 @@
       if (isNaN(index) || !SCHEDULE_DATA[index]) return;
 
       SCHEDULE_DATA[index].companion = document.getElementById("editSlotCompanion").value.trim() || "Open / Available";
+      if (document.getElementById("editSlotActivity")) {
+        SCHEDULE_DATA[index].activity = document.getElementById("editSlotActivity").value;
+      }
       SCHEDULE_DATA[index].time = document.getElementById("editSlotTime").value.trim() || SCHEDULE_DATA[index].time;
       SCHEDULE_DATA[index].note = document.getElementById("editSlotNote").value.trim();
       SCHEDULE_DATA[index].status = document.getElementById("editSlotStatus").value;
@@ -4218,6 +4144,23 @@
       window.print();
     }
 
+        function getActivityAbbr(act) {
+      if (!act) return '';
+      const a = act.toLowerCase();
+      if (a.includes('house')) return 'H2H';
+      if (a.includes('rv') || a.includes('bible') || a.includes('study')) return 'RV/BS';
+      if (a.includes('shepherd')) return 'Shepherding';
+      if (a.includes('meeting')) return 'Meeting';
+      return act;
+    }
+
+    function cleanTimeStr(t) {
+      if (!t) return '';
+      return t.replace(/\s*(?:AM|PM)\s*/gi, ' ').replace(/\s+-\s+/, ' - ').trim();
+    }
+
+    window.addEventListener("beforeprint", () => renderPrintTemplate());
+
     function renderPrintTemplate() {
       const container = document.getElementById("printableSheet");
       if (!container) return;
@@ -4263,8 +4206,7 @@
         </table>
       `;
 
-      // 3. Ministry Accompaniments Table (Sasamahan)
-      // Matches the reference layout with Wednesday to Sunday
+      // 3. Ministry Accompaniments Table (Sasamahan) - Dynamically built from SCHEDULE_DATA
       html += `
         <table class="print-table">
           <thead>
@@ -4281,98 +4223,118 @@
             </tr>
           </thead>
           <tbody>
-            <!-- WEDNESDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Wed</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: Francis Francisco (H2H)<br>Wife: Malou Dela Cruz (H2H)</td>
-              <td class="center" rowspan="3">-</td>
-              <td rowspan="3" class="center" style="font-style:italic; color:#444;">*Flexibility Time</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Lani Yuzon (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Open Brother (RV/BS)<br>Wife: Lydia Aguilar (RV/BS)</td>
-            </tr>
+      `;
 
-            <!-- THURSDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Thu</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: John Michael Sta. Cruz (H2H)<br>Wife: May Dilloro (H2H)</td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: John Michael Sta. Cruz (H2H)<br>Wife: Lerma Maclang (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Florissa Sebastian (H2H)</td>
-              <td class="center">-</td>
-              <td class="center">-</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Shepherding Call<br>Wife: Julie Ann Aguilar (RV/BS)</td>
-              <td class="center">5:00 - 6:00</td>
-              <td class="bold">Pioneers Meeting with C.O. (Kingdom Hall)</td>
-            </tr>
+      const days = [
+        { key: 'Wed', label: 'Wed' },
+        { key: 'Thu', label: 'Thu' },
+        { key: 'Fri', label: 'Fri' },
+        { key: 'Sat', label: 'Sat' },
+        { key: 'Sun', label: 'Sun' }
+      ];
 
-            <!-- FRIDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Fri</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: Arnold Cabrales Sr. (H2H)<br>Wife: Leni Dela Cruz (H2H)</td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Deborah Barte (H2H)</td>
-              <td class="center">4:00 - 5:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Open Brother (RV/BS)<br>Wife: Lorinda Soco (RV/BS)</td>
-              <td class="center">5:30 - 7:30</td>
-              <td class="bold">Elder &amp; MS Meeting with C.O. (Kingdom Hall)</td>
-            </tr>
+      days.forEach(d => {
+        const dayItems = SCHEDULE_DATA.filter(i => i.dayKey === d.key);
+        const ministryItems = dayItems.filter(i => 
+          !['Breakfast', 'Lunch', 'Dinner', 'Hospitality'].includes(i.activity)
+        );
 
-            <!-- SATURDAY -->
-            <tr>
-              <td class="bold center" rowspan="3">Sat</td>
-              <td class="center">8:00 - 9:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Cherry Sebastian (H2H)</td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">9:00 - 10:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Noemi Zoleta (H2H)</td>
-              <td class="center">4:00 - 5:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Open Sister (H2H)</td>
-            </tr>
-            <tr>
-              <td class="center">10:00 - 11:00</td>
-              <td>CO: Shepherding Call<br>Wife: Francisca A. Sebastian (RV/BS)</td>
-              <td class="center">-</td>
-              <td class="center">-</td>
-            </tr>
+        if (d.key === 'Sun') {
+          const meetingItem = dayItems.find(i => i.activity === 'Meeting') || { time: '8:00 - 10:00 AM', companion: 'Weekend Meeting with Public Talk' };
+          const pmCo = dayItems.find(i => i.role === 'CO' && i.time.includes('PM'));
+          const pmWife = dayItems.find(i => i.role === 'Wife' && i.time.includes('PM'));
+          const pmTime = pmCo ? pmCo.time : (pmWife ? pmWife.time : '4:00 - 5:30 PM');
+          
+          const pmDesc = [];
+          if (pmCo) pmDesc.push(`CO: ${pmCo.companion} (${getActivityAbbr(pmCo.activity)})`);
+          if (pmWife) pmDesc.push(`Wife: ${pmWife.companion} (${getActivityAbbr(pmWife.activity)})`);
 
+          html += `
             <!-- SUNDAY -->
             <tr>
-              <td class="bold center" rowspan="2">Sun</td>
-              <td class="center" rowspan="2">8:00 - 10:00</td>
-              <td class="bold center" rowspan="2">Weekend Meeting &amp; Public Talk<br><span style="font-size:7.5pt; font-weight:normal; color:#444;">(Kingdom Hall)</span></td>
-              <td class="center">3:00 - 4:00</td>
-              <td>CO: Open Brother (H2H)<br>Wife: Julie Ann Aguilar (H2H)</td>
+              <td class="bold center">Sun</td>
+              <td class="center">${cleanTimeStr(meetingItem.time)}</td>
+              <td class="bold center">Weekend Meeting &amp; Public Talk<br><span style="font-size:7.5pt; font-weight:normal; color:#444;">(Kingdom Hall)</span></td>
+              <td class="center">${cleanTimeStr(pmTime)}</td>
+              <td>${pmDesc.join('<br>')}</td>
             </tr>
-            <tr>
-              <td class="center">4:00 - 5:00</td>
-              <td>CO: Francis Francisco (H2H)<br>Wife: Marcia Acaylar (H2H)</td>
-            </tr>
+          `;
+          return;
+        }
+
+        const amTimes = [...new Set(ministryItems.filter(i => i.time.includes('AM')).map(i => i.time))];
+        amTimes.sort((a, b) => parseTimeToMinutes(a) - parseTimeToMinutes(b));
+
+        const pmTimes = [...new Set(ministryItems.filter(i => i.time.includes('PM')).map(i => i.time))];
+        pmTimes.sort((a, b) => parseTimeToMinutes(a) - parseTimeToMinutes(b));
+
+        const rowCount = Math.max(amTimes.length, pmTimes.length, 3);
+
+        for (let r = 0; r < rowCount; r++) {
+          html += '\n            <tr>';
+          if (r === 0) {
+            html += `\n              <td class="bold center" rowspan="${rowCount}">${d.label}</td>`;
+          }
+
+          // Morning column
+          if (r < amTimes.length) {
+            const t = amTimes[r];
+            const coItem = ministryItems.find(i => i.time === t && i.role === 'CO');
+            const wifeItem = ministryItems.find(i => i.time === t && i.role === 'Wife');
+            const bothItem = ministryItems.find(i => i.time === t && i.role === 'both');
+
+            let desc = '';
+            if (bothItem) {
+              desc = `${bothItem.companion} (${bothItem.activity})`;
+            } else {
+              const parts = [];
+              if (coItem) parts.push(`CO: ${coItem.companion} (${getActivityAbbr(coItem.activity)})`);
+              if (wifeItem) parts.push(`Wife: ${wifeItem.companion} (${getActivityAbbr(wifeItem.activity)})`);
+              desc = parts.join('<br>');
+            }
+            html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
+            html += `\n              <td>${desc}</td>`;
+          } else {
+            html += `\n              <td class="center">-</td>\n              <td class="center">-</td>`;
+          }
+
+          // Afternoon column
+          if (d.key === 'Wed') {
+            if (r === 0) {
+              html += `\n              <td class="center" rowspan="${rowCount}">-</td>`;
+              html += `\n              <td rowspan="${rowCount}" class="center" style="font-style:italic; color:#444;">*Flexibility Time</td>`;
+            }
+          } else {
+            if (r < pmTimes.length) {
+              const t = pmTimes[r];
+              const coItem = ministryItems.find(i => i.time === t && i.role === 'CO');
+              const wifeItem = ministryItems.find(i => i.time === t && i.role === 'Wife');
+              const bothItem = ministryItems.find(i => i.time === t && i.role === 'both');
+
+              if (bothItem && bothItem.activity === 'Meeting') {
+                html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
+                html += `\n              <td class="bold">${bothItem.companion} (Kingdom Hall)</td>`;
+              } else if (coItem && coItem.activity === 'Meeting') {
+                html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
+                html += `\n              <td class="bold">${coItem.companion} (Kingdom Hall)</td>`;
+              } else {
+                const parts = [];
+                if (coItem) parts.push(`CO: ${coItem.companion} (${getActivityAbbr(coItem.activity)})`);
+                if (wifeItem) parts.push(`Wife: ${wifeItem.companion} (${getActivityAbbr(wifeItem.activity)})`);
+                const desc = parts.join('<br>');
+                html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
+                html += `\n              <td>${desc}</td>`;
+              }
+            } else {
+              html += `\n              <td class="center">-</td>\n              <td class="center">-</td>`;
+            }
+          }
+
+          html += '\n            </tr>';
+        }
+      });
+
+      html += `
           </tbody>
         </table>
       `;

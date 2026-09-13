@@ -4,6 +4,7 @@
 *.json
 *.csv
 *.txt
+*.pdf
 
 # Screenshots and Media
 *.jpg
