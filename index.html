@@ -2400,7 +2400,7 @@
         </tr>
         <tr>
           <td class="center">9:30 - 11:00</td>
-          <td>CO: Shepherding Call (Shepherding)<br>Wife: Francisca A. Sebastian (RV/BS)</td>
+          <td>CO: Open slot (RV/BS/Shepherding)<br>Wife: Francisca A. Sebastian (RV/BS)</td>
           <td class="center">-</td>
           <td class="center">-</td>
         </tr>
@@ -2512,7 +2512,7 @@
     
     const SESSION_KEY = "sm_covisit_unlocked";
     const ADMIN_KEY   = "sm_covisit_is_admin";
-    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v5";
+    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v6";
 
     const BROTHERS = [
       "Amiel Joshua Zoleta", "Arnold Cabrales Jr.", "Arnold Cabrales Sr.", "Arnulfo Sebastian",
@@ -3058,9 +3058,9 @@
     "fullDate": "September 19",
     "time": "9:30 - 11:00 AM",
     "role": "CO",
-    "activity": "Shepherding",
-    "companion": "Shepherding Call",
-    "status": "shepherd",
+    "activity": "RV / Bible Study",
+    "companion": "Open slot",
+    "status": "open",
     "note": "Flexible slot: Shepherding Call or RV / Bible Study"
   },
   {
@@ -3800,7 +3800,7 @@
             activityBadgeHtml = `<span class="badge-activity">Meeting</span>`;
           } else if (item.activity === "House to House") {
             activityBadgeHtml = `<span class="badge-activity"><span class="lbl-full">House to House</span><span class="lbl-short">H2H</span></span>`;
-          } else if (item.activity.includes("RV") || item.activity.includes("Bible Study")) {
+          } else if (item.activity.includes("RV") || item.activity.includes("Bible Study") || item.activity.includes("Shepherd")) {
             activityBadgeHtml = `<span class="badge-activity"><span class="lbl-full">RV / Bible Study</span><span class="lbl-short">RV/BS</span></span>`;
           } else if (isMeal) {
             activityBadgeHtml = `<span class="badge-activity badge-meal">${item.activity}</span>`;
@@ -4214,8 +4214,7 @@
       if (!act) return '';
       const a = act.toLowerCase();
       if (a.includes('house')) return 'H2H';
-      if (a.includes('rv') || a.includes('bible') || a.includes('study')) return 'RV/BS';
-      if (a.includes('shepherd')) return 'Shepherding';
+      if (a.includes('rv') || a.includes('bible') || a.includes('study') || a.includes('shepherd')) return 'RV/BS';
       if (a.includes('meeting')) return 'Meeting';
       return act;
     }
@@ -4236,7 +4235,7 @@
           }
         } else {
           const act = (item.activity || '').toLowerCase();
-          if (item.role === 'CO' && (act.includes('rv') || act.includes('bible') || act.includes('study'))) {
+          if (item.role === 'CO' && (act.includes('rv') || act.includes('bible') || act.includes('study') || act.includes('shepherd'))) {
             return `${rolePrefix}Open slot (RV/BS/Shepherding)`;
           } else if (item.role === 'CO') {
             return `${rolePrefix}Open Brother (${getActivityAbbr(item.activity)})`;
