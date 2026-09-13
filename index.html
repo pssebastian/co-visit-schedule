@@ -1946,7 +1946,6 @@
         <select id="editSlotActivity" class="form-control">
           <option value="House to House">House to House</option>
           <option value="RV / Bible Study">RV / Bible Study</option>
-          <option value="Shepherding">Shepherding Call</option>
           <option value="Meeting">Meeting</option>
           <option value="Breakfast">Breakfast (Hospitality)</option>
           <option value="Lunch">Lunch (Hospitality)</option>
@@ -1970,7 +1969,7 @@
         <select id="editSlotStatus" class="form-control">
           <option value="confirmed">Confirmed</option>
           <option value="open">Open / Available</option>
-          <option value="shepherd">Shepherding</option>
+          <option value="RV / Bible Study">RV / Bible Study</option>
           <option value="meeting">Meeting</option>
         </select>
       </div>
@@ -2022,7 +2021,6 @@
         <select id="addSlotActivity" class="form-control">
           <option value="House to House">House to House</option>
           <option value="RV / Bible Study">RV / Bible Study</option>
-          <option value="Shepherding">Shepherding</option>
           <option value="Meeting">Meeting</option>
           <option value="Breakfast">Breakfast (Hospitality)</option>
           <option value="Lunch">Lunch (Hospitality)</option>
@@ -2046,7 +2044,7 @@
         <select id="addSlotStatus" class="form-control">
           <option value="confirmed">Confirmed</option>
           <option value="open">Open / Available</option>
-          <option value="shepherd">Shepherding</option>
+          <option value="RV / Bible Study">RV / Bible Study</option>
           <option value="meeting">Meeting</option>
         </select>
       </div>
@@ -2512,7 +2510,7 @@
     
     const SESSION_KEY = "sm_covisit_unlocked";
     const ADMIN_KEY   = "sm_covisit_is_admin";
-    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v6";
+    const LOCAL_DATA_KEY = "sm_covisit_custom_data_v7";
 
     const BROTHERS = [
       "Amiel Joshua Zoleta", "Arnold Cabrales Jr.", "Arnold Cabrales Sr.", "Arnulfo Sebastian",
@@ -2697,7 +2695,7 @@
     "role": "CO",
     "activity": "RV / Bible Study",
     "companion": "Open slot",
-    "status": "open",
+    "status": "RV / Bible Study",
     "note": "Flexible slot: RV / Bible Study or Shepherding Call"
   },
   {
@@ -2796,7 +2794,7 @@
     "role": "CO",
     "activity": "RV / Bible Study",
     "companion": "Open slot",
-    "status": "open",
+    "status": "RV / Bible Study",
     "note": "Flexible slot: Shepherding Call or RV / Bible Study"
   },
   {
@@ -2928,7 +2926,7 @@
     "role": "CO",
     "activity": "RV / Bible Study",
     "companion": "Open slot",
-    "status": "open",
+    "status": "RV / Bible Study",
     "note": "Flexible slot: Shepherding Call or RV / Bible Study"
   },
   {
@@ -3060,7 +3058,7 @@
     "role": "CO",
     "activity": "RV / Bible Study",
     "companion": "Open slot",
-    "status": "open",
+    "status": "RV / Bible Study",
     "note": "Flexible slot: Shepherding Call or RV / Bible Study"
   },
   {
@@ -3800,7 +3798,7 @@
             activityBadgeHtml = `<span class="badge-activity">Meeting</span>`;
           } else if (item.activity === "House to House") {
             activityBadgeHtml = `<span class="badge-activity"><span class="lbl-full">House to House</span><span class="lbl-short">H2H</span></span>`;
-          } else if (item.activity.includes("RV") || item.activity.includes("Bible Study") || item.activity.includes("Shepherd")) {
+          } else if (item.activity.includes("RV") || item.activity.includes("Bible Study") || (item.status && item.status.includes("RV"))) {
             activityBadgeHtml = `<span class="badge-activity"><span class="lbl-full">RV / Bible Study</span><span class="lbl-short">RV/BS</span></span>`;
           } else if (isMeal) {
             activityBadgeHtml = `<span class="badge-activity badge-meal">${item.activity}</span>`;
@@ -4222,7 +4220,7 @@
     function formatMinistryPrintItem(item, isAfternoon) {
       if (!item) return '';
       const rolePrefix = item.role === 'CO' ? 'CO: ' : (item.role === 'Wife' ? 'Wife: ' : '');
-      const isOpen = item.status === 'open' || (item.companion && item.companion.toLowerCase().includes('open'));
+      const isOpen = item.status === 'open' || item.status === 'RV / Bible Study' || (item.companion && item.companion.toLowerCase().includes('open'));
 
       if (isOpen) {
         if (isAfternoon) {
