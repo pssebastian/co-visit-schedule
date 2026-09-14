@@ -105,7 +105,8 @@ function readSheetData(sheet) {
   const lastCol = sheet.getLastColumn();
   if (lastRow < 2 || lastCol < 1) return [];
 
-  const values = sheet.getRange(1, 1, lastRow, lastCol).getValues();
+  // getDisplayValues returns clean cell text formatted as strings, preventing raw Date GMT objects
+  const values = sheet.getRange(1, 1, lastRow, lastCol).getDisplayValues();
   const headers = values[0];
   const items = [];
 
@@ -119,7 +120,17 @@ function readSheetData(sheet) {
     for (let c = 0; c < headers.length; c++) {
       const headerKey = String(headers[c]).trim();
       if (!headerKey) continue;
-      item[headerKey] = row[c] !== null && row[c] !== undefined ? String(row[c]) : "";
+      let val = row[c] !== null && row[c] !== undefined ? String(row[c]).trim() : "";
+
+      // Clean up if it was serialized as a long GMT date string
+      if (headerKey === "fullDate" && (val.includes("GMT") || val.includes("Standard na Oras") || val.includes("00:00"))) {
+        const d = new Date(val);
+        if (!isNaN(d.getTime())) {
+          const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+          val = months[d.getMonth()] + " " + d.getDate();
+        }
+      }
+      item[headerKey] = val;
     }
     items.push(item);
   }

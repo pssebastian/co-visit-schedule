@@ -3497,12 +3497,32 @@
       pList.innerHTML = combined.map(p => `<option value="${p}">`).join('');
     }
 
+    function cleanFullDate(dStr) {
+      if (!dStr) return '';
+      const str = String(dStr).trim();
+      const simpleMatch = str.match(/^(January|February|March|April|May|June|July|August|September|Sept|October|November|December)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+\d{4})?$/i);
+      if (simpleMatch) {
+        return `September ${simpleMatch[2]}`;
+      }
+      const d = new Date(str);
+      if (!isNaN(d.getTime())) {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return `${months[d.getMonth()]} ${d.getDate()}`;
+      }
+      return str;
+    }
+
     function loadDraftData() {
       try {
         const saved = localStorage.getItem(LOCAL_DATA_KEY);
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (parsed.SCHEDULE_DATA) SCHEDULE_DATA = parsed.SCHEDULE_DATA;
+          if (parsed.SCHEDULE_DATA) {
+            SCHEDULE_DATA = parsed.SCHEDULE_DATA.map(item => ({
+              ...item,
+              fullDate: cleanFullDate(item.fullDate)
+            }));
+          }
           if (parsed.TERRITORY_DATA) TERRITORY_DATA = parsed.TERRITORY_DATA;
           if (parsed.MEETINGS_DATA) MEETINGS_DATA = parsed.MEETINGS_DATA;
           if (parsed.HOSPITALITY_DATA) HOSPITALITY_DATA = parsed.HOSPITALITY_DATA;
@@ -3552,7 +3572,10 @@
         if (json && json.status === "success") {
           let updated = false;
           if (json.SCHEDULE_DATA && Array.isArray(json.SCHEDULE_DATA) && json.SCHEDULE_DATA.length > 0) {
-            SCHEDULE_DATA = json.SCHEDULE_DATA;
+            SCHEDULE_DATA = json.SCHEDULE_DATA.map(item => ({
+              ...item,
+              fullDate: cleanFullDate(item.fullDate)
+            }));
             updated = true;
           }
           if (json.TERRITORY_DATA && Array.isArray(json.TERRITORY_DATA) && json.TERRITORY_DATA.length > 0) {
@@ -3621,7 +3644,10 @@
         syncTimeout = setTimeout(async () => {
           try {
             const payload = {
-              SCHEDULE_DATA,
+              SCHEDULE_DATA: SCHEDULE_DATA.map(item => ({
+                ...item,
+                fullDate: cleanFullDate(item.fullDate)
+              })),
               TERRITORY_DATA,
               MEETINGS_DATA,
               HOSPITALITY_DATA
@@ -3947,19 +3973,19 @@
         return;
       }
 
-      let days = [...new Set(filtered.map(i => i.fullDate || i.dayLabel))];
+      let days = [...new Set(filtered.map(i => cleanFullDate(i.fullDate) || i.dayLabel))];
 
       const todayKey = getTodayVisitKey();
       if (todayKey && currentDay === 'all') {
         const todayItem = SCHEDULE_DATA.find(i => i.dayKey === todayKey);
-        const todayTitle = todayItem ? (todayItem.fullDate || todayItem.dayLabel) : null;
+        const todayTitle = todayItem ? (cleanFullDate(todayItem.fullDate) || todayItem.dayLabel) : null;
         if (todayTitle && days.includes(todayTitle)) {
           days = [todayTitle, ...days.filter(d => d !== todayTitle)];
         }
       }
 
       days.forEach(dateTitle => {
-        const itemsForDay = filtered.filter(i => (i.fullDate || i.dayLabel) === dateTitle);
+        const itemsForDay = filtered.filter(i => (cleanFullDate(i.fullDate) || i.dayLabel) === dateTitle);
         const dayLabel = itemsForDay[0].dayLabel || dateTitle;
         const isToday = todayKey && (itemsForDay[0].dayKey === todayKey);
         const todayBadgeHtml = isToday ? `<span class="today-badge">Today</span>` : '';
@@ -3984,7 +4010,7 @@
           </div>
           <div class="date-group-info">
             <div class="date-group-day-label">${dayLabel} ${todayBadgeHtml}</div>
-            <div class="date-group-date-title">${dateTitle}</div>
+            <div class="date-group-date-title">${cleanFullDate(dateTitle)}</div>
           </div>
           <div class="date-group-slot-count">${itemsForDay.length} slots</div>
         `;
