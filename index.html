@@ -3512,6 +3512,25 @@
       return str;
     }
 
+    function cleanTime(tStr) {
+      if (!tStr) return '';
+      const str = String(tStr).trim();
+      if (str.includes('1899') || str.includes('GMT') || str.includes('Standard na Oras')) {
+        if (str.includes('23:30') || str.includes('07:30') || str.includes('7:30')) return '7:30 AM';
+        if (str.includes('08:00') || str.includes('16:00') || str.includes('04:00') || str.includes('4:00')) return '4:00 PM';
+        const d = new Date(str);
+        if (!isNaN(d.getTime())) {
+          let h = d.getHours();
+          const m = d.getMinutes();
+          const mStr = m < 10 ? '0' + m : m;
+          const ampm = h >= 12 ? 'PM' : 'AM';
+          h = h % 12 || 12;
+          return `${h}:${mStr} ${ampm}`;
+        }
+      }
+      return str;
+    }
+
     function loadDraftData() {
       try {
         const saved = localStorage.getItem(LOCAL_DATA_KEY);
@@ -3523,7 +3542,12 @@
               fullDate: cleanFullDate(item.fullDate)
             }));
           }
-          if (parsed.TERRITORY_DATA) TERRITORY_DATA = parsed.TERRITORY_DATA;
+          if (parsed.TERRITORY_DATA) {
+            TERRITORY_DATA = parsed.TERRITORY_DATA.map(t => ({
+              ...t,
+              time: cleanTime(t.time)
+            }));
+          }
           if (parsed.MEETINGS_DATA) MEETINGS_DATA = parsed.MEETINGS_DATA;
           if (parsed.HOSPITALITY_DATA) HOSPITALITY_DATA = parsed.HOSPITALITY_DATA;
         }
@@ -3579,7 +3603,10 @@
             updated = true;
           }
           if (json.TERRITORY_DATA && Array.isArray(json.TERRITORY_DATA) && json.TERRITORY_DATA.length > 0) {
-            TERRITORY_DATA = json.TERRITORY_DATA;
+            TERRITORY_DATA = json.TERRITORY_DATA.map(t => ({
+              ...t,
+              time: cleanTime(t.time)
+            }));
             updated = true;
           }
           if (json.MEETINGS_DATA && Array.isArray(json.MEETINGS_DATA) && json.MEETINGS_DATA.length > 0) {
@@ -3648,7 +3675,10 @@
                 ...item,
                 fullDate: cleanFullDate(item.fullDate)
               })),
-              TERRITORY_DATA,
+              TERRITORY_DATA: TERRITORY_DATA.map(t => ({
+                ...t,
+                time: cleanTime(t.time)
+              })),
               MEETINGS_DATA,
               HOSPITALITY_DATA
             };
@@ -4143,7 +4173,7 @@
         card.innerHTML = `
           <div class="territory-top">
             <span class="territory-day-title">${t.day}</span>
-            <span class="territory-time-badge">${t.time}</span>
+            <span class="territory-time-badge">${cleanTime(t.time)}</span>
           </div>
           <div class="territory-info-grid">
             <div class="info-line">
@@ -4498,16 +4528,17 @@
     function formatMinistryPrintItem(item, isAfternoon) {
       if (!item) return '';
       const rolePrefix = item.role === 'CO' ? 'CO: ' : (item.role === 'Wife' ? 'Wife: ' : '');
-      const isOpen = item.status === 'open' || item.status === 'RV / Bible Study' || (item.companion && item.companion.toLowerCase().includes('open'));
+      const comp = (item.companion || '').trim();
+      const isExplicitOpen = item.status === 'open' || !comp || /^(open|available|open\s*slot|open\s*brother|open\s*sister)/i.test(comp);
 
-      if (isOpen) {
+      if (isExplicitOpen) {
         if (isAfternoon) {
           if (item.role === 'CO') {
             return `${rolePrefix}Open Brother (H2H/RV/BS/Shepherding)`;
           } else if (item.role === 'Wife') {
             return `${rolePrefix}Open Sister (H2H/RV/BS)`;
           } else {
-            return `${item.companion} (H2H/RV/BS)`;
+            return `${comp || 'Open'} (H2H/RV/BS)`;
           }
         } else {
           const act = (item.activity || '').toLowerCase();
@@ -4518,12 +4549,12 @@
           } else if (item.role === 'Wife') {
             return `${rolePrefix}Open Sister (${getActivityAbbr(item.activity)})`;
           } else {
-            return `${item.companion} (${getActivityAbbr(item.activity)})`;
+            return `${comp || 'Open'} (${getActivityAbbr(item.activity)})`;
           }
         }
       }
 
-      return `${rolePrefix}${item.companion} (${getActivityAbbr(item.activity)})`;
+      return `${rolePrefix}${comp} (${getActivityAbbr(item.activity)})`;
     }
 
     function cleanTimeStr(t) {
@@ -4565,7 +4596,7 @@
         html += `
           <tr>
             <td class="bold">${shortDay}</td>
-            <td class="center">${t.time}</td>
+            <td class="center">${cleanTime(t.time)}</td>
             <td>${t.territory}</td>
             <td>${t.meetingPlace}</td>
             <td>${t.guide}</td>
@@ -4728,13 +4759,34 @@
           <tbody>
       `;
 
-      HOSPITALITY_DATA.forEach(h => {
+      const hospDays = [
+        { day: 'Tuesday', date: 'Sept 15', key: 'Tue15' },
+        { day: 'Wednesday', date: 'Sept 16', key: 'Wed' },
+        { day: 'Thursday', date: 'Sept 17', key: 'Thu' },
+        { day: 'Friday', date: 'Sept 18', key: 'Fri' },
+        { day: 'Saturday', date: 'Sept 19', key: 'Sat' },
+        { day: 'Sunday', date: 'Sept 20', key: 'Sun' },
+        { day: 'Monday', date: 'Sept 21', key: 'Mon21' },
+        { day: 'Tuesday', date: 'Sept 22', key: 'Tue22' }
+      ];
+
+      hospDays.forEach(h => {
+        const bSlot = SCHEDULE_DATA.find(s => s.dayKey === h.key && s.activity === 'Breakfast');
+        const lSlot = SCHEDULE_DATA.find(s => s.dayKey === h.key && s.activity === 'Lunch');
+        const dSlot = SCHEDULE_DATA.find(s => s.dayKey === h.key && s.activity === 'Dinner');
+
+        const fallbackH = HOSPITALITY_DATA.find(item => item.day === h.day && (item.date === h.date || (item.date && item.date.includes(h.date.split(' ')[1])))) || {};
+
+        const bComp = bSlot && bSlot.companion ? bSlot.companion : (fallbackH.breakfast || '-');
+        const lComp = lSlot && lSlot.companion ? lSlot.companion : (fallbackH.lunch || '-');
+        const dComp = dSlot && dSlot.companion ? dSlot.companion : (fallbackH.dinner || '-');
+
         html += `
           <tr>
             <td class="bold">${h.day} (${h.date})</td>
-            <td>${h.breakfast}</td>
-            <td>${h.lunch}</td>
-            <td>${h.dinner}</td>
+            <td>${bComp}</td>
+            <td>${lComp}</td>
+            <td>${dComp}</td>
           </tr>
         `;
       });
