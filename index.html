@@ -231,6 +231,97 @@
       cursor: pointer;
     }
 
+    /* Google Sheet Cloud Sync Badges & Toasts */
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid #d97706;
+      color: #92400e;
+      transition: all 0.2s ease;
+    }
+    .sync-badge.sync-synced {
+      background: #eef7ee;
+      border-color: #86efac;
+      color: #166534;
+    }
+    .sync-badge.sync-syncing {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1e40af;
+      animation: pulseSync 1.5s infinite ease-in-out;
+    }
+    .sync-badge.sync-error {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
+    .sync-badge.sync-local {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #475569;
+    }
+
+    .header-sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      vertical-align: middle;
+      border: 1px solid transparent;
+    }
+    .header-sync-badge.sync-synced {
+      background: #eef7ee;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+    .header-sync-badge.sync-syncing {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #bfdbfe;
+    }
+    .header-sync-badge.sync-cached {
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #e2e8f0;
+    }
+
+    @keyframes pulseSync {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.75; transform: scale(0.98); }
+    }
+
+    .toast-notification {
+      position: fixed;
+      bottom: 76px;
+      left: 50%;
+      transform: translateX(-50%) translateY(25px);
+      background: #1e293b;
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 10000;
+      white-space: nowrap;
+    }
+    .toast-notification.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     /* Site Header */
     header.site-header {
       background: transparent;
@@ -1243,10 +1334,13 @@
     <!-- STICKY TOP CONTAINER (Header, Admin Bar, Search Drawer, Single-Line Filters) -->
     <div id="stickyHeaderArea">
       <!-- Admin Edit Mode Sticky Banner -->
-      <div id="adminBanner" style="display: flex;">
-        <span>Admin Edit Mode Active</span>
+      <div id="adminBanner" style="display: none;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>Admin Mode</span>
+          <span id="adminSyncBadge" class="sync-badge sync-local" title="Google Sheet Sync Status">☁️ Google Sheet</span>
+        </div>
         <div class="admin-btns">
-          <button class="btn-admin-pill" onclick="downloadUpdatedFile()">Export index.html</button>
+          <button class="btn-admin-pill" id="btnSyncNow" onclick="manualSync()" title="Refresh latest data from Google Sheet">🔄 Sync</button>
           <button class="btn-admin-pill" onclick="exitAdmin()">Exit</button>
         </div>
       </div>
@@ -1255,7 +1349,10 @@
       <header class="site-header">
         <div class="header-text-group">
           <p class="sub-header">San Miguel Congregation</p>
-          <h1 id="siteHeaderTitle">CO Visit Schedule</h1>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h1 id="siteHeaderTitle">CO Visit Schedule</h1>
+            <span id="headerSyncBadge" class="header-sync-badge" style="display: none;" title="Google Sheet Status"></span>
+          </div>
         </div>
         <div class="header-icon-actions">
           <!-- Admin Icon Button (beside Lock button) -->
@@ -2496,6 +2593,9 @@
   <datalist id="brothersDatalist"><option value="Amiel Joshua Zoleta"></option><option value="Arnold Cabrales Jr."></option><option value="Arnold Cabrales Sr."></option><option value="Arnulfo Sebastian"></option><option value="Christopher De Guzman"></option><option value="Emerson Salonga"></option><option value="Emmanuel Santiago"></option><option value="Francis Francisco"></option><option value="Howell Dela Cruz"></option><option value="Jade Baldovino"></option><option value="Jemuel Barte"></option><option value="Jeremy Barte"></option><option value="Jofferson Roque"></option><option value="John Michael Sta. Cruz"></option><option value="John Rey Belerma"></option><option value="Lino Cahilo"></option><option value="Michael Angelo Gutierrez"></option><option value="Paul Richard Acaylar"></option><option value="Pierre Paulo Sebastian"></option><option value="Robledo Lazaro"></option><option value="Samuel Barte"></option><option value="Vlad Parole"></option><option value="Zar Pormilos"></option><option value="Group Overseer / Servant"></option></datalist>
   <datalist id="publishersDatalist"><option value="Agatha Victoria"></option><option value="Aija Mae Pormilos"></option><option value="Amiel Joshua Zoleta"></option><option value="Ann Mariel Zoleta"></option><option value="April Rose Cabrales"></option><option value="Arlene Campita"></option><option value="Arlene Enriquez"></option><option value="Arnold Cabrales Jr."></option><option value="Arnold Cabrales Sr."></option><option value="Arnulfo Sebastian"></option><option value="Aubrey Desiree Aguilar"></option><option value="Aurora De Leon"></option><option value="Beth Francisco"></option><option value="Caridad Salonga"></option><option value="Catalina Velasco"></option><option value="Cherry Sebastian"></option><option value="Christopher De Guzman"></option><option value="Connie Cabrales"></option><option value="Deborah Barte"></option><option value="Elena Balatbat"></option><option value="Emerson Salonga"></option><option value="Emmanuel Santiago"></option><option value="Evangeline Malicsi"></option><option value="Fercy Sebastian"></option><option value="Flor De Guzman"></option><option value="Florisa Sebastian"></option><option value="Florissa Sebastian"></option><option value="Francis Francisco"></option><option value="Francisca A. Sebastian"></option><option value="Group Overseer / Servant"></option><option value="Hazel Dela Cruz"></option><option value="Howell Dela Cruz"></option><option value="Imelda Dela Cruz"></option><option value="Jade Baldovino"></option><option value="Jemuel Barte"></option><option value="Jeremy Barte"></option><option value="Jerica Seco"></option><option value="Joan Victoria"></option><option value="Jocelyn Aguilar"></option><option value="Jofferson Roque"></option><option value="John Michael Sta. Cruz"></option><option value="John Rey Belerma"></option><option value="Josephina Sebastian"></option><option value="Joycel Salonga"></option><option value="Julie Ann Aguilar"></option><option value="Lani Yuzon"></option><option value="Leni Dela Cruz"></option><option value="Lerma Maclang"></option><option value="Lino Cahilo"></option><option value="Lira Zoleta"></option><option value="Lizel Sebastian"></option><option value="Lolita Barcelona"></option><option value="Lolita Guidoc"></option><option value="Lorinda Soco"></option><option value="Lucy Cahilo"></option><option value="Lydia Aguilar"></option><option value="Mabelle Parole"></option><option value="Malou Dela Cruz"></option><option value="Marcia Acaylar"></option><option value="Mary Jane Santiago"></option><option value="May Dilloro"></option><option value="Michael Angelo Gutierrez"></option><option value="Milca Francisco"></option><option value="Mishelemiah Baldovino"></option><option value="Nieves Sebastian"></option><option value="Noemi Zoleta"></option><option value="Paul Richard Acaylar"></option><option value="Pierre Paulo Sebastian"></option><option value="Raquel Coronado"></option><option value="Robledo Lazaro"></option><option value="Samuel Barte"></option><option value="Vanessa Maclang"></option><option value="Vlad Parole"></option><option value="Zar Pormilos"></option></datalist>
 
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast-notification"></div>
+
   <!-- ========================================================
        DATA & APPLICATION LOGIC
        ======================================================== -->
@@ -2511,6 +2611,13 @@
     const SESSION_KEY = "sm_covisit_unlocked";
     const ADMIN_KEY   = "sm_covisit_is_admin";
     const LOCAL_DATA_KEY = "sm_covisit_custom_data_v7";
+
+    /**
+     * GOOGLE APPS SCRIPT WEB APP BACKEND URL
+     * Once deployed, paste your Apps Script Web App URL here:
+     * e.g. "https://script.google.com/macros/s/AKfycb.../exec"
+     */
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXB82w_KFsSG1mObi394nUCTMJfdNK6N9MVOA2VvAUVq0WAM0j37qsuT13GxagBN4c/exec";
 
     const BROTHERS = [
       "Amiel Joshua Zoleta", "Arnold Cabrales Jr.", "Arnold Cabrales Sr.", "Arnulfo Sebastian",
@@ -3366,12 +3473,19 @@
       if (sel) sel.value = currentDay;
     }
 
+    let syncTimeout = null;
+
     document.addEventListener("DOMContentLoaded", () => {
       initVisitDateFilter();
       loadDraftData();
       checkAuth();
       setupDatalists();
       sortScheduleData();
+      if (GOOGLE_SCRIPT_URL) {
+        fetchLiveGoogleSheetData();
+      } else {
+        updateSyncStatus("local", "Local Mode");
+      }
     });
 
     function setupDatalists() {
@@ -3396,7 +3510,100 @@
       } catch (e) {}
     }
 
+    function updateSyncStatus(state, message) {
+      const badge = document.getElementById("adminSyncBadge");
+      const headerBadge = document.getElementById("headerSyncBadge");
+      
+      if (badge) {
+        badge.textContent = message;
+        badge.className = "sync-badge sync-" + state;
+      }
+      if (headerBadge) {
+        if (!GOOGLE_SCRIPT_URL) {
+          headerBadge.style.display = "none";
+        } else {
+          headerBadge.style.display = "inline-flex";
+          headerBadge.textContent = state === "synced" ? "● Live" : (state === "syncing" ? "● Syncing..." : "● Offline");
+          headerBadge.className = "header-sync-badge sync-" + state;
+        }
+      }
+    }
+
+    function showToast(msg, duration = 2800) {
+      const toast = document.getElementById("toastNotification");
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, duration);
+    }
+
+    async function fetchLiveGoogleSheetData(isManual = false) {
+      if (!GOOGLE_SCRIPT_URL) {
+        updateSyncStatus("local", "Local Mode");
+        return;
+      }
+      updateSyncStatus("syncing", "Syncing...");
+      try {
+        const resp = await fetch(GOOGLE_SCRIPT_URL);
+        const json = await resp.json();
+        if (json && json.status === "success") {
+          let updated = false;
+          if (json.SCHEDULE_DATA && Array.isArray(json.SCHEDULE_DATA) && json.SCHEDULE_DATA.length > 0) {
+            SCHEDULE_DATA = json.SCHEDULE_DATA;
+            updated = true;
+          }
+          if (json.TERRITORY_DATA && Array.isArray(json.TERRITORY_DATA) && json.TERRITORY_DATA.length > 0) {
+            TERRITORY_DATA = json.TERRITORY_DATA;
+            updated = true;
+          }
+          if (json.MEETINGS_DATA && Array.isArray(json.MEETINGS_DATA) && json.MEETINGS_DATA.length > 0) {
+            MEETINGS_DATA = json.MEETINGS_DATA;
+            updated = true;
+          }
+          if (json.HOSPITALITY_DATA && Array.isArray(json.HOSPITALITY_DATA) && json.HOSPITALITY_DATA.length > 0) {
+            HOSPITALITY_DATA = json.HOSPITALITY_DATA;
+            updated = true;
+          }
+
+          if (updated) {
+            try {
+              localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify({
+                SCHEDULE_DATA,
+                TERRITORY_DATA,
+                MEETINGS_DATA,
+                HOSPITALITY_DATA
+              }));
+            } catch (e) {}
+
+            sortScheduleData();
+            renderSchedule();
+            renderTerritories();
+            renderMeetings();
+            renderPrintTemplate();
+          }
+          updateSyncStatus("synced", "☁️ Synced");
+          if (isManual) showToast("Google Sheet data synced!");
+        } else {
+          updateSyncStatus("cached", "Using Cache");
+          if (isManual) showToast("Could not retrieve latest data from sheet.");
+        }
+      } catch (err) {
+        console.warn("Could not sync with Google Sheet:", err);
+        updateSyncStatus("cached", "Offline / Cache");
+        if (isManual) showToast("Connection failed. Showing offline schedule.");
+      }
+    }
+
+    async function manualSync() {
+      showToast("Syncing with Google Sheet...");
+      await fetchLiveGoogleSheetData(true);
+    }
+
     function persistDraftData() {
+      // 1. Instant local persistence
       try {
         localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify({
           SCHEDULE_DATA,
@@ -3405,6 +3612,50 @@
           HOSPITALITY_DATA
         }));
       } catch (e) {}
+      renderPrintTemplate();
+
+      // 2. Automatic cloud save to Google Sheets (if URL configured)
+      if (GOOGLE_SCRIPT_URL) {
+        clearTimeout(syncTimeout);
+        updateSyncStatus("syncing", "Saving...");
+        syncTimeout = setTimeout(async () => {
+          try {
+            const payload = {
+              SCHEDULE_DATA,
+              TERRITORY_DATA,
+              MEETINGS_DATA,
+              HOSPITALITY_DATA
+            };
+            // Sending as text/plain prevents CORS preflight issues on Google Apps Script
+            const res = await fetch(GOOGLE_SCRIPT_URL, {
+              method: "POST",
+              mode: "cors",
+              redirect: "follow",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify(payload)
+            });
+            let success = false;
+            try {
+              const resJson = await res.json();
+              if (resJson && resJson.status === "success") success = true;
+            } catch (e) {
+              if (res.ok || res.type === "opaque") success = true;
+            }
+
+            if (success) {
+              updateSyncStatus("synced", "☁️ Saved");
+              showToast("✅ Changes saved to Google Sheet!");
+            } else {
+              updateSyncStatus("error", "Save failed");
+              showToast("⚠️ Could not save to Google Sheet.");
+            }
+          } catch (err) {
+            console.error("Failed to sync to Google Sheet:", err);
+            updateSyncStatus("error", "Sync error");
+            showToast("⚠️ Saved locally; check internet connection.");
+          }
+        }, 350);
+      }
     }
 
     /* Chronological Date & Time Auto-Sort Helper */
@@ -3510,6 +3761,7 @@
       renderTerritories();
       renderMeetings();
       renderPrintTemplate();
+      if (GOOGLE_SCRIPT_URL) fetchLiveGoogleSheetData();
     }
 
     function updateAdminUI() {
@@ -4469,44 +4721,7 @@
       container.innerHTML = html;
     }
 
-    /* ========================================================
-       FILE EXPORT (Saves all 4 updated arrays)
-       ======================================================== */
-    function downloadUpdatedFile() {
-      if (!isAdmin) return;
 
-      let html = document.documentElement.outerHTML;
-
-      const schedRegex = /let\s+SCHEDULE_DATA\s*=\s*\[[\s\S]*?\];/;
-      const newSchedStr = `let SCHEDULE_DATA = ${JSON.stringify(SCHEDULE_DATA, null, 2)};`;
-      html = html.replace(schedRegex, newSchedStr);
-
-      const terrRegex = /let\s+TERRITORY_DATA\s*=\s*\[[\s\S]*?\];/;
-      const newTerrStr = `let TERRITORY_DATA = ${JSON.stringify(TERRITORY_DATA, null, 2)};`;
-      html = html.replace(terrRegex, newTerrStr);
-
-      const meetRegex = /let\s+MEETINGS_DATA\s*=\s*\[[\s\S]*?\];/;
-      const newMeetStr = `let MEETINGS_DATA = ${JSON.stringify(MEETINGS_DATA, null, 2)};`;
-      html = html.replace(meetRegex, newMeetStr);
-
-      const hospRegex = /let\s+HOSPITALITY_DATA\s*=\s*\[[\s\S]*?\];/;
-      const newHospStr = `let HOSPITALITY_DATA = ${JSON.stringify(HOSPITALITY_DATA, null, 2)};`;
-      html = html.replace(hospRegex, newHospStr);
-
-      const fullDoc = "<!DOCTYPE html>\n<html lang=\"en\">\n" + html.substring(html.indexOf("<head>"));
-
-      const blob = new Blob([fullDoc], { type: "text/html;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "index.html";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      alert("Updated 'index.html' downloaded! You can now commit or upload this file to your GitHub repository.");
-    }
   </script>
 </body>
 </html>
