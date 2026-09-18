@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
     :root {
@@ -1111,6 +1112,68 @@
       border-bottom: 1px solid #e2e8f0;
       padding-bottom: 12px;
       margin-bottom: 14px;
+      gap: 12px;
+    }
+
+    .print-modal-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-share-image {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 8px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .btn-share-image:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    .btn-export-image {
+      background: var(--brand-green);
+      color: #ffffff;
+      border: none;
+      padding: 8px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .btn-export-image:hover {
+      background: var(--brand-green-hover);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      .print-modal-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .print-modal-actions {
+        width: 100%;
+      }
+      .btn-share-image, .btn-export-image {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
     }
 
     .print-preview-container {
@@ -1597,7 +1660,7 @@
 
               <!-- Main Title Row + Chevron -->
               <div class="card-title-row">
-                <span class="card-person-name">Open / Available Brother</span>
+                <span class="card-person-name">Open slot</span>
                 <svg class="chevron-icon" viewBox="0 0 24 24">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -1671,7 +1734,7 @@
 
               <!-- Main Title Row + Chevron -->
               <div class="card-title-row">
-                <span class="card-person-name">Open / Available Brother</span>
+                <span class="card-person-name">Open slot</span>
                 <svg class="chevron-icon" viewBox="0 0 24 24">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -2000,7 +2063,7 @@
             <rect x="6" y="14" width="12" height="8"></rect>
           </svg>
         </div>
-        <span>Print</span>
+        <span>Print / Share</span>
       </button>
     </nav>
   </div>
@@ -2115,7 +2178,7 @@
 
       <div class="form-field">
         <label for="addSlotActivity">Activity</label>
-        <select id="addSlotActivity" class="form-control">
+        <select id="addSlotActivity" class="form-control" onchange="handleAddSlotActivityChange(this.value)">
           <option value="House to House">House to House</option>
           <option value="RV / Bible Study">RV / Bible Study</option>
           <option value="Meeting">Meeting</option>
@@ -2290,8 +2353,22 @@
       </div>
 
       <div class="form-field">
-        <label for="addMeetingTimeInput">Day &amp; Time</label>
-        <input type="text" id="addMeetingTimeInput" class="form-control" placeholder="e.g. Thursday (Sept 17) • 5:00 PM">
+        <label for="addMeetingDaySelect">Day &amp; Date</label>
+        <select id="addMeetingDaySelect" class="form-control">
+          <option value="Tue15">Tuesday (Sept 15)</option>
+          <option value="Wed">Wednesday (Sept 16)</option>
+          <option value="Thu">Thursday (Sept 17)</option>
+          <option value="Fri">Friday (Sept 18)</option>
+          <option value="Sat" selected="">Saturday (Sept 19)</option>
+          <option value="Sun">Sunday (Sept 20)</option>
+          <option value="Mon21">Monday (Sept 21)</option>
+          <option value="Tue22">Tuesday (Sept 22)</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="addMeetingTimeInput">Time Schedule</label>
+        <input type="text" id="addMeetingTimeInput" class="form-control" placeholder="e.g. 6:00 PM - 7:00 PM, 3:30 PM">
       </div>
 
       <div class="form-field">
@@ -2305,8 +2382,8 @@
       </div>
 
       <div class="form-field">
-        <label for="addMeetingDescInput">Description</label>
-        <input type="text" id="addMeetingDescInput" class="form-control" placeholder="Special meeting to encourage pioneers">
+        <label for="addMeetingDescInput">Description / Purpose</label>
+        <input type="text" id="addMeetingDescInput" class="form-control" placeholder="Special meeting or service talk details">
       </div>
 
       <div class="modal-btn-group">
@@ -2321,11 +2398,21 @@
     <div class="modal-box print-modal-box">
       <div class="print-modal-header">
         <div>
-          <h3>Print Arrangement Sheet</h3>
-          <p class="sub" style="margin-bottom:0;">Formatted to print cleanly on a single page.</p>
+          <h3>Arrangement Sheet</h3>
+          <p class="sub" style="margin-bottom:0;">Share as Image, download PNG, or print / save as PDF.</p>
         </div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn-save-primary" onclick="triggerPrint()" style="padding:8px 14px;">🖨️ Print / Save as PDF</button>
+        <div class="print-modal-actions">
+          <button class="btn-share-image" onclick="shareScheduleImage()" title="Share Schedule via WhatsApp, Messenger, etc.">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Share Image</span>
+          </button>
+          <button class="btn-export-image" onclick="exportScheduleImage()" title="Save High-Resolution PNG Image">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Save Image (PNG)</span>
+          </button>
+          <button class="btn-save-primary" onclick="triggerPrint()" style="padding:8px 14px;" title="Print or Save as PDF">
+            🖨️ PDF / Print
+          </button>
           <button class="btn-cancel-secondary" onclick="closePrintModal()" style="padding:8px 12px;">Close</button>
         </div>
       </div>
@@ -2436,7 +2523,7 @@
         </tr>
         <tr>
           <td class="center">8:30 - 9:30</td>
-          <td>CO: Open Brother (H2H)<br>Wife: Lani Yuzon (H2H)</td>
+          <td>CO: Open slot (H2H)<br>Wife: Lani Yuzon (H2H)</td>
         </tr>
         <tr>
           <td class="center">9:30 - 11:00</td>
@@ -2447,11 +2534,11 @@
           <td class="center">7:30 - 8:30</td>
           <td>CO: John Michael Sta. Cruz (H2H)<br>Wife: May Dilloro (H2H)</td>
           <td class="center">4:00 - 5:00</td>
-          <td>CO: Open Brother (H2H/RV/BS/Shepherding)<br>Wife: Lerma Maclang (H2H)</td>
+          <td>CO: Open slot (H2H/RV/BS/Shepherding)<br>Wife: Lerma Maclang (H2H)</td>
         </tr>
         <tr>
           <td class="center">8:30 - 9:30</td>
-          <td>CO: Open Brother (H2H)<br>Wife: Florissa Sebastian (H2H)</td>
+          <td>CO: Open slot (H2H)<br>Wife: Florissa Sebastian (H2H)</td>
           <td class="center">6:00 - 7:00</td>
           <td class="bold">Pioneers Meeting with C.O. (Kingdom Hall)</td>
         </tr>
@@ -2464,13 +2551,13 @@
         <tr>
           <td class="bold center" rowspan="3">Fri</td>
           <td class="center">7:30 - 8:30</td>
-          <td>CO: Open Brother (H2H)<br>Wife: Leni Dela Cruz (H2H)</td>
+          <td>CO: Open slot (H2H)<br>Wife: Leni Dela Cruz (H2H)</td>
           <td class="center">4:00 - 5:00</td>
-          <td>CO: Open Brother (H2H/RV/BS/Shepherding)<br>Wife: Open Sister (H2H/RV/BS)</td>
+          <td>CO: Open slot (H2H/RV/BS/Shepherding)<br>Wife: Open slot (H2H/RV/BS)</td>
         </tr>
         <tr>
           <td class="center">8:30 - 9:30</td>
-          <td>CO: Open Brother (H2H)<br>Wife: Deborah Barte (H2H)</td>
+          <td>CO: Open slot (H2H)<br>Wife: Deborah Barte (H2H)</td>
           <td class="center">6:00 - 8:00</td>
           <td class="bold">Elder & MS Meeting with C.O. (Kingdom Hall)</td>
         </tr>
@@ -2483,13 +2570,13 @@
         <tr>
           <td class="bold center" rowspan="3">Sat</td>
           <td class="center">7:30 - 8:30</td>
-          <td>CO: Open Brother (H2H)<br>Wife: Cherry Sebastian (H2H)</td>
+          <td>CO: Open slot (H2H)<br>Wife: Cherry Sebastian (H2H)</td>
           <td class="center">4:00 - 5:30</td>
-          <td>CO: Open Brother (H2H/RV/BS/Shepherding)<br>Wife: Open Sister (H2H/RV/BS)</td>
+          <td>CO: Open slot (H2H/RV/BS/Shepherding)<br>Wife: Open slot (H2H/RV/BS)</td>
         </tr>
         <tr>
           <td class="center">8:30 - 9:30</td>
-          <td>CO: Open Brother (H2H)<br>Wife: Noemi Zoleta (H2H)</td>
+          <td>CO: Open slot (H2H)<br>Wife: Noemi Zoleta (H2H)</td>
           <td class="center">-</td>
           <td class="center">-</td>
         </tr>
@@ -2505,7 +2592,7 @@
           <td class="center">8:00 - 10:00</td>
           <td class="bold center">Weekend Meeting &amp; Public Talk<br><span style="font-size:7.5pt; font-weight:normal; color:#444;">(Kingdom Hall)</span></td>
           <td class="center">4:00 - 5:30</td>
-          <td>CO: Open Brother (H2H/RV/BS/Shepherding)<br>Wife: Marcia Acaylar (H2H)</td>
+          <td>CO: Open slot (H2H/RV/BS/Shepherding)<br>Wife: Marcia Acaylar (H2H)</td>
         </tr>
       
       </tbody>
@@ -2779,7 +2866,7 @@
     "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Open slot for ministry"
   },
@@ -2878,7 +2965,7 @@
     "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Open slot for ministry"
   },
@@ -2933,7 +3020,7 @@
     "time": "4:00 - 5:00 PM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Flexible slot: House to House, RV / Bible Study, or Shepherding Call"
   },
@@ -2988,7 +3075,7 @@
     "time": "7:30 - 8:30 AM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Open slot for ministry"
   },
@@ -3010,7 +3097,7 @@
     "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Open slot for ministry"
   },
@@ -3065,7 +3152,7 @@
     "time": "4:00 - 5:00 PM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Flexible slot: House to House, RV / Bible Study, or Shepherding Call"
   },
@@ -3076,7 +3163,7 @@
     "time": "4:00 - 5:00 PM",
     "role": "Wife",
     "activity": "House to House",
-    "companion": "Open / Available Sister",
+    "companion": "Open slot",
     "status": "open",
     "note": "Flexible slot: House to House or RV / Bible Study"
   },
@@ -3120,7 +3207,7 @@
     "time": "7:30 - 8:30 AM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "By Group Field Service"
   },
@@ -3142,7 +3229,7 @@
     "time": "8:30 - 9:30 AM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Open slot for ministry"
   },
@@ -3197,7 +3284,7 @@
     "time": "4:00 - 5:30 PM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Flexible slot: House to House, RV / Bible Study, or Shepherding Call"
   },
@@ -3208,7 +3295,7 @@
     "time": "4:00 - 5:30 PM",
     "role": "Wife",
     "activity": "House to House",
-    "companion": "Open / Available Sister",
+    "companion": "Open slot",
     "status": "open",
     "note": "Flexible slot: House to House or RV / Bible Study"
   },
@@ -3263,7 +3350,7 @@
     "time": "4:00 - 5:30 PM",
     "role": "CO",
     "activity": "House to House",
-    "companion": "Open / Available Brother",
+    "companion": "Open slot",
     "status": "open",
     "note": "Flexible slot: House to House, RV / Bible Study, or Shepherding Call"
   },
@@ -3531,6 +3618,155 @@
       return str;
     }
 
+    const DAY_KEY_MAP = {
+      Tue15: { day: "Tuesday", date: "Sept 15", fullDate: "September 15" },
+      Wed:   { day: "Wednesday", date: "Sept 16", fullDate: "September 16" },
+      Thu:   { day: "Thursday", date: "Sept 17", fullDate: "September 17" },
+      Fri:   { day: "Friday", date: "Sept 18", fullDate: "September 18" },
+      Sat:   { day: "Saturday", date: "Sept 19", fullDate: "September 19" },
+      Sun:   { day: "Sunday", date: "Sept 20", fullDate: "September 20" },
+      Mon21: { day: "Monday", date: "Sept 21", fullDate: "September 21" },
+      Tue22: { day: "Tuesday", date: "Sept 22", fullDate: "September 22" }
+    };
+
+    function parseDayMetaFromText(text) {
+      const t = (text || "").toLowerCase();
+      if (t.includes("15") || t.includes("tue15")) return { dayKey: "Tue15", dayLabel: "Tuesday", fullDate: "September 15", date: "Sept 15" };
+      if (t.includes("16") || t.includes("wed")) return { dayKey: "Wed", dayLabel: "Wednesday", fullDate: "September 16", date: "Sept 16" };
+      if (t.includes("17") || t.includes("thu")) return { dayKey: "Thu", dayLabel: "Thursday", fullDate: "September 17", date: "Sept 17" };
+      if (t.includes("18") || t.includes("fri")) return { dayKey: "Fri", dayLabel: "Friday", fullDate: "September 18", date: "Sept 18" };
+      if (t.includes("19") || t.includes("sat")) return { dayKey: "Sat", dayLabel: "Saturday", fullDate: "September 19", date: "Sept 19" };
+      if (t.includes("20") || t.includes("sun")) return { dayKey: "Sun", dayLabel: "Sunday", fullDate: "September 20", date: "Sept 20" };
+      if (t.includes("21") || t.includes("mon")) return { dayKey: "Mon21", dayLabel: "Monday", fullDate: "September 21", date: "Sept 21" };
+      if (t.includes("22") || t.includes("tue22")) return { dayKey: "Tue22", dayLabel: "Tuesday", fullDate: "September 22", date: "Sept 22" };
+      return { dayKey: "Wed", dayLabel: "Wednesday", fullDate: "September 16", date: "Sept 16" };
+    }
+
+    function syncMealToHospitality(dayKey, activity, companion) {
+      if (!dayKey || !activity) return;
+      const act = activity.toLowerCase();
+      let mealType = null;
+      if (act.includes("breakfast")) mealType = "breakfast";
+      else if (act.includes("lunch")) mealType = "lunch";
+      else if (act.includes("dinner")) mealType = "dinner";
+      else if (act.includes("hospitality") || act.includes("meal")) mealType = "lunch";
+      if (!mealType) return;
+
+      const meta = DAY_KEY_MAP[dayKey];
+      if (!meta) return;
+
+      let row = HOSPITALITY_DATA.find(h => h.day === meta.day || (h.date && h.date.includes(meta.date.split(" ")[1])));
+      if (!row) {
+        row = { day: meta.day, date: meta.date, breakfast: "-", lunch: "-", dinner: "-" };
+        HOSPITALITY_DATA.push(row);
+      }
+      row[mealType] = companion && companion.trim() ? companion.trim() : "-";
+    }
+
+    function syncScheduleSlotToMeeting(slot, oldTitle = null) {
+      if (!slot) return;
+      const title = slot.companion || "Special Meeting";
+      const lookupTitle = oldTitle || title;
+      const place = slot.note ? slot.note.split("•")[0].trim() : "Kingdom Hall";
+      const desc = slot.note && slot.note.includes("•") ? slot.note.split("•").slice(1).join("•").trim() : "";
+      const dayTime = `${slot.dayLabel} (${cleanFullDate(slot.fullDate)}) • ${slot.time}`;
+
+      let m = MEETINGS_DATA.find(item => item.title === lookupTitle || (lookupTitle && item.title.toLowerCase().includes(lookupTitle.toLowerCase())));
+      if (m) {
+        m.title = title;
+        m.dayTime = dayTime;
+        if (place) m.place = place;
+        if (desc) m.desc = desc;
+      } else {
+        MEETINGS_DATA.push({
+          title,
+          dayTime,
+          place: place || "Kingdom Hall",
+          attendees: "All Publishers",
+          desc
+        });
+      }
+    }
+
+    function removeMeetingByTitle(title) {
+      if (!title) return;
+      const idx = MEETINGS_DATA.findIndex(m => m.title === title || m.title.toLowerCase().includes(title.toLowerCase()));
+      if (idx !== -1) {
+        MEETINGS_DATA.splice(idx, 1);
+      }
+    }
+
+    function reconcileAllDatasets() {
+      // 1. Reconcile Meals from HOSPITALITY_DATA into SCHEDULE_DATA
+      if (Array.isArray(HOSPITALITY_DATA)) {
+        HOSPITALITY_DATA.forEach(h => {
+          const matchedEntry = Object.entries(DAY_KEY_MAP).find(([k, v]) => v.day === h.day || (h.date && h.date.includes(v.date.split(" ")[1])));
+          if (!matchedEntry) return;
+          const [dayKey, meta] = matchedEntry;
+
+          const meals = [
+            { type: "breakfast", label: "Breakfast", defaultTime: "6:30 - 7:15 AM", val: h.breakfast },
+            { type: "lunch", label: "Lunch", defaultTime: "12:00 - 1:00 PM", val: h.lunch },
+            { type: "dinner", label: "Dinner", defaultTime: "6:00 - 7:00 PM", val: h.dinner }
+          ];
+
+          meals.forEach(m => {
+            if (!m.val || m.val === "-" || m.val.toLowerCase() === "none") return;
+            let slot = SCHEDULE_DATA.find(s => s.dayKey === dayKey && s.activity === m.label);
+            if (slot) {
+              slot.companion = m.val;
+              slot.role = "both";
+              slot.status = "confirmed";
+            } else {
+              SCHEDULE_DATA.push({
+                dayKey,
+                dayLabel: meta.day,
+                fullDate: meta.fullDate,
+                time: m.defaultTime,
+                role: "both",
+                activity: m.label,
+                companion: m.val,
+                status: "confirmed",
+                note: "Hospitality Meal"
+              });
+            }
+          });
+        });
+      }
+
+      // 2. Reconcile Meetings from MEETINGS_DATA into SCHEDULE_DATA
+      if (Array.isArray(MEETINGS_DATA)) {
+        MEETINGS_DATA.forEach(m => {
+          const meta = parseDayMetaFromText(m.dayTime);
+          const timePart = m.dayTime.includes("•") ? m.dayTime.split("•")[1].trim() : (m.dayTime.includes("-") ? m.dayTime : "6:00 PM");
+
+          let slot = SCHEDULE_DATA.find(s => s.activity === "Meeting" && (s.companion === m.title || (s.companion && s.companion.toLowerCase().includes(m.title.toLowerCase()))));
+          if (slot) {
+            slot.companion = m.title;
+            slot.dayKey = meta.dayKey;
+            slot.dayLabel = meta.dayLabel;
+            slot.fullDate = meta.fullDate;
+            if (timePart) slot.time = timePart;
+            slot.role = "both";
+            slot.status = "meeting";
+            slot.note = m.place + (m.desc ? " • " + m.desc : "");
+          } else {
+            SCHEDULE_DATA.push({
+              dayKey: meta.dayKey,
+              dayLabel: meta.dayLabel,
+              fullDate: meta.fullDate,
+              time: timePart || "6:00 PM",
+              role: "both",
+              activity: "Meeting",
+              companion: m.title,
+              status: "meeting",
+              note: m.place + (m.desc ? " • " + m.desc : "")
+            });
+          }
+        });
+      }
+    }
+
     function loadDraftData() {
       try {
         const saved = localStorage.getItem(LOCAL_DATA_KEY);
@@ -3539,7 +3775,8 @@
           if (parsed.SCHEDULE_DATA) {
             SCHEDULE_DATA = parsed.SCHEDULE_DATA.map(item => ({
               ...item,
-              fullDate: cleanFullDate(item.fullDate)
+              fullDate: cleanFullDate(item.fullDate),
+              time: cleanTime(item.time)
             }));
           }
           if (parsed.TERRITORY_DATA) {
@@ -3550,6 +3787,7 @@
           }
           if (parsed.MEETINGS_DATA) MEETINGS_DATA = parsed.MEETINGS_DATA;
           if (parsed.HOSPITALITY_DATA) HOSPITALITY_DATA = parsed.HOSPITALITY_DATA;
+          reconcileAllDatasets();
         }
       } catch (e) {}
     }
@@ -3598,7 +3836,8 @@
           if (json.SCHEDULE_DATA && Array.isArray(json.SCHEDULE_DATA) && json.SCHEDULE_DATA.length > 0) {
             SCHEDULE_DATA = json.SCHEDULE_DATA.map(item => ({
               ...item,
-              fullDate: cleanFullDate(item.fullDate)
+              fullDate: cleanFullDate(item.fullDate),
+              time: cleanTime(item.time)
             }));
             updated = true;
           }
@@ -3619,6 +3858,8 @@
           }
 
           if (updated) {
+            reconcileAllDatasets();
+
             try {
               localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify({
                 SCHEDULE_DATA,
@@ -3673,7 +3914,8 @@
             const payload = {
               SCHEDULE_DATA: SCHEDULE_DATA.map(item => ({
                 ...item,
-                fullDate: cleanFullDate(item.fullDate)
+                fullDate: cleanFullDate(item.fullDate),
+                time: cleanTime(item.time)
               })),
               TERRITORY_DATA: TERRITORY_DATA.map(t => ({
                 ...t,
@@ -3682,23 +3924,37 @@
               MEETINGS_DATA,
               HOSPITALITY_DATA
             };
-            // Sending as text/plain prevents CORS preflight issues on Google Apps Script
-            const res = await fetch(GOOGLE_SCRIPT_URL, {
-              method: "POST",
-              mode: "cors",
-              redirect: "follow",
-              headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify(payload)
-            });
-            let success = false;
+            
+            let saved = false;
             try {
-              const resJson = await res.json();
-              if (resJson && resJson.status === "success") success = true;
-            } catch (e) {
-              if (res.ok || res.type === "opaque") success = true;
+              const res = await fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "cors",
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+              });
+              if (res.ok || res.type === "opaque") saved = true;
+              try {
+                const resJson = await res.json();
+                if (resJson && resJson.status === "success") saved = true;
+              } catch (e) {}
+            } catch (corsErr) {
+              // Fallback for browsers that block CORS during 302 redirects
+              try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                  method: "POST",
+                  mode: "no-cors",
+                  headers: { "Content-Type": "text/plain;charset=utf-8" },
+                  body: JSON.stringify(payload)
+                });
+                saved = true;
+              } catch (fallbackErr) {
+                console.error("Save error:", fallbackErr);
+              }
             }
 
-            if (success) {
+            if (saved) {
               updateSyncStatus("synced", "☁️ Saved");
               showToast("✅ Changes saved to Google Sheet!");
             } else {
@@ -4237,6 +4493,30 @@
     /* ========================================================
        MODAL ACTIONS: SCHEDULE SLOTS
        ======================================================== */
+    function handleAddSlotActivityChange(val) {
+      const roleSelect = document.getElementById("addSlotRole");
+      const statusSelect = document.getElementById("addSlotStatus");
+      const noteInput = document.getElementById("addSlotNote");
+      const timeInput = document.getElementById("addSlotTime");
+
+      const isMeal = (val === "Breakfast" || val === "Lunch" || val === "Dinner" || val === "Hospitality");
+      if (isMeal) {
+        if (roleSelect) roleSelect.value = "both";
+        if (statusSelect) statusSelect.value = "confirmed";
+        if (noteInput && !noteInput.value.trim()) noteInput.value = "Hospitality Meal";
+        if (timeInput && !timeInput.value.trim()) {
+          if (val === "Breakfast") timeInput.value = "6:30 - 7:15 AM";
+          else if (val === "Lunch") timeInput.value = "12:00 - 1:00 PM";
+          else if (val === "Dinner") timeInput.value = "6:00 - 7:00 PM";
+        }
+      } else if (val === "Meeting") {
+        if (roleSelect) roleSelect.value = "both";
+        if (statusSelect) statusSelect.value = "meeting";
+        if (noteInput && !noteInput.value.trim()) noteInput.value = "Kingdom Hall";
+        if (timeInput && !timeInput.value.trim()) timeInput.value = "6:00 - 7:00 PM";
+      }
+    }
+
     function openEditSlotModal(index) {
       if (!isAdmin) return;
       renderPrintTemplate();
@@ -4266,18 +4546,36 @@
       const index = parseInt(document.getElementById("editSlotIndex").value, 10);
       if (isNaN(index) || !SCHEDULE_DATA[index]) return;
 
-      SCHEDULE_DATA[index].companion = document.getElementById("editSlotCompanion").value.trim() || "Open / Available";
-      if (document.getElementById("editSlotActivity")) {
-        SCHEDULE_DATA[index].activity = document.getElementById("editSlotActivity").value;
+      const oldSlot = { ...SCHEDULE_DATA[index] };
+      const newCompanion = document.getElementById("editSlotCompanion").value.trim() || "Open slot";
+      const newActivity = document.getElementById("editSlotActivity") ? document.getElementById("editSlotActivity").value : SCHEDULE_DATA[index].activity;
+      const newTime = cleanTime(document.getElementById("editSlotTime").value.trim()) || SCHEDULE_DATA[index].time;
+      const newNote = document.getElementById("editSlotNote").value.trim();
+      const newStatus = document.getElementById("editSlotStatus").value;
+
+      SCHEDULE_DATA[index].companion = newCompanion;
+      SCHEDULE_DATA[index].activity = newActivity;
+      SCHEDULE_DATA[index].time = newTime;
+      SCHEDULE_DATA[index].note = newNote;
+      SCHEDULE_DATA[index].status = newStatus;
+
+      // Sync meal to Hospitality
+      const isMeal = (newActivity === "Breakfast" || newActivity === "Lunch" || newActivity === "Dinner" || newActivity === "Hospitality");
+      if (isMeal) {
+        syncMealToHospitality(SCHEDULE_DATA[index].dayKey, newActivity, newCompanion);
       }
-      SCHEDULE_DATA[index].time = document.getElementById("editSlotTime").value.trim() || SCHEDULE_DATA[index].time;
-      SCHEDULE_DATA[index].note = document.getElementById("editSlotNote").value.trim();
-      SCHEDULE_DATA[index].status = document.getElementById("editSlotStatus").value;
+
+      // Sync meeting to Meetings
+      if (newActivity === "Meeting") {
+        syncScheduleSlotToMeeting(SCHEDULE_DATA[index], oldSlot.companion);
+        renderMeetings();
+      }
 
       sortScheduleData();
       persistDraftData();
       closeEditSlotModal();
       renderSchedule();
+      showToast(`✅ Slot updated!`);
     }
 
     function deleteCurrentSlot() {
@@ -4286,18 +4584,35 @@
       const item = SCHEDULE_DATA[index];
 
       if (confirm(`Delete slot for ${item.dayLabel} (${item.time}) with ${item.companion}?`)) {
+        // If meal, clear from Hospitality
+        if (item.activity === "Breakfast" || item.activity === "Lunch" || item.activity === "Dinner" || item.activity === "Hospitality") {
+          syncMealToHospitality(item.dayKey, item.activity, "-");
+        }
+        // If meeting, remove from Meetings
+        if (item.activity === "Meeting") {
+          removeMeetingByTitle(item.companion);
+          renderMeetings();
+        }
+
         SCHEDULE_DATA.splice(index, 1);
         persistDraftData();
         closeEditSlotModal();
         renderSchedule();
+        showToast(`🗑️ Slot removed.`);
       }
     }
 
     function openAddSlotModal() {
       if (!isAdmin) return;
+      if (document.getElementById("addSlotDay") && currentDay !== 'all') {
+        document.getElementById("addSlotDay").value = currentDay;
+      }
       document.getElementById("addSlotTime").value = "";
       document.getElementById("addSlotCompanion").value = "";
       document.getElementById("addSlotNote").value = "";
+      document.getElementById("addSlotRole").value = "both";
+      document.getElementById("addSlotActivity").value = "House to House";
+      document.getElementById("addSlotStatus").value = "confirmed";
       document.getElementById("addSlotModal").style.display = "flex";
       setTimeout(() => document.getElementById("addSlotTime").focus(), 100);
     }
@@ -4308,28 +4623,17 @@
 
     function saveNewSlot() {
       const dayKey = document.getElementById("addSlotDay").value;
-      const dayMap = {
-        Tue15: { dayLabel: "Tuesday", fullDate: "September 15" },
-        Wed: { dayLabel: "Wednesday", fullDate: "September 16" },
-        Thu: { dayLabel: "Thursday", fullDate: "September 17" },
-        Fri: { dayLabel: "Friday", fullDate: "September 18" },
-        Sat: { dayLabel: "Saturday", fullDate: "September 19" },
-        Sun: { dayLabel: "Sunday", fullDate: "September 20" },
-        Mon21: { dayLabel: "Monday", fullDate: "September 21" },
-        Tue22: { dayLabel: "Tuesday", fullDate: "September 22" }
-      };
-
-      const meta = dayMap[dayKey] || { dayLabel: "Other Day", fullDate: "September" };
-      const time = document.getElementById("addSlotTime").value.trim() || "8:00 AM";
+      const meta = DAY_KEY_MAP[dayKey] || { day: "Other Day", fullDate: "September", date: "Sept" };
+      const time = cleanTime(document.getElementById("addSlotTime").value.trim()) || "8:00 AM";
       const role = document.getElementById("addSlotRole").value;
       const activity = document.getElementById("addSlotActivity").value;
-      const companion = document.getElementById("addSlotCompanion").value.trim() || "Open / Available";
+      const companion = document.getElementById("addSlotCompanion").value.trim() || "Open slot";
       const note = document.getElementById("addSlotNote").value.trim();
       const status = document.getElementById("addSlotStatus").value;
 
       SCHEDULE_DATA.push({
         dayKey,
-        dayLabel: meta.dayLabel,
+        dayLabel: meta.day,
         fullDate: meta.fullDate,
         time,
         role,
@@ -4339,10 +4643,36 @@
         note
       });
 
+      // Synchronize with Hospitality if meal
+      const isMeal = (activity === "Breakfast" || activity === "Lunch" || activity === "Dinner" || activity === "Hospitality");
+      if (isMeal) {
+        syncMealToHospitality(dayKey, activity, companion);
+      }
+
+      // Synchronize with Meetings if meeting
+      if (activity === "Meeting") {
+        syncScheduleSlotToMeeting({
+          dayKey,
+          dayLabel: meta.day,
+          fullDate: meta.fullDate,
+          time,
+          companion,
+          note
+        });
+        renderMeetings();
+      }
+
       sortScheduleData();
       persistDraftData();
       closeAddSlotModal();
-      renderSchedule();
+
+      // Ensure the day filter displays the newly added slot so user sees it immediately
+      if (currentDay !== 'all' && currentDay !== dayKey) {
+        filterDay(dayKey);
+      } else {
+        renderSchedule();
+      }
+      showToast(`✅ Added ${activity} slot for ${meta.day}!`);
     }
 
     /* ========================================================
@@ -4454,35 +4784,84 @@
       const index = parseInt(document.getElementById("editMeetingIndex").value, 10);
       if (isNaN(index) || !MEETINGS_DATA[index]) return;
 
-      MEETINGS_DATA[index].title = document.getElementById("editMeetingTitleInput").value.trim();
-      MEETINGS_DATA[index].dayTime = document.getElementById("editMeetingTimeInput").value.trim();
-      MEETINGS_DATA[index].place = document.getElementById("editMeetingPlaceInput").value.trim();
-      MEETINGS_DATA[index].attendees = document.getElementById("editMeetingAttendeesInput").value.trim();
-      MEETINGS_DATA[index].desc = document.getElementById("editMeetingDescInput").value.trim();
+      const oldTitle = MEETINGS_DATA[index].title;
+      const newTitle = document.getElementById("editMeetingTitleInput").value.trim() || oldTitle;
+      const newDayTime = document.getElementById("editMeetingTimeInput").value.trim() || MEETINGS_DATA[index].dayTime;
+      const newPlace = document.getElementById("editMeetingPlaceInput").value.trim() || "Kingdom Hall";
+      const newAttendees = document.getElementById("editMeetingAttendeesInput").value.trim() || "Congregation";
+      const newDesc = document.getElementById("editMeetingDescInput").value.trim();
 
+      MEETINGS_DATA[index].title = newTitle;
+      MEETINGS_DATA[index].dayTime = newDayTime;
+      MEETINGS_DATA[index].place = newPlace;
+      MEETINGS_DATA[index].attendees = newAttendees;
+      MEETINGS_DATA[index].desc = newDesc;
+
+      // Update matching slot in SCHEDULE_DATA
+      const dayMeta = parseDayMetaFromText(newDayTime);
+      const timePart = newDayTime.includes("•") ? newDayTime.split("•")[1].trim() : (newDayTime.includes("-") ? newDayTime : "6:00 PM");
+
+      const schedSlot = SCHEDULE_DATA.find(s => s.activity === "Meeting" && (s.companion === oldTitle || s.companion === newTitle));
+      if (schedSlot) {
+        schedSlot.companion = newTitle;
+        schedSlot.dayKey = dayMeta.dayKey;
+        schedSlot.dayLabel = dayMeta.dayLabel;
+        schedSlot.fullDate = dayMeta.fullDate;
+        schedSlot.time = timePart;
+        schedSlot.note = newPlace + (newDesc ? " • " + newDesc : "");
+      } else {
+        SCHEDULE_DATA.push({
+          dayKey: dayMeta.dayKey,
+          dayLabel: dayMeta.dayLabel,
+          fullDate: dayMeta.fullDate,
+          time: timePart,
+          role: "both",
+          activity: "Meeting",
+          companion: newTitle,
+          status: "meeting",
+          note: newPlace + (newDesc ? " • " + newDesc : "")
+        });
+      }
+
+      sortScheduleData();
       persistDraftData();
       closeEditMeetingModal();
       renderMeetings();
+      renderSchedule();
+      showToast(`✅ Meeting updated!`);
     }
 
     function deleteCurrentMeeting() {
       const index = parseInt(document.getElementById("editMeetingIndex").value, 10);
       if (isNaN(index) || !MEETINGS_DATA[index]) return;
+      const m = MEETINGS_DATA[index];
 
-      if (confirm(`Delete meeting: "${MEETINGS_DATA[index].title}"?`)) {
+      if (confirm(`Delete meeting: "${m.title}"?`)) {
+        // Also remove matching meeting from SCHEDULE_DATA
+        const schedIdx = SCHEDULE_DATA.findIndex(s => s.activity === "Meeting" && s.companion === m.title);
+        if (schedIdx !== -1) {
+          SCHEDULE_DATA.splice(schedIdx, 1);
+        }
+
         MEETINGS_DATA.splice(index, 1);
+        sortScheduleData();
         persistDraftData();
         closeEditMeetingModal();
         renderMeetings();
+        renderSchedule();
+        showToast(`🗑️ Meeting deleted.`);
       }
     }
 
     function openAddMeetingModal() {
       if (!isAdmin) return;
       document.getElementById("addMeetingTitleInput").value = "";
+      if (document.getElementById("addMeetingDaySelect")) {
+        document.getElementById("addMeetingDaySelect").value = (currentDay !== 'all' ? currentDay : "Sat");
+      }
       document.getElementById("addMeetingTimeInput").value = "";
-      document.getElementById("addMeetingPlaceInput").value = "";
-      document.getElementById("addMeetingAttendeesInput").value = "";
+      document.getElementById("addMeetingPlaceInput").value = "Kingdom Hall";
+      document.getElementById("addMeetingAttendeesInput").value = "Congregation";
       document.getElementById("addMeetingDescInput").value = "";
       document.getElementById("addMeetingModal").style.display = "flex";
       setTimeout(() => document.getElementById("addMeetingTitleInput").focus(), 100);
@@ -4493,20 +4872,49 @@
     }
 
     function saveNewMeeting() {
-      const title = document.getElementById("addMeetingTitleInput").value.trim() || "Meeting Title";
-      const dayTime = document.getElementById("addMeetingTimeInput").value.trim() || "TBA";
+      const title = document.getElementById("addMeetingTitleInput").value.trim() || "Special Meeting";
+      const daySelect = document.getElementById("addMeetingDaySelect");
+      const dayKey = daySelect ? daySelect.value : null;
+      const timeInput = document.getElementById("addMeetingTimeInput").value.trim() || "6:00 PM";
       const place = document.getElementById("addMeetingPlaceInput").value.trim() || "Kingdom Hall";
       const attendees = document.getElementById("addMeetingAttendeesInput").value.trim() || "Congregation";
       const desc = document.getElementById("addMeetingDescInput").value.trim() || "";
 
+      let dayMeta = null;
+      if (dayKey && DAY_KEY_MAP[dayKey]) {
+        dayMeta = { dayKey, dayLabel: DAY_KEY_MAP[dayKey].day, fullDate: DAY_KEY_MAP[dayKey].fullDate, date: DAY_KEY_MAP[dayKey].date };
+      } else {
+        dayMeta = parseDayMetaFromText(timeInput);
+      }
+
+      // Clean dayTime string for MEETINGS_DATA
+      const dayTime = `${dayMeta.dayLabel} (${dayMeta.date}) • ${timeInput}`;
+
       MEETINGS_DATA.push({ title, dayTime, place, attendees, desc });
+
+      // Automatically add corresponding slot to SCHEDULE_DATA!
+      SCHEDULE_DATA.push({
+        dayKey: dayMeta.dayKey,
+        dayLabel: dayMeta.dayLabel,
+        fullDate: dayMeta.fullDate,
+        time: timeInput,
+        role: "both",
+        activity: "Meeting",
+        companion: title,
+        status: "meeting",
+        note: place + (desc ? " • " + desc : "")
+      });
+
+      sortScheduleData();
       persistDraftData();
       closeAddMeetingModal();
       renderMeetings();
+      renderSchedule();
+      showToast(`✅ Meeting "${title}" added to Schedule and Meetings!`);
     }
 
     /* ========================================================
-       SINGLE-PAGE PRINT TEMPLATE BUILDER & MODAL
+       SINGLE-PAGE PRINT TEMPLATE BUILDER, IMAGE EXPORT & MODAL
        ======================================================== */
     function openPrintModal() {
       renderPrintTemplate();
@@ -4521,7 +4929,118 @@
       window.print();
     }
 
-        function getActivityAbbr(act) {
+    async function generateScheduleCanvas() {
+      if (typeof html2canvas === 'undefined') {
+        throw new Error("Image rendering engine is still loading. Please try again in 2 seconds.");
+      }
+
+      renderPrintTemplate();
+      const source = document.getElementById("printableSheet");
+      if (!source) throw new Error("Printable sheet element not found.");
+
+      showToast("⏳ Rendering high-resolution schedule image...");
+
+      // Clone element into off-screen container with fixed width (760px) to prevent mobile squishing
+      const clone = source.cloneNode(true);
+      clone.id = "printableSheetClone";
+      clone.style.width = "760px";
+      clone.style.maxWidth = "760px";
+      clone.style.minWidth = "760px";
+      clone.style.padding = "16px";
+      clone.style.margin = "0";
+      clone.style.background = "#ffffff";
+      clone.style.position = "absolute";
+      clone.style.left = "-9999px";
+      clone.style.top = "0";
+      clone.style.boxSizing = "border-box";
+      clone.style.display = "block";
+      document.body.appendChild(clone);
+
+      try {
+        const canvas = await html2canvas(clone, {
+          scale: 2.5,
+          backgroundColor: "#ffffff",
+          useCORS: true,
+          logging: false,
+          windowWidth: 1024
+        });
+        return canvas;
+      } finally {
+        if (clone.parentNode) {
+          clone.parentNode.removeChild(clone);
+        }
+      }
+    }
+
+    async function exportScheduleImage() {
+      try {
+        const canvas = await generateScheduleCanvas();
+        const dataUrl = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.download = "CO_Visit_Schedule_San_Miguel_2026.png";
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("✅ Image saved successfully as PNG!");
+      } catch (err) {
+        console.error("Export image error:", err);
+        showToast("⚠️ Could not export image: " + err.message);
+      }
+    }
+
+    async function shareScheduleImage() {
+      try {
+        const canvas = await generateScheduleCanvas();
+
+        if (canvas.toBlob) {
+          canvas.toBlob(async (blob) => {
+            if (!blob) {
+              showToast("⚠️ Failed to generate image file.");
+              return;
+            }
+
+            const file = new File([blob], "CO_Visit_Schedule_San_Miguel_2026.png", { type: "image/png" });
+
+            // Check if Web Share API supports file sharing (available on mobile Safari, Android Chrome, Edge)
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              try {
+                await navigator.share({
+                  title: "CO Visit Schedule - San Miguel Congregation",
+                  text: "Arrangement During Circuit Overseer's Visit (September 16–20, 2026)",
+                  files: [file]
+                });
+                showToast("✅ Schedule image shared successfully!");
+                return;
+              } catch (shareErr) {
+                if (shareErr.name === "AbortError") {
+                  // User closed the share sheet
+                  return;
+                }
+                console.warn("Native share failed, falling back to download:", shareErr);
+              }
+            }
+
+            // Fallback for desktop browsers without file share capability
+            const dataUrl = canvas.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.download = "CO_Visit_Schedule_San_Miguel_2026.png";
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("📥 Direct share not supported on this device — image downloaded instead!");
+          }, "image/png");
+        } else {
+          exportScheduleImage();
+        }
+      } catch (err) {
+        console.error("Share image error:", err);
+        showToast("⚠️ Could not share image: " + err.message);
+      }
+    }
+
+    function getActivityAbbr(act) {
       if (!act) return '';
       const a = act.toLowerCase();
       if (a.includes('house')) return 'H2H';
@@ -4539,22 +5058,18 @@
       if (isExplicitOpen) {
         if (isAfternoon) {
           if (item.role === 'CO') {
-            return `${rolePrefix}Open Brother (H2H/RV/BS/Shepherding)`;
+            return `${rolePrefix}Open slot (H2H/RV/BS/Shepherding)`;
           } else if (item.role === 'Wife') {
-            return `${rolePrefix}Open Sister (H2H/RV/BS)`;
+            return `${rolePrefix}Open slot (H2H/RV/BS)`;
           } else {
-            return `${comp || 'Open'} (H2H/RV/BS)`;
+            return `${rolePrefix}Open slot (H2H/RV/BS)`;
           }
         } else {
           const act = (item.activity || '').toLowerCase();
           if (item.role === 'CO' && (act.includes('rv') || act.includes('bible') || act.includes('study') || act.includes('shepherd'))) {
             return `${rolePrefix}Open slot (RV/BS/Shepherding)`;
-          } else if (item.role === 'CO') {
-            return `${rolePrefix}Open Brother (${getActivityAbbr(item.activity)})`;
-          } else if (item.role === 'Wife') {
-            return `${rolePrefix}Open Sister (${getActivityAbbr(item.activity)})`;
           } else {
-            return `${comp || 'Open'} (${getActivityAbbr(item.activity)})`;
+            return `${rolePrefix}Open slot (${getActivityAbbr(item.activity)})`;
           }
         }
       }
@@ -4641,6 +5156,9 @@
         { key: 'Sun', label: 'Sun' }
       ];
 
+      const isAmSlot = (t) => /am/i.test(t) || (!/pm/i.test(t) && parseTimeToMinutes(t) < 720);
+      const isPmSlot = (t) => /pm/i.test(t) || (!/am/i.test(t) && parseTimeToMinutes(t) >= 720);
+
       days.forEach(d => {
         const dayItems = SCHEDULE_DATA.filter(i => i.dayKey === d.key);
         const ministryItems = dayItems.filter(i => 
@@ -4649,8 +5167,8 @@
 
         if (d.key === 'Sun') {
           const meetingItem = dayItems.find(i => i.activity === 'Meeting') || { time: '8:00 - 10:00 AM', companion: 'Weekend Meeting with Public Talk' };
-          const pmCo = dayItems.find(i => i.role === 'CO' && i.time.includes('PM'));
-          const pmWife = dayItems.find(i => i.role === 'Wife' && i.time.includes('PM'));
+          const pmCo = dayItems.find(i => i.role === 'CO' && isPmSlot(i.time));
+          const pmWife = dayItems.find(i => i.role === 'Wife' && isPmSlot(i.time));
           const pmTime = pmCo ? pmCo.time : (pmWife ? pmWife.time : '4:00 - 5:30 PM');
           
           const pmDesc = [];
@@ -4664,16 +5182,16 @@
               <td class="center">${cleanTimeStr(meetingItem.time)}</td>
               <td class="bold center">Weekend Meeting &amp; Public Talk<br><span style="font-size:7.5pt; font-weight:normal; color:#444;">(Kingdom Hall)</span></td>
               <td class="center">${cleanTimeStr(pmTime)}</td>
-              <td>${pmDesc.join('<br>')}</td>
+              <td>${pmDesc.length > 0 ? pmDesc.join('<br>') : 'CO / Wife Shepherding Calls'}</td>
             </tr>
           `;
           return;
         }
 
-        const amTimes = [...new Set(ministryItems.filter(i => i.time.includes('AM')).map(i => i.time))];
+        const amTimes = [...new Set(ministryItems.filter(i => isAmSlot(i.time)).map(i => i.time))];
         amTimes.sort((a, b) => parseTimeToMinutes(a) - parseTimeToMinutes(b));
 
-        const pmTimes = [...new Set(ministryItems.filter(i => i.time.includes('PM')).map(i => i.time))];
+        const pmTimes = [...new Set(ministryItems.filter(i => isPmSlot(i.time)).map(i => i.time))];
         pmTimes.sort((a, b) => parseTimeToMinutes(a) - parseTimeToMinutes(b));
 
         const rowCount = Math.max(amTimes.length, pmTimes.length, 3);
@@ -4687,19 +5205,21 @@
           // Morning column
           if (r < amTimes.length) {
             const t = amTimes[r];
-            const coItem = ministryItems.find(i => i.time === t && i.role === 'CO');
-            const wifeItem = ministryItems.find(i => i.time === t && i.role === 'Wife');
-            const bothItem = ministryItems.find(i => i.time === t && i.role === 'both');
+            const coItems = ministryItems.filter(i => i.time === t && i.role === 'CO');
+            const wifeItems = ministryItems.filter(i => i.time === t && i.role === 'Wife');
+            const bothItems = ministryItems.filter(i => i.time === t && i.role === 'both');
 
-            let desc = '';
-            if (bothItem) {
-              desc = `${bothItem.companion} (${bothItem.activity})`;
-            } else {
-              const parts = [];
-              if (coItem) parts.push(formatMinistryPrintItem(coItem, false));
-              if (wifeItem) parts.push(formatMinistryPrintItem(wifeItem, false));
-              desc = parts.join('<br>');
-            }
+            const parts = [];
+            bothItems.forEach(b => {
+              const comp = (b.companion || '').trim();
+              const isOpen = b.status === 'open' || !comp || /^(open|available)/i.test(comp);
+              const displayComp = isOpen ? 'Open slot' : comp;
+              parts.push(`${displayComp} (${getActivityAbbr(b.activity)})`);
+            });
+            coItems.forEach(c => parts.push(formatMinistryPrintItem(c, false)));
+            wifeItems.forEach(w => parts.push(formatMinistryPrintItem(w, false)));
+            const desc = parts.join('<br>') || '-';
+
             html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
             html += `\n              <td>${desc}</td>`;
           } else {
@@ -4707,7 +5227,7 @@
           }
 
           // Afternoon column
-          if (d.key === 'Wed') {
+          if (d.key === 'Wed' && pmTimes.length === 0) {
             if (r === 0) {
               html += `\n              <td class="center" rowspan="${rowCount}">-</td>`;
               html += `\n              <td rowspan="${rowCount}" class="center" style="font-style:italic; color:#444;">*Flexibility Time</td>`;
@@ -4715,24 +5235,33 @@
           } else {
             if (r < pmTimes.length) {
               const t = pmTimes[r];
-              const coItem = ministryItems.find(i => i.time === t && i.role === 'CO');
-              const wifeItem = ministryItems.find(i => i.time === t && i.role === 'Wife');
-              const bothItem = ministryItems.find(i => i.time === t && i.role === 'both');
+              const coItems = ministryItems.filter(i => i.time === t && i.role === 'CO');
+              const wifeItems = ministryItems.filter(i => i.time === t && i.role === 'Wife');
+              const bothItems = ministryItems.filter(i => i.time === t && i.role === 'both');
 
-              if (bothItem && bothItem.activity === 'Meeting') {
-                html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
-                html += `\n              <td class="bold">${bothItem.companion} (Kingdom Hall)</td>`;
-              } else if (coItem && coItem.activity === 'Meeting') {
-                html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
-                html += `\n              <td class="bold">${coItem.companion} (Kingdom Hall)</td>`;
-              } else {
-                const parts = [];
-                if (coItem) parts.push(formatMinistryPrintItem(coItem, true));
-                if (wifeItem) parts.push(formatMinistryPrintItem(wifeItem, true));
-                const desc = parts.join('<br>');
-                html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
-                html += `\n              <td>${desc}</td>`;
-              }
+              const parts = [];
+              bothItems.forEach(b => {
+                if (b.activity === 'Meeting') {
+                  parts.push(`<span class="bold">${b.companion} (Kingdom Hall)</span>`);
+                } else {
+                  const comp = (b.companion || '').trim();
+                  const isOpen = b.status === 'open' || !comp || /^(open|available)/i.test(comp);
+                  const displayComp = isOpen ? 'Open slot' : comp;
+                  parts.push(`${displayComp} (${getActivityAbbr(b.activity)})`);
+                }
+              });
+              coItems.forEach(c => {
+                if (c.activity === 'Meeting') {
+                  parts.push(`<span class="bold">${c.companion} (Kingdom Hall)</span>`);
+                } else {
+                  parts.push(formatMinistryPrintItem(c, true));
+                }
+              });
+              wifeItems.forEach(w => parts.push(formatMinistryPrintItem(w, true)));
+              const desc = parts.join('<br>') || '-';
+
+              html += `\n              <td class="center">${cleanTimeStr(t)}</td>`;
+              html += `\n              <td>${desc}</td>`;
             } else {
               html += `\n              <td class="center">-</td>\n              <td class="center">-</td>`;
             }
@@ -4764,6 +5293,13 @@
           <tbody>
       `;
 
+      const formatHospComp = (comp) => {
+        if (!comp || comp === '-') return '-';
+        const str = comp.trim();
+        if (/^(open|available|open\s*brother|open\s*sister)/i.test(str)) return 'Open slot';
+        return str;
+      };
+
       const hospDays = [
         { day: 'Tuesday', date: 'Sept 15', key: 'Tue15' },
         { day: 'Wednesday', date: 'Sept 16', key: 'Wed' },
@@ -4789,9 +5325,9 @@
         html += `
           <tr>
             <td class="bold">${h.day} (${h.date})</td>
-            <td>${bComp}</td>
-            <td>${lComp}</td>
-            <td>${dComp}</td>
+            <td>${formatHospComp(bComp)}</td>
+            <td>${formatHospComp(lComp)}</td>
+            <td>${formatHospComp(dComp)}</td>
           </tr>
         `;
       });

@@ -130,6 +130,17 @@ function readSheetData(sheet) {
           val = months[d.getMonth()] + " " + d.getDate();
         }
       }
+      if (headerKey === "time" && (val.includes("1899") || val.includes("GMT") || val.includes("Standard na Oras"))) {
+        const d = new Date(val);
+        if (!isNaN(d.getTime())) {
+          let h = d.getHours();
+          const m = d.getMinutes();
+          const mStr = m < 10 ? '0' + m : m;
+          const ampm = h >= 12 ? 'PM' : 'AM';
+          h = h % 12 || 12;
+          val = `${h}:${mStr} ${ampm}`;
+        }
+      }
       item[headerKey] = val;
     }
     items.push(item);
@@ -156,6 +167,13 @@ function writeSheetData(sheet, dataArray) {
 
   if (!dataArray || dataArray.length === 0) return;
 
+  // Ensure sheet has enough capacity
+  const neededRows = dataArray.length + 1;
+  const currentMaxRows = sheet.getMaxRows();
+  if (neededRows > currentMaxRows) {
+    sheet.insertRowsAfter(currentMaxRows, neededRows - currentMaxRows);
+  }
+
   // Build 2D values array matching header columns
   const rows = dataArray.map(item => {
     return headers.map(headerKey => {
@@ -164,7 +182,9 @@ function writeSheetData(sheet, dataArray) {
     });
   });
 
-  sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
+  const targetRange = sheet.getRange(2, 1, rows.length, headers.length);
+  targetRange.setNumberFormat("@");
+  targetRange.setValues(rows);
 }
 
 /**
