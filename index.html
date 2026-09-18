@@ -2615,28 +2615,28 @@
       <tr>
         <td class="bold">Tuesday (Sept 15)</td>
         <td>-</td>
-        <td>Taken</td>
+        <td>FSG 2</td>
         <td>Arlene Enriquez</td>
       </tr>
     
       <tr>
         <td class="bold">Wednesday (Sept 16)</td>
         <td>Catalina Velasco</td>
-        <td>Taken by group</td>
+        <td>FSG 5 (c/o Soco Family)</td>
         <td>Malou Dela Cruz</td>
       </tr>
     
       <tr>
         <td class="bold">Thursday (Sept 17)</td>
         <td>Julie Ann and Des Aguilar</td>
-        <td>Taken by group</td>
+        <td>FSG 3</td>
         <td>Evangeline Malicsi</td>
       </tr>
     
       <tr>
         <td class="bold">Friday (Sept 18)</td>
         <td>Lydia Aguilar</td>
-        <td>Taken by group</td>
+        <td>Maclang Family</td>
         <td>Melda Dela Cruz</td>
       </tr>
     
@@ -3556,6 +3556,7 @@
       checkAuth();
       setupDatalists();
       sortScheduleData();
+      renderPrintTemplate();
       if (GOOGLE_SCRIPT_URL) {
         fetchLiveGoogleSheetData();
       } else {
@@ -3737,8 +3738,11 @@
             if (!m.val || m.val === "-" || m.val.toLowerCase() === "none") return;
             let slot = SCHEDULE_DATA.find(s => s.dayKey === dayKey && s.activity === m.label);
             if (slot) {
-              // NEVER overwrite an existing assigned companion in SCHEDULE_DATA!
-              if (!slot.companion || slot.companion === "Open slot" || slot.companion.toLowerCase().includes("taken")) {
+              const hospIsGeneric = m.val.toLowerCase().includes("taken") || /^(open|available)/i.test(m.val);
+              const slotIsGeneric = !slot.companion || slot.companion === "Open slot" || slot.companion.toLowerCase().includes("taken");
+
+              // If slot is generic (e.g. "taken by group"), or if Hospitality has a specific non-generic assignment, adopt it:
+              if (slotIsGeneric || (!hospIsGeneric && m.val !== slot.companion)) {
                 slot.companion = m.val;
                 slot.role = "both";
                 slot.status = "confirmed";
@@ -5356,9 +5360,16 @@
 
         const fallbackH = HOSPITALITY_DATA.find(item => item.day === h.day && (item.date === h.date || (item.date && item.date.includes(h.date.split(' ')[1])))) || {};
 
-        const bComp = bSlot && bSlot.companion ? bSlot.companion : (fallbackH.breakfast || '-');
-        const lComp = lSlot && lSlot.companion ? lSlot.companion : (fallbackH.lunch || '-');
-        const dComp = dSlot && dSlot.companion ? dSlot.companion : (fallbackH.dinner || '-');
+        const resolveMealComp = (slotComp, hospComp) => {
+          const isGeneric = (str) => !str || str === '-' || str.toLowerCase().includes('taken') || /^(open|available)/i.test(str);
+          if (slotComp && !isGeneric(slotComp)) return slotComp;
+          if (hospComp && !isGeneric(hospComp)) return hospComp;
+          return slotComp || hospComp || '-';
+        };
+
+        const bComp = resolveMealComp(bSlot ? bSlot.companion : '', fallbackH.breakfast || '-');
+        const lComp = resolveMealComp(lSlot ? lSlot.companion : '', fallbackH.lunch || '-');
+        const dComp = resolveMealComp(dSlot ? dSlot.companion : '', fallbackH.dinner || '-');
 
         html += `
           <tr>
